@@ -1,0 +1,72 @@
+﻿engine ready: 173 ms cold start (toolchain init 133 ms), 177 importable packages
+ok ok ok  01_hello.go  [ok] compile 360 ms, link 521 ms, run 258 ms
+ok ok ok  02_goroutines_waitgroup_channel.go  [ok] compile 246 ms, link 521 ms, run 192 ms
+ok ok ok  03_select_timeout.go  [ok] compile 154 ms, link 471 ms, run 89 ms
+ok ok ok  04_mutex_once_atomic.go  [ok] compile 163 ms, link 461 ms, run 74 ms
+ok ok ok  05_context_timeout.go  [ok] compile 149 ms, link 449 ms, run 108 ms
+ok ok ok  06_generics_funcs.go  [ok] compile 265 ms, link 458 ms, run 59 ms
+ok ok ok  07_generics_types.go  [ok] compile 191 ms, link 462 ms, run 62 ms
+ok ok ok  08_panic_index.go  [exit] compile 107 ms, link 515 ms, run 77 ms
+ok ok ok  09_panic_nil_map.go  [exit] compile 117 ms, link 466 ms, run 68 ms
+ok ok ok  10_panic_nil_pointer.go  [exit] compile 122 ms, link 440 ms, run 45 ms
+ok ok ok  11_panic_custom.go  [exit] compile 84 ms, link 425 ms, run 53 ms
+ok ok ok  12_panic_in_goroutine.go  [exit] compile 83 ms, link 454 ms, run 47 ms
+ok ok ok  13_deadlock.go  [deadlock] compile 79 ms, link 453 ms, run 56 ms
+ok ok ok  14_os_exit.go  [exit] compile 92 ms, link 436 ms, run 51 ms
+ok ok ok  15_compile_unused_var.go  [compile_error] compile 46 ms, link 0 ms, run 0 ms
+ok ok ok  16_compile_type_mismatch.go  [compile_error] compile 41 ms, link 0 ms, run 0 ms
+ok ok ok  17_loopvar_122.go  [ok] compile 125 ms, link 437 ms, run 50 ms
+ok ok ok  18_range_int.go  [ok] compile 97 ms, link 408 ms, run 46 ms
+ok ok ok  19_range_func_iter.go  [ok] compile 130 ms, link 442 ms, run 49 ms
+ok ok ok  20_min_max_clear.go  [ok] compile 100 ms, link 398 ms, run 48 ms
+ok ok ok  21_strings_runes.go  [ok] compile 134 ms, link 459 ms, run 78 ms
+ok ok ok  22_slices_maps_pkgs.go  [ok] compile 476 ms, link 465 ms, run 61 ms
+ok ok ok  23_errors_wrap.go  [ok] compile 150 ms, link 414 ms, run 52 ms
+ok ok ok  24_defer_recover.go  [ok] compile 117 ms, link 396 ms, run 53 ms
+ok ok ok  25_nil_interface.go  [ok] compile 86 ms, link 404 ms, run 48 ms
+ok ok ok  26_embedding_methodsets.go  [ok] compile 147 ms, link 403 ms, run 53 ms
+ok ok ok  27_json_tags.go  [ok] compile 104 ms, link 567 ms, run 117 ms
+ok ok ok  28_int_overflow_division.go  [ok] compile 97 ms, link 436 ms, run 51 ms
+ok ok ok  29_divide_by_zero.go  [exit] compile 84 ms, link 346 ms, run 44 ms
+ok ok ok  30_type_assertion_panic.go  [exit] compile 79 ms, link 394 ms, run 50 ms
+ok ok ok  31_type_switch_iota.go  [ok] compile 111 ms, link 391 ms, run 57 ms
+ok ok ok  32_slice_aliasing.go  [ok] compile 91 ms, link 420 ms, run 48 ms
+ok ok ok  33_map_iteration_random.go  [ok] compile 109 ms, link 463 ms, run 71 ms
+XX ok ok  34_runtime_info.go  [ok] compile 101 ms, link 444 ms, run 61 ms
+   real exit=0 stdout="windows amd64 16 16\n"
+        stderr=""
+   wasm exit=0 stdout="js wasm 1 1\n"
+        stderr=""
+ok ok ok  35_unsafe_sizeof.go  [ok] compile 81 ms, link 442 ms, run 58 ms
+ok ok ok  36_buffered_close_send_panic.go  [ok] compile 111 ms, link 429 ms, run 61 ms
+ok ok ok  37_worker_pool_fanin.go  [ok] compile 103 ms, link 433 ms, run 55 ms
+ok ok ok  38_io_reader_writer.go  [ok] compile 181 ms, link 465 ms, run 63 ms
+ok ok ok  39_testing_pkg.go  [ok] compile 130 ms, link 495 ms, run 56 ms
+ok ok ok  40_http_handler_and_listen.go  [ok] compile 260 ms, link 1662 ms, run 130 ms
+ok ok ok  41_compile_unused_import.go  [compile_error] compile 47 ms, link 0 ms, run 0 ms
+XX ok ok  42_numgoroutine.go  [ok] compile 92 ms, link 410 ms, run 218 ms
+   real exit=0 stdout="started 10, delta: 10\nafter sleep delta: 0\n"
+        stderr=""
+   wasm exit=0 stdout="started 10, delta: 10\nafter sleep delta: 1\n"
+        stderr=""
+ok ok ok  43_generic_constraint_methods.go  [ok] compile 160 ms, link 462 ms, run 51 ms
+ok ok ok  44_select_block_forever.go  [deadlock] compile 98 ms, link 439 ms, run 52 ms
+ok ok ok  45_waitgroup_negative.go  [exit] compile 69 ms, link 265 ms, run 41 ms
+ok ok ok  46_value_copy_struct_array.go  [ok] compile 95 ms, link 422 ms, run 53 ms
+XX ok ok  47_racy_counter.go  [ok] compile 87 ms, link 433 ms, run 62 ms
+   real exit=0 stdout="false\n"
+        stderr=""
+   wasm exit=0 stdout="true\n"
+        stderr=""
+ok ok ok  S1_loopvar_lang_go1.21  [ok] compile 130 ms, link 448 ms, run 54 ms
+ok ok ok  S2_escape_analysis_-m  [ok] compile 115 ms, link 431 ms, run 55 ms
+ok  S3_infinite_loop_timeout  status=timeout after 4879 ms; next run after respawn: "alive\n" (2198 ms incl. respawn)
+ok  S4_output_flood  status=output_limit captured 1048575 chars
+-- S5_memory_exhaustion  status=exit exit=2 stdout tail="12\nallocated MB: 2624\nallocated MB: 3136\nallocated MB: 3648\n" stderr head="runtime: out of memory: cannot allocate 67108864-byte block (4228251648 in use)\nfatal error: out of memory\n\ngoroutine 1 "
+ok ok XX  S6_stack_overflow  [exit] compile 123 ms, link 322 ms, run 102 ms
+   real exit=2 stdout=""
+        stderr="runtime: goroutine stack exceeds 1000000000-byte limit\nruntime: sp=0x3765a38e1390 stack=[0x3765a38e0000, 0x3765c38e0000]\nfatal error: stack overflow\n\nruntime stack:\nruntime.throw({0x7ff76ce5e3a2?, 0x200000001?})\n\truntime/panic.go:1243 fp=0xc3c29ffa40 sp=0xc3c29ffa10 pc=0x7ff76ce523ed\nruntime.newstack()\n\truntime/stack.go:1207 fp=0xc3c29ffb70 sp=0xc3c29ffa40 pc=0x7ff76ce3854c\nruntime.morestack()\n\tru"
+   wasm exit=2 stdout=""
+        stderr="[engine] program aborted by the JavaScript host: RangeError: Maximum call stack size exceeded. The browser's WebAssembly call stack ran out before Go's own 1 GB goroutine stack limit. Native Go would print \"fatal error: stack overflow\" (or succeed, if the recursion is finite).\n"
+-- S8_recursion_depth 1000:ok 10000:ok 50000:ok 100000:ok 1000000:crash
+-- S7_warm_hello_total_ms 567, 569, 545

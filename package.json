@@ -1,0 +1,14 @@
+{
+  "name": "go-forge",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "engine:build": "node scripts/build-engine.mjs",
+    "engine:probe": "node scripts/probe-engine.mjs",
+    "p0:serve": "node scripts/serve-static.mjs 4173",
+    "p0:verify": "node scripts/verify-p0-browser.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0"
+  }
+}

@@ -1,0 +1,834 @@
+{
+  "goVersion": "go1.27.1",
+  "compileMs": 61,
+  "results": [
+    {
+      "probe": "01_hello.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "hello, gopher\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "hello, gopher\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 175
+      }
+    },
+    {
+      "probe": "02_goroutines_waitgroup_channel.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "sum of squares: 55\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "sum of squares: 55\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 34
+      }
+    },
+    {
+      "probe": "03_select_timeout.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "timeout\ngot ready\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "timeout\ngot ready\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 64
+      }
+    },
+    {
+      "probe": "04_mutex_once_atomic.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "init once\n100 100\nrwmutex ok\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "init once\n100 100\nrwmutex ok\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 49
+      }
+    },
+    {
+      "probe": "05_context_timeout.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "context deadline exceeded true\ncontext canceled\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "context deadline exceeded true\ncontext canceled\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 71
+      }
+    },
+    {
+      "probe": "06_generics_funcs.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "6\n4\n9\n[10 20 30]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "31:34: cannot use type func(int) string as type func(int) int\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 30
+      }
+    },
+    {
+      "probe": "07_generics_types.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "b true\n2\n{Key:age Val:30}\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "b true\n2\n{Key:age Val:30}\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 30
+      }
+    },
+    {
+      "probe": "08_panic_index.go",
+      "stdoutMatch": true,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "before\n",
+        "stderr": "panic: runtime error: index out of range [5] with length 3\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-8c2aWc/main.go:9 +0x4a\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "before\n",
+        "stderr": "6:8: panic: main.main(...)\nreflect: slice index out of range\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 21
+      }
+    },
+    {
+      "probe": "09_panic_nil_map.go",
+      "stdoutMatch": true,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "0 0\n",
+        "stderr": "panic: assignment to entry in nil map\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-UudGaC/main.go:8 +0xa7\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "0 0\n",
+        "stderr": "6:6: panic: main.main(...)\nassignment to entry in nil map\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 22
+      }
+    },
+    {
+      "probe": "10_panic_nil_pointer.go",
+      "stdoutMatch": true,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "",
+        "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal 0xc0000005 code=0x0 addr=0x0 pc=0x7ff6cc505216]\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-CjfPfO/main.go:9 +0x16\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "8:8: panic: main.main(...)\nreflect: call of reflect.Value.Field on zero Value\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 21
+      }
+    },
+    {
+      "probe": "11_panic_custom.go",
+      "stdoutMatch": true,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "start\n",
+        "stderr": "panic: something went wrong\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-dMJb3C/main.go:7 +0x58\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "start\n",
+        "stderr": "6:2: panic: main.main(...)\nsomething went wrong\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 18
+      }
+    },
+    {
+      "probe": "12_panic_in_goroutine.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "",
+        "stderr": "panic: goroutine blew up\n\ngoroutine 7 [running]:\nmain.main.func1()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-BTEaEL/main.go:10 +0x25\ncreated by main.main in goroutine 1\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-BTEaEL/main.go:9 +0x1a\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "10:3: panic: main.main.func(...)\npanic: goroutine blew up [recovered, repanicked]\n\ngoroutine 10 [running]:\ngithub.com/traefik/yaegi/interp.runCfg.func1()\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/run.go:226 +0x19\npanic({0xec8110, 0x1570c90})\n\truntime/panic.go:859 +0x1c\ngithub.com/traefik/yaegi/interp._panic.func1(0x11004d0)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/run.go:931 +0x6\ngithub.com/traefik/yaegi/interp.runCfg(0x164a8c0, 0x11004d0, 0x1647cc0, 0x1647cc0)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/run.go:234 +0x3a\ngithub.com/traefik/yaegi/interp.getFunc.func1.1({0xf78e00, 0x0, 0x0})\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/run.go:1939 +0x61\nreflect.Value.call({0xd84040, 0x1650d50, 0x13}, {0x5453e, 0x4}, {0xf78e00, 0x0, 0x0})\n\treflect/value.go:586 +0x155\nreflect.Value.Call({0xd84040, 0x1650d50, 0x13}, {0xf78e00, 0x0, 0x0})\n\treflect/value.go:369 +0xd\ngithub.com/traefik/yaegi/interp.call.func9.2({0xf78e00, 0x0, 0x0})\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/run.go:1323 +0x2\ncreated by github.com/traefik/yaegi/interp.call.func9 in goroutine 9\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/run.go:1335 +0x109\n",
+        "exitCode": 2,
+        "deadlocked": false,
+        "ms": 24
+      }
+    },
+    {
+      "probe": "13_deadlock.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "sending\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine 1 [chan send]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-GOTEIj/main.go:8 +0x76\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "sending\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n",
+        "exitCode": 2,
+        "deadlocked": true,
+        "ms": 45
+      }
+    },
+    {
+      "probe": "14_os_exit.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "exiting\n",
+        "stderr": "",
+        "exitCode": 3
+      },
+      "engine": {
+        "stdout": "exiting\ndeferred: not printed\n",
+        "stderr": "9:8: panic: main.main(...)\nos.Exit(3)\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 21
+      }
+    },
+    {
+      "probe": "15_compile_unused_var.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "",
+        "stderr": "# prog\n.\\main.go:6:2: declared and not used: x\n",
+        "exitCode": 1
+      },
+      "engine": {
+        "stdout": "hi\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 18
+      }
+    },
+    {
+      "probe": "16_compile_type_mismatch.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "",
+        "stderr": "# prog\n.\\main.go:8:14: invalid operation: a + b (mismatched types int and int64)\n",
+        "exitCode": 1
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "8:14: invalid operation: mismatched types int and int64\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 17
+      }
+    },
+    {
+      "probe": "17_loopvar_122.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "0 1 2 \n10 20 30\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "0 1 2 \n10 20 30\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 19
+      }
+    },
+    {
+      "probe": "18_range_int.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "0 1 2 \n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "0 1 2 \n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 23
+      }
+    },
+    {
+      "probe": "19_range_func_iter.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "0 1 2 3 \n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "2026/09/15 01:36:26 nil type\npanic: nil type\n\ngoroutine 9 [running]:\nlog.Panic({0x1523308, 0x1, 0x1})\n\tlog/log.go:451 +0x5\ngithub.com/traefik/yaegi/interp.(*scope).add(0x1105290, 0x0)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/scope.go:215 +0x3\ngithub.com/traefik/yaegi/interp.(*Interpreter).cfg.func1(0x164f040)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/cfg.go:212 +0x6c2\ngithub.com/traefik/yaegi/interp.(*node).Walk(0x164f040, 0x1523b80, 0x1523b28)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/interp.go:282 +0x3\ngithub.com/traefik/yaegi/interp.(*node).Walk(0x164ea00, 0x1523b80, 0x1523b28)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/interp.go:286 +0x9\ngithub.com/traefik/yaegi/interp.(*node).Walk(0x164e8c0, 0x1523b80, 0x1523b28)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/interp.go:286 +0x9\ngithub.com/traefik/yaegi/interp.(*node).Walk(0x164e780, 0x1523b80, 0x1523b28)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/interp.go:286 +0x9\ngithub.com/traefik/yaegi/interp.(*node).Walk(0x164e000, 0x1523b80, 0x1523b28)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/interp.go:286 +0x9\ngithub.com/traefik/yaegi/interp.(*node).Walk(0x16468c0, 0x1523b80, 0x1523b28)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/interp.go:286 +0x9\ngithub.com/traefik/yaegi/interp.(*Interpreter).cfg(0x1129448, 0x16468c0, 0x1105290, {0x1569058, 0x4}, {0x1569058, 0x4})\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/cfg.go:69 +0x15\ngithub.com/traefik/yaegi/interp.(*Interpreter).CompileAST(0x1129448, {0xeccf90, 0x116bc20})\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/program.go:99 +0x15\ngithub.com/traefik/yaegi/interp.(*Interpreter).compileSrc(0x1129448, {0x11246c0, 0x102}, {0x0, 0x0}, 0x1)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/program.go:66 +0x11\ngithub.com/traefik/yaegi/interp.(*Interpreter).eval(0x1129448, {0x11246c0, 0x102}, {0x0, 0x0}, 0x1)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/interp.go:555 +0x2\ngithub.com/traefik/yaegi/interp.(*Interpreter).Eval(...)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/interp.go:496\nmain.run({0x11246c0, 0x102})\n\tgoforge/engine/main.go:34 +0xb\nmain.main.func1.1()\n\tgoforge/engine/main.go:54 +0x2\ncreated by main.main.func1 in goroutine 8\n\tgoforge/engine/main.go:53 +0x8\n",
+        "exitCode": 2,
+        "deadlocked": false,
+        "ms": 23
+      }
+    },
+    {
+      "probe": "20_min_max_clear.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "1 2.5\n0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "6:14: undefined: min\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 18
+      }
+    },
+    {
+      "probe": "21_strings_runes.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "14 9\n195 Ã\n0 104 h\n1 233 é\n[97 98 99] [233]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "14 9\n195 Ã\n0 104 h\n1 233 é\n[97 98 99] [233]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 20
+      }
+    },
+    {
+      "probe": "22_slices_maps_pkgs.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "[1 2 3] true 2\n[a b c]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "12:2: undefined selector: slices.Sort\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 21
+      }
+    },
+    {
+      "probe": "23_errors_wrap.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "find user: select: not found\ntrue\ntrue select\nfalse\na\nb\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "find user: %!w(*struct { Query string; Err error }=&{select 0x1647a60})\nfalse\n",
+        "stderr": "24:9: panic: main.main(...)\nerrors: *target must be interface or implement error\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 22
+      }
+    },
+    {
+      "probe": "24_defer_recover.go",
+      "stdoutMatch": false,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "x = 2\ndeferred x = 1\n5 <nil>\n0 recovered: runtime error: integer divide by zero\n2 1 0 ",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "x = 2\ndeferred x = 2\n5 <nil>\n0 recovered: runtime error: integer divide by zero\n2 1 0 ",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 19
+      }
+    },
+    {
+      "probe": "25_nil_interface.go",
+      "stdoutMatch": false,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "false\n*main.MyErr true\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "true\n<nil> false\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 18
+      }
+    },
+    {
+      "probe": "26_embedding_methodsets.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "Rex barks | Rex makes a sound\nMax\nMax barks\nBo\nDog value implements Renamer: false\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "Rex barks | Rex makes a sound\nMax\nMax barks\nBo\nDog value implements Renamer: false\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 21
+      }
+    },
+    {
+      "probe": "27_json_tags.go",
+      "stdoutMatch": false,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "{\"id\":1,\"name\":\"Ada\",\"tags\":null} <nil>\n{ID:7 Name:Bob Email: password: Tags:[a]} <nil>\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "{\"id\":1,\"name\":\"Ada\",\"Xpassword\":\"x\",\"tags\":null} <nil>\n{ID:7 Name:Bob Email: Xpassword: Tags:[a]} <nil>\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 27
+      }
+    },
+    {
+      "probe": "28_int_overflow_division.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "-128\n3 -3 1 -1 3.5\n255\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "-128\n3 -3 1 -1 3.5\n255\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 42
+      }
+    },
+    {
+      "probe": "29_divide_by_zero.go",
+      "stdoutMatch": true,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "",
+        "stderr": "panic: runtime error: integer divide by zero\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-g9wyjn/main.go:7 +0x9\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "6:2: panic: main.main(...)\nruntime error: integer divide by zero\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 47
+      }
+    },
+    {
+      "probe": "30_type_assertion_panic.go",
+      "stdoutMatch": true,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "0 false\n",
+        "stderr": "panic: interface conversion: interface {} is string, not int\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-LExi1R/main.go:9 +0x89\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "0 false\n",
+        "stderr": "6:8: panic: main.main(...)\n9:14: interface conversion: interface {} is string, not int\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 37
+      }
+    },
+    {
+      "probe": "31_type_switch_iota.go",
+      "stdoutMatch": false,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "int 1 string s stringer Tue other float64\nMon\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "int 1 string s other stdlib._fmt_Stringer other float64\nMon\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 39
+      }
+    },
+    {
+      "probe": "32_slice_aliasing.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "42 42 3 4\n[1 100 3 4 5] [100 3] 2 4\n[1 100 3 4 5]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "42 42 3 4\n[1 100 3 4 5] [100 3] 2 4\n[1 100 3 4 5]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 52
+      }
+    },
+    {
+      "probe": "33_map_iteration_random.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "distinct orders > 1: true\nmap[a:2 z:1]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "distinct orders > 1: true\nmap[a:2 z:1]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 58
+      }
+    },
+    {
+      "probe": "34_runtime_info.go",
+      "stdoutMatch": false,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "windows amd64 16 16\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "js wasm 1 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 45
+      }
+    },
+    {
+      "probe": "35_unsafe_sizeof.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "8 24 16 24\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "5:2: import \"unsafe\" error: unable to find source related to: \"unsafe\"\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 49
+      }
+    },
+    {
+      "probe": "36_buffered_close_send_panic.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "2 2\n1 2 0 false\nrecovered: send on closed channel\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "2 2\n1 2 0 false\nrecovered: send on closed channel\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 65
+      }
+    },
+    {
+      "probe": "37_worker_pool_fanin.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "[2 4 6 8 10 12]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "[2 4 6 8 10 12]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 46
+      }
+    },
+    {
+      "probe": "38_io_reader_writer.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "HELLO WORLD\n11 <nil>\n\"a b\"\n\"c\"\n03.14|go  |ff\n",
+        "stderr": "to stderr\n",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "HELLO WORLD\n11 <nil>\n\"a b\"\n\"c\"\n03.14|go  |ff\n",
+        "stderr": "to stderr\n",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 68
+      }
+    },
+    {
+      "probe": "39_testing_pkg.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "testing importable\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "testing importable\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 68
+      }
+    },
+    {
+      "probe": "40_http_handler_and_listen.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "200 hi from handler\nlisten error: true\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "200 hi from handler\nlisten error: true\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 78
+      }
+    },
+    {
+      "probe": "41_compile_unused_import.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "",
+        "stderr": "# prog\n.\\main.go:5:2: \"os\" imported and not used\n",
+        "exitCode": 1
+      },
+      "engine": {
+        "stdout": "hi\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 40
+      }
+    },
+    {
+      "probe": "42_numgoroutine.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "started 10, delta: 10\nafter sleep delta: 0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "started 10, delta: 10\nafter sleep delta: 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 221
+      }
+    },
+    {
+      "probe": "43_generic_constraint_methods.go",
+      "stdoutMatch": false,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "C1C2\n9 b\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "26:12: undefined type for T\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 54
+      }
+    },
+    {
+      "probe": "44_select_block_forever.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "blocking\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine 1 [select (no cases)]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-GUnoW3/main.go:7 +0x4a\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "blocking\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n",
+        "exitCode": 2,
+        "deadlocked": true,
+        "ms": 71
+      }
+    },
+    {
+      "probe": "45_waitgroup_negative.go",
+      "stdoutMatch": true,
+      "exitMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "",
+        "stderr": "panic: sync: negative WaitGroup counter\n\ngoroutine 1 [running]:\nsync.(*WaitGroup).Add(0x37091c08c000, 0xffffffffffffffff)\n\tC:/Program Files/Go/src/sync/waitgroup.go:118 +0x23a\nsync.(*WaitGroup).Done(...)\n\tC:/Program Files/Go/src/sync/waitgroup.go:156\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-ztlLaV/main.go:7 +0x32\n",
+        "exitCode": 2
+      },
+      "engine": {
+        "stdout": "",
+        "stderr": "6:9: panic: main.main(...)\nsync: negative WaitGroup counter\n",
+        "exitCode": 1,
+        "deadlocked": false,
+        "ms": 56
+      }
+    },
+    {
+      "probe": "46_value_copy_struct_array.go",
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "{1 2}\n{100 2}\n[1 2 3] [9 2 3]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "{1 2}\n{100 2}\n[1 2 3] [9 2 3]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "deadlocked": false,
+        "ms": 62
+      }
+    }
+  ]
+}

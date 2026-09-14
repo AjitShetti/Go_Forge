@@ -1,0 +1,1397 @@
+{
+  "goVersion": "go1.27.1",
+  "platform": "node v22.20.0 win32",
+  "ready": {
+    "coldStartMs": 173,
+    "initMs": 133,
+    "packageCount": 177
+  },
+  "results": [
+    {
+      "probe": "01_hello.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "hello, gopher\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "hello, gopher\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 360,
+        "linkMs": 521,
+        "runMs": 258,
+        "totalMs": 1143,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "02_goroutines_waitgroup_channel.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "sum of squares: 55\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "sum of squares: 55\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 246,
+        "linkMs": 521,
+        "runMs": 192,
+        "totalMs": 961,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "03_select_timeout.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "timeout\ngot ready\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "timeout\ngot ready\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 154,
+        "linkMs": 471,
+        "runMs": 89,
+        "totalMs": 720,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "04_mutex_once_atomic.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "init once\n100 100\nrwmutex ok\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "init once\n100 100\nrwmutex ok\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 163,
+        "linkMs": 461,
+        "runMs": 74,
+        "totalMs": 704,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "05_context_timeout.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "context deadline exceeded true\ncontext canceled\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "context deadline exceeded true\ncontext canceled\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 149,
+        "linkMs": 449,
+        "runMs": 108,
+        "totalMs": 711,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "06_generics_funcs.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "6\n4\n9\n[10 20 30]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "6\n4\n9\n[10 20 30]\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 265,
+        "linkMs": 458,
+        "runMs": 59,
+        "totalMs": 788,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "07_generics_types.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "b true\n2\n{Key:age Val:30}\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "b true\n2\n{Key:age Val:30}\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 191,
+        "linkMs": 462,
+        "runMs": 62,
+        "totalMs": 721,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "08_panic_index.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "before\n",
+        "stderr": "panic: runtime error: index out of range [5] with length 3\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-mrYOcv/main.go:9 +0x4a\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "before\n",
+        "stderr": "panic: runtime error: index out of range [5] with length 3\n\ngoroutine 1 [running]:\nmain.main()\n\tmain.go:9 +0x7\n",
+        "compileOutput": "",
+        "compileMs": 107,
+        "linkMs": 515,
+        "runMs": 77,
+        "totalMs": 707,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "09_panic_nil_map.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "0 0\n",
+        "stderr": "panic: assignment to entry in nil map\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-cOpOkb/main.go:8 +0xa7\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "0 0\n",
+        "stderr": "panic: assignment to entry in nil map\n\ngoroutine 1 [running]:\nmain.main()\n\tmain.go:8 +0xa\n",
+        "compileOutput": "",
+        "compileMs": 117,
+        "linkMs": 466,
+        "runMs": 68,
+        "totalMs": 658,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "10_panic_nil_pointer.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "",
+        "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal 0xc0000005 code=0x0 addr=0x0 pc=0x7ff724f75216]\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-ZdvuwW/main.go:9 +0x16\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "",
+        "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n[signal 0xb code=0x0 addr=0x0 pc=0x0]\n\ngoroutine 1 [running]:\nmain.main()\n\tmain.go:9 +0x2\n",
+        "compileOutput": "",
+        "compileMs": 122,
+        "linkMs": 440,
+        "runMs": 45,
+        "totalMs": 612,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "11_panic_custom.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "start\n",
+        "stderr": "panic: something went wrong\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-qY4ASF/main.go:7 +0x58\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "start\n",
+        "stderr": "panic: something went wrong\n\ngoroutine 1 [running]:\nmain.main()\n\tmain.go:7 +0x7\n",
+        "compileOutput": "",
+        "compileMs": 84,
+        "linkMs": 425,
+        "runMs": 53,
+        "totalMs": 566,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "12_panic_in_goroutine.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "",
+        "stderr": "panic: goroutine blew up\n\ngoroutine 7 [running]:\nmain.main.func1()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-sb4A2K/main.go:10 +0x25\ncreated by main.main in goroutine 1\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-sb4A2K/main.go:9 +0x1a\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "",
+        "stderr": "panic: goroutine blew up\n\ngoroutine 7 [running]:\nmain.main.func1()\n\tmain.go:10 +0x2\ncreated by main.main in goroutine 1\n\tmain.go:9 +0x2\n",
+        "compileOutput": "",
+        "compileMs": 83,
+        "linkMs": 454,
+        "runMs": 47,
+        "totalMs": 590,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "13_deadlock.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "sending\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine 1 [chan send]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-8wNxMG/main.go:8 +0x76\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "deadlock",
+        "exitCode": 2,
+        "stdout": "sending\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine 1 [chan send]:\nmain.main()\n\tmain.go:8 +0x8\n",
+        "compileOutput": "",
+        "compileMs": 79,
+        "linkMs": 453,
+        "runMs": 56,
+        "totalMs": 592,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "14_os_exit.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "exiting\n",
+        "stderr": "",
+        "exitCode": 3,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 3,
+        "stdout": "exiting\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 92,
+        "linkMs": 436,
+        "runMs": 51,
+        "totalMs": 582,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "15_compile_unused_var.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "",
+        "stderr": "# prog\n.\\main.go:6:2: declared and not used: x\n",
+        "exitCode": 1,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "compile_error",
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": "./main.go:6:2: declared and not used: x\n",
+        "compileOutput": "./main.go:6:2: declared and not used: x\n",
+        "compileMs": 46,
+        "linkMs": 0,
+        "runMs": 0,
+        "totalMs": 48,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "16_compile_type_mismatch.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "",
+        "stderr": "# prog\n.\\main.go:8:14: invalid operation: a + b (mismatched types int and int64)\n",
+        "exitCode": 1,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "compile_error",
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": "./main.go:8:14: invalid operation: a + b (mismatched types int and int64)\n",
+        "compileOutput": "./main.go:8:14: invalid operation: a + b (mismatched types int and int64)\n",
+        "compileMs": 41,
+        "linkMs": 0,
+        "runMs": 0,
+        "totalMs": 42,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "17_loopvar_122.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "0 1 2 \n10 20 30\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "0 1 2 \n10 20 30\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 125,
+        "linkMs": 437,
+        "runMs": 50,
+        "totalMs": 615,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "18_range_int.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "0 1 2 \n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "0 1 2 \n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 97,
+        "linkMs": 408,
+        "runMs": 46,
+        "totalMs": 556,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "19_range_func_iter.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "0 1 2 3 \n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "0 1 2 3 \n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 130,
+        "linkMs": 442,
+        "runMs": 49,
+        "totalMs": 627,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "20_min_max_clear.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "1 2.5\n0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "1 2.5\n0\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 100,
+        "linkMs": 398,
+        "runMs": 48,
+        "totalMs": 550,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "21_strings_runes.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "14 9\n195 Ã\n0 104 h\n1 233 é\n[97 98 99] [233]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "14 9\n195 Ã\n0 104 h\n1 233 é\n[97 98 99] [233]\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 134,
+        "linkMs": 459,
+        "runMs": 78,
+        "totalMs": 678,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "22_slices_maps_pkgs.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "[1 2 3] true 2\n[a b c]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "[1 2 3] true 2\n[a b c]\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 476,
+        "linkMs": 465,
+        "runMs": 61,
+        "totalMs": 1006,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "23_errors_wrap.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "find user: select: not found\ntrue\ntrue select\nfalse\na\nb\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "find user: select: not found\ntrue\ntrue select\nfalse\na\nb\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 150,
+        "linkMs": 414,
+        "runMs": 52,
+        "totalMs": 620,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "24_defer_recover.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "x = 2\ndeferred x = 1\n5 <nil>\n0 recovered: runtime error: integer divide by zero\n2 1 0 ",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "x = 2\ndeferred x = 1\n5 <nil>\n0 recovered: runtime error: integer divide by zero\n2 1 0 ",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 117,
+        "linkMs": 396,
+        "runMs": 53,
+        "totalMs": 570,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "25_nil_interface.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "false\n*main.MyErr true\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "false\n*main.MyErr true\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 86,
+        "linkMs": 404,
+        "runMs": 48,
+        "totalMs": 543,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "26_embedding_methodsets.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "Rex barks | Rex makes a sound\nMax\nMax barks\nBo\nDog value implements Renamer: false\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "Rex barks | Rex makes a sound\nMax\nMax barks\nBo\nDog value implements Renamer: false\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 147,
+        "linkMs": 403,
+        "runMs": 53,
+        "totalMs": 606,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "27_json_tags.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "{\"id\":1,\"name\":\"Ada\",\"tags\":null} <nil>\n{ID:7 Name:Bob Email: password: Tags:[a]} <nil>\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "{\"id\":1,\"name\":\"Ada\",\"tags\":null} <nil>\n{ID:7 Name:Bob Email: password: Tags:[a]} <nil>\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 104,
+        "linkMs": 567,
+        "runMs": 117,
+        "totalMs": 792,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "28_int_overflow_division.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "-128\n3 -3 1 -1 3.5\n255\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "-128\n3 -3 1 -1 3.5\n255\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 97,
+        "linkMs": 436,
+        "runMs": 51,
+        "totalMs": 589,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "29_divide_by_zero.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "",
+        "stderr": "panic: runtime error: integer divide by zero\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-chLK2n/main.go:7 +0x9\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "",
+        "stderr": "panic: runtime error: integer divide by zero\n\ngoroutine 1 [running]:\nmain.main()\n\tmain.go:7 +0x1\n",
+        "compileOutput": "",
+        "compileMs": 84,
+        "linkMs": 346,
+        "runMs": 44,
+        "totalMs": 477,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "30_type_assertion_panic.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "0 false\n",
+        "stderr": "panic: interface conversion: interface {} is string, not int\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-B8oWVB/main.go:9 +0x89\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "0 false\n",
+        "stderr": "panic: interface conversion: interface {} is string, not int\n\ngoroutine 1 [running]:\nmain.main()\n\tmain.go:9 +0x8\n",
+        "compileOutput": "",
+        "compileMs": 79,
+        "linkMs": 394,
+        "runMs": 50,
+        "totalMs": 528,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "31_type_switch_iota.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "int 1 string s stringer Tue other float64\nMon\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "int 1 string s stringer Tue other float64\nMon\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 111,
+        "linkMs": 391,
+        "runMs": 57,
+        "totalMs": 562,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "32_slice_aliasing.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "42 42 3 4\n[1 100 3 4 5] [100 3] 2 4\n[1 100 3 4 5]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "42 42 3 4\n[1 100 3 4 5] [100 3] 2 4\n[1 100 3 4 5]\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 91,
+        "linkMs": 420,
+        "runMs": 48,
+        "totalMs": 565,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "33_map_iteration_random.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "distinct orders > 1: true\nmap[a:2 z:1]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "distinct orders > 1: true\nmap[a:2 z:1]\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 109,
+        "linkMs": 463,
+        "runMs": 71,
+        "totalMs": 648,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "34_runtime_info.go",
+      "opts": {},
+      "stdoutMatch": false,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "windows amd64 16 16\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "js wasm 1 1\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 101,
+        "linkMs": 444,
+        "runMs": 61,
+        "totalMs": 611,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "35_unsafe_sizeof.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "8 24 16 24\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "8 24 16 24\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 81,
+        "linkMs": 442,
+        "runMs": 58,
+        "totalMs": 587,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "36_buffered_close_send_panic.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "2 2\n1 2 0 false\nrecovered: send on closed channel\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "2 2\n1 2 0 false\nrecovered: send on closed channel\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 111,
+        "linkMs": 429,
+        "runMs": 61,
+        "totalMs": 607,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "37_worker_pool_fanin.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "[2 4 6 8 10 12]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "[2 4 6 8 10 12]\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 103,
+        "linkMs": 433,
+        "runMs": 55,
+        "totalMs": 595,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "38_io_reader_writer.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "HELLO WORLD\n11 <nil>\n\"a b\"\n\"c\"\n03.14|go  |ff\n",
+        "stderr": "to stderr\n",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "HELLO WORLD\n11 <nil>\n\"a b\"\n\"c\"\n03.14|go  |ff\n",
+        "stderr": "to stderr\n",
+        "compileOutput": "",
+        "compileMs": 181,
+        "linkMs": 465,
+        "runMs": 63,
+        "totalMs": 714,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "39_testing_pkg.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "testing importable\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "testing importable\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 130,
+        "linkMs": 495,
+        "runMs": 56,
+        "totalMs": 685,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "40_http_handler_and_listen.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "200 hi from handler\nlisten error: true\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "200 hi from handler\nlisten error: true\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 260,
+        "linkMs": 1662,
+        "runMs": 130,
+        "totalMs": 2127,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "41_compile_unused_import.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "",
+        "stderr": "# prog\n.\\main.go:5:2: \"os\" imported and not used\n",
+        "exitCode": 1,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "compile_error",
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": "./main.go:5:2: \"os\" imported and not used\n",
+        "compileOutput": "./main.go:5:2: \"os\" imported and not used\n",
+        "compileMs": 47,
+        "linkMs": 0,
+        "runMs": 0,
+        "totalMs": 49,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "42_numgoroutine.go",
+      "opts": {},
+      "stdoutMatch": false,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "started 10, delta: 10\nafter sleep delta: 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "started 10, delta: 10\nafter sleep delta: 1\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 92,
+        "linkMs": 410,
+        "runMs": 218,
+        "totalMs": 725,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "43_generic_constraint_methods.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "C1C2\n9 b\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "C1C2\n9 b\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 160,
+        "linkMs": 462,
+        "runMs": 51,
+        "totalMs": 678,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "44_select_block_forever.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "blocking\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine 1 [select (no cases)]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-jP8IyP/main.go:7 +0x4a\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "deadlock",
+        "exitCode": 2,
+        "stdout": "blocking\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine 1 [select (no cases)]:\nmain.main()\n\tmain.go:7 +0x7\n",
+        "compileOutput": "",
+        "compileMs": 98,
+        "linkMs": 439,
+        "runMs": 52,
+        "totalMs": 592,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "45_waitgroup_negative.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "",
+        "stderr": "panic: sync: negative WaitGroup counter\n\ngoroutine 1 [running]:\nsync.(*WaitGroup).Add(0x3bdbaaf14080, 0xffffffffffffffff)\n\tC:/Program Files/Go/src/sync/waitgroup.go:118 +0x23a\nsync.(*WaitGroup).Done(...)\n\tC:/Program Files/Go/src/sync/waitgroup.go:156\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-R23Z62/main.go:7 +0x32\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "",
+        "stderr": "panic: sync: negative WaitGroup counter\n\ngoroutine 1 [running]:\nsync.(*WaitGroup).Add(0x18e030, 0xffffffffffffffff)\n\tsync/waitgroup.go:118 +0x4b\nsync.(*WaitGroup).Done(...)\n\tsync/waitgroup.go:156\nmain.main()\n\tmain.go:7 +0x5\n",
+        "compileOutput": "",
+        "compileMs": 69,
+        "linkMs": 265,
+        "runMs": 41,
+        "totalMs": 378,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "46_value_copy_struct_array.go",
+      "opts": {},
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "{1 2}\n{100 2}\n[1 2 3] [9 2 3]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "{1 2}\n{100 2}\n[1 2 3] [9 2 3]\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 95,
+        "linkMs": 422,
+        "runMs": 53,
+        "totalMs": 573,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "47_racy_counter.go",
+      "opts": {},
+      "stdoutMatch": false,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "false\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "true\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 87,
+        "linkMs": 433,
+        "runMs": 62,
+        "totalMs": 587,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "S1_loopvar_lang_go1.21",
+      "opts": {
+        "lang": "go1.21"
+      },
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "3 3 3 \n30 30 30\n",
+        "stderr": "",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "3 3 3 \n30 30 30\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 130,
+        "linkMs": 448,
+        "runMs": 54,
+        "totalMs": 636,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "S2_escape_analysis_-m",
+      "opts": {
+        "gcflags": [
+          "-m"
+        ],
+        "buildOnly": true
+      },
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": true,
+      "stderrFirstLineMatch": true,
+      "real": {
+        "stdout": "",
+        "stderr": "# prog\n./main.go:7:6: can inline newPoint\n./main.go:12:6: can inline sum\n./main.go:21:15: inlining call to newPoint\n./main.go:23:22: inlining call to sum\n./main.go:23:13: inlining call to fmt.Println\n./main.go:8:2: moved to heap: p\n./main.go:12:10: xs does not escape\n./main.go:23:13: ... argument does not escape\n./main.go:23:15: p.x escapes to heap\n./main.go:23:22: ~r0 escapes to heap\n",
+        "exitCode": 0,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "1 6\n",
+        "stderr": "",
+        "compileOutput": "./main.go:7:6: can inline newPoint\n./main.go:12:6: can inline sum\n./main.go:21:15: inlining call to newPoint\n./main.go:23:22: inlining call to sum\n./main.go:23:13: inlining call to fmt.Println\n./main.go:8:2: moved to heap: p\n./main.go:12:10: xs does not escape\n./main.go:23:13: ... argument does not escape\n./main.go:23:15: p.x escapes to heap\n./main.go:23:22: ~r0 escapes to heap\n",
+        "compileMs": 115,
+        "linkMs": 431,
+        "runMs": 55,
+        "totalMs": 606,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "S3_infinite_loop_timeout",
+      "pass": true,
+      "engine": {
+        "status": "timeout",
+        "exitCode": -1,
+        "stdout": "",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": null,
+        "linkMs": null,
+        "runMs": null,
+        "totalMs": 2338,
+        "engineError": null
+      },
+      "followUp": {
+        "status": "ok",
+        "exitCode": 0,
+        "stdout": "alive\n",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": 766,
+        "linkMs": 1168,
+        "runMs": 258,
+        "totalMs": 2198,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "S4_output_flood",
+      "pass": true,
+      "engine": {
+        "status": "output_limit",
+        "exitCode": -1,
+        "stdout": "spam 0\nspam 1\nspam 2\nspam 3\nspam 4\nspam 5\nspam 6\nspam 7\nspam 8\nspam 9\nspam 10\nspam 11\nspam 12\nspam 13\nspam 14\nspam 15\nspam 16\nspam 17\nspam 18\nspam 19\nspam 20\nspam 21\nspam 22\nspam 23\nspam 24\nspam 25\nsp",
+        "stderr": "",
+        "compileOutput": "",
+        "compileMs": null,
+        "linkMs": null,
+        "runMs": null,
+        "totalMs": 8488,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "S5_memory_exhaustion",
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "allocated MB: 64\nallocated MB: 576\nallocated MB: 1088\nallocated MB: 1600\nallocated MB: 2112\nallocated MB: 2624\nallocated MB: 3136\nallocated MB: 3648\n",
+        "stderr": "runtime: out of memory: cannot allocate 67108864-byte block (4228251648 in use)\nfatal error: out of memory\n\ngoroutine 1 gp=0x2021c0 m=0 mp=0x137ec0 [running]:\nruntime.throw({0x7afb, 0xd})\n\truntime/panic.go:1243 +0x3 fp=0x23ccd8 sp=0x23ccb0 pc=0x14cb0003\nruntime.(*mcache).allocLarge(0x160108, 0x4000000, 0x1)\n\truntime/mcache.go:259 +0x1f fp=0x23cd28 sp=0x23ccd8 pc=0x1137001f\nruntime.mallocgcLarge(0x4000000, 0x117018, 0x1)\n\truntime/malloc.go:1709 +0x19 fp=0x23cd90 sp=0x23cd28 pc=0x10ff0019\nruntime.mallocgc(0x4000000, 0x117018, 0x1)\n\truntime/malloc.go:1137 +0x28 fp=0x23cdc8 sp=0x23cd90 pc=0x14b30028\nruntime.makeslice(0x117018, 0x4000000, 0x4000000)\n\truntime/slice.go:117 +0x12 fp=0x23cdf0 sp=0x23cdc8 pc=0x14e60012\nmain.main()\n\tmain.go:8 +0x8 fp=0x23ceb8 sp=0x23cdf0 pc=0x16600008\nruntime.main()\n\truntime/proc.go:302 +0x54 fp=0x23cfe0 sp=0x23ceb8 pc=0x12aa0054\nruntime.goexit({})\n\truntime/asm_wasm.s:413 +0x1 fp=0x23cfe8 sp=0x23cfe0 pc=0x15250001\n\ngoroutine 2 gp=0x202380 m=nil [force gc (idle)]:\nruntime.gopark(0x125800, 0x136c70, 0xb, 0xa, 0x1)\n\truntime/proc.go:474 +0x24 fp=0x232fa0 sp=0x232f68 pc=0x14cc0024\nruntime.goparkunlock(...)\n\truntime/proc.go:480\nruntime.forcegchelper()\n\truntime/proc.go:387 +0x1b fp=0x232fe0 sp=0x232fa0 pc=0x12ad001b\nruntime.goexit({})\n\truntime/asm_wasm.s:413 +0x1 fp=0x232fe8 sp=0x232fe0 pc=0x15250001\ncreated by runtime.init.6 in goroutine 1\n\truntime/proc.go:375 +0x2\n\ngoroutine 3 gp=0x202540 m=nil [GC sweep wait]:\nruntime.gopark(0x125800, 0x136d80, 0x8, 0x9, 0x1)\n\truntime/proc.go:474 +0x24 fp=0x233790 sp=0x233758 pc=0x14cc0024\nruntime.goparkunlock(...)\n\truntime/proc.go:480\nruntime.bgsweep(0x236000)\n\truntime/mgcsweep.go:324 +0x2a fp=0x2337d0 sp=0x233790 pc=0x11eb002a\nruntime.gcenable.gowrap1()\n\truntime/mgc.go:214 +0x2 fp=0x2337e0 sp=0x2337d0 pc=0x14350002\nruntime.goexit({})\n\truntime/asm_wasm.s:413 +0x1 fp=0x2337e8 sp=0x2337e0 pc=0x15250001\ncreated by runtime.gcenable in goroutine 1\n\truntime/mgc.go:214 +0x6\n\ngoroutine 4 gp=0x202700 m=nil [GC scavenge wa",
+        "compileOutput": "",
+        "compileMs": 934,
+        "linkMs": 1228,
+        "runMs": 1547,
+        "totalMs": 3714,
+        "engineError": null
+      }
+    },
+    {
+      "probe": "S6_stack_overflow",
+      "opts": {
+        "timeoutMs": 60000
+      },
+      "stdoutMatch": true,
+      "exitMatch": true,
+      "stderrMatch": false,
+      "stderrFirstLineMatch": false,
+      "real": {
+        "stdout": "",
+        "stderr": "runtime: goroutine stack exceeds 1000000000-byte limit\nruntime: sp=0x3765a38e1390 stack=[0x3765a38e0000, 0x3765c38e0000]\nfatal error: stack overflow\n\nruntime stack:\nruntime.throw({0x7ff76ce5e3a2?, 0x200000001?})\n\tC:/Program Files/Go/src/runtime/panic.go:1243 +0x4d fp=0xc3c29ffa40 sp=0xc3c29ffa10 pc=0x7ff76ce523ed\nruntime.newstack()\n\tC:/Program Files/Go/src/runtime/stack.go:1207 +0x5ec fp=0xc3c29ffb70 sp=0xc3c29ffa40 pc=0x7ff76ce3854c\nruntime.morestack()\n\tC:/Program Files/Go/src/runtime/asm_amd64.s:650 +0x7a fp=0xc3c29ffb78 sp=0xc3c29ffb70 pc=0x7ff76ce55cda\n\ngoroutine 1 gp=0x376583812000 m=0 mp=0x7ff76cf060c0 [running]:\nmain.f(0x2aaa8eb?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x2b fp=0x3765a38e13a0 sp=0x3765a38e1398 pc=0x7ff76ce5c7cb\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e13b8 sp=0x3765a38e13a0 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e13d0 sp=0x3765a38e13b8 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e13e8 sp=0x3765a38e13d0 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1400 sp=0x3765a38e13e8 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1418 sp=0x3765a38e1400 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1430 sp=0x3765a38e1418 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1448 sp=0x3765a38e1430 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1460 sp=0x3765a38e1448 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1478 sp=0x3765a38e1460 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1490 sp=0x3765a38e1478 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e14a8 sp=0x3765a38e1490 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e14c0 sp=0x3765a38e14a8 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e14d8 sp=0x3765a38e14c0 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e14f0 sp=0x3765a38e14d8 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1508 sp=0x3765a38e14f0 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1520 sp=0x3765a38e1508 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1538 sp=0x3765a38e1520 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1550 sp=0x3765a38e1538 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1568 sp=0x3765a38e1550 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1580 sp=0x3765a38e1568 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e1598 sp=0x3765a38e1580 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e15b0 sp=0x3765a38e1598 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e15c8 sp=0x3765a38e15b0 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765a38e15e0 sp=0x3765a38e15c8 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\n...44738699 frames elided...\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x376583819c98?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfc88 sp=0x3765c38dfc70 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x376583819cc0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfca0 sp=0x3765c38dfc88 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x13?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfcb8 sp=0x3765c38dfca0 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x29f1cc9dbf0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfcd0 sp=0x3765c38dfcb8 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x29f1cc9dbf0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfce8 sp=0x3765c38dfcd0 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x29f1cc90108?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfd00 sp=0x3765c38dfce8 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x8382c000?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfd18 sp=0x3765c38dfd00 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x68?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfd30 sp=0x3765c38dfd18 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfd48 sp=0x3765c38dfd30 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x68?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfd60 sp=0x3765c38dfd48 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x7ff76cf4ac60?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfd78 sp=0x3765c38dfd60 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x7ff76ce0be7c?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfd90 sp=0x3765c38dfd78 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x376583819de0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfda8 sp=0x3765c38dfd90 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x7ff76cf060c0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfdc0 sp=0x3765c38dfda8 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x7ff76cf4ac60?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfdd8 sp=0x3765c38dfdc0 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x29f1cc90108?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfdf0 sp=0x3765c38dfdd8 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x101019f1cc9adb0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfe08 sp=0x3765c38dfdf0 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x70?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfe20 sp=0x3765c38dfe08 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x376583812000?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfe38 sp=0x3765c38dfe20 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x7ff76cdf002a?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfe50 sp=0x3765c38dfe38 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfe68 sp=0x3765c38dfe50 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x0?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfe80 sp=0x3765c38dfe68 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.f(0x7ff76cef3fe8?)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3 +0x17 fp=0x3765c38dfe98 sp=0x3765c38dfe80 pc=0x7ff76ce5c7b7\nmain.f(...)\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:3\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-n4Sx3r/main.go:6 +0x18 fp=0x3765c38dfeb8 sp=0x3765c38dfe98 pc=0x7ff76ce5c7f8\nruntime.main()\n\tC:/Program Files/Go/src/runtime/proc.go:302 +0x3fb fp=0x3765c38dffe0 sp=0x3765c38dfeb8 pc=0x7ff76ce23f1b\nruntime.goexit({})\n\tC:/Program Files/Go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x3765c38dffe8 sp=0x3765c38dffe0 pc=0x7ff76ce57721\n\ngoroutine 2 gp=0x376583812780 m=nil [force gc (idle)]:\nruntime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)\n\tC:/Program Files/Go/src/runtime/proc.go:474 +0xca fp=0x376583815fa8 sp=0x376583815f88 pc=0x7ff76ce524ca\nruntime.goparkunlock(...)\n\tC:/Program Files/Go/src/runtime/proc.go:480\nruntime.forcegchelper()\n\tC:/Program Files/Go/src/runtime/proc.go:387 +0xb8 fp=0x376583815fe0 sp=0x376583815fa8 pc=0x7ff76ce241b8\nruntime.goexit({})\n\tC:/Program Files/Go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x376583815fe8 sp=0x376583815fe0 pc=0x7ff76ce57721\ncreated by runtime.init.7 in goroutine 1\n\tC:/Program Files/Go/src/runtime/proc.go:375 +0x1a\n\ngoroutine 3 gp=0x376583812b40 m=nil [GC sweep wait]:\nruntime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)\n\tC:/Program Files/Go/src/runtime/proc.go:474 +0xca fp=0x376583817f88 sp=0x376583817f68 pc=0x7ff76ce524ca\nruntime.goparkunlock(...)\n\tC:/Program Files/Go/src/runtime/proc.go:480\nruntime.bgsweep(0x3765837bc080)\n\tC:/Program Files/Go/src/runtime/mgcsweep.go:279 +0x94 fp=0x376583817fc8 sp=0x376583817f88 pc=0x7ff76ce0ed94\nruntime.gcenable.gowrap1()\n\tC:/Program Files/Go/src/runtime/mgc.go:214 +0x17 fp=0x376583817fe0 sp=0x376583817fc8 pc=0x7ff76ce4c317\nruntime.goexit({})\n\tC:/Program Files/Go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x376583817fe8 sp=0x376583817fe0 pc=0x7ff76ce57721\ncreated by runtime.gcenable in goroutine 1\n\tC:/Program Files/Go/src/runtime/mgc.go:214 +0x66\n\ngoroutine 4 gp=0x376583812d20 m=nil [GC scavenge wait]:\nruntime.gopark(0x3765837bc080?, 0x7ff76ce648b0?, 0x1?, 0x0?, 0x376583812d20?)\n\tC:/Program Files/Go/src/runtime/proc.go:474 +0xca fp=0x376583827f78 sp=0x376583827f58 pc=0x7ff76ce524ca\nruntime.goparkunlock(...)\n\tC:/Program Files/Go/src/runtime/proc.go:480\nruntime.(*scavengerState).park(0x7ff76cf050c0)\n\tC:/Program Files/Go/src/runtime/mgcscavenge.go:425 +0x49 fp=0x376583827fa8 sp=0x376583827f78 pc=0x7ff76ce0c969\nruntime.bgscavenge(0x3765837bc080)\n\tC:/Program Files/Go/src/runtime/mgcscavenge.go:653 +0x3c fp=0x376583827fc8 sp=0x376583827fa8 pc=0x7ff76ce0cebc\nruntime.gcenable.gowrap2()\n\tC:/Program Files/Go/src/runtime/mgc.go:215 +0x17 fp=0x376583827fe0 sp=0x376583827fc8 pc=0x7ff76ce4c2d7\nruntime.goexit({})\n\tC:/Program Files/Go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x376583827fe8 sp=0x376583827fe0 pc=0x7ff76ce57721\ncreated by runtime.gcenable in goroutine 1\n\tC:/Program Files/Go/src/runtime/mgc.go:215 +0xa5\n\ngoroutine 5 gp=0x3765838130e0 m=nil [GOMAXPROCS updater (idle)]:\nruntime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)\n\tC:/Program Files/Go/src/runtime/proc.go:474 +0xca fp=0x376583829f88 sp=0x376583829f68 pc=0x7ff76ce524ca\nruntime.goparkunlock(...)\n\tC:/Program Files/Go/src/runtime/proc.go:480\nruntime.updateMaxProcsGoroutine()\n\tC:/Program Files/Go/src/runtime/proc.go:7146 +0xe7 fp=0x376583829fe0 sp=0x376583829f88 pc=0x7ff76ce30c87\nruntime.goexit({})\n\tC:/Program Files/Go/src/runtime/asm_amd64.s:1264 +0x1 fp=0x376583829fe8 sp=0x376583829fe0 pc=0x7ff76ce57721\ncreated by runtime.defaultGOMAXPROCSUpdateEnable in goroutine 1\n\tC:/Program Files/Go/src/runtime/proc.go:7134 +0x37\n",
+        "exitCode": 2,
+        "timedOut": false
+      },
+      "engine": {
+        "status": "exit",
+        "exitCode": 2,
+        "stdout": "",
+        "stderr": "[engine] program aborted by the JavaScript host: RangeError: Maximum call stack size exceeded. The browser's WebAssembly call stack ran out before Go's own 1 GB goroutine stack limit. Native Go would print \"fatal error: stack overflow\" (or succeed, if the recursion is finite).\n",
+        "compileOutput": "",
+        "compileMs": 123,
+        "linkMs": 322,
+        "runMs": 102,
+        "totalMs": 551,
+        "engineError": "RangeError: Maximum call stack size exceeded"
+      }
+    },
+    {
+      "probe": "S8_recursion_depth",
+      "survived": [
+        "1000:ok",
+        "10000:ok",
+        "50000:ok",
+        "100000:ok",
+        "1000000:crash"
+      ]
+    },
+    {
+      "probe": "S7_warm_hello_total_ms",
+      "times": [
+        567,
+        569,
+        545
+      ]
+    }
+  ]
+}

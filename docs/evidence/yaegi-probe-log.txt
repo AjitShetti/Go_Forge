@@ -1,0 +1,95 @@
+﻿engine compile (WebAssembly.compile): 61 ms
+ok ok ok  01_hello.go  (engine 175 ms)
+ok ok ok  02_goroutines_waitgroup_channel.go  (engine 34 ms)
+ok ok ok  03_select_timeout.go  (engine 64 ms)
+ok ok ok  04_mutex_once_atomic.go  (engine 49 ms)
+ok ok ok  05_context_timeout.go  (engine 71 ms)
+XX XX XX  06_generics_funcs.go  (engine 30 ms)
+   real  exit=0 stdout="6\n4\n9\n[10 20 30]\n" stderr=""
+   wasm  exit=1 stdout="" stderr="31:34: cannot use type func(int) string as type func(int) int\n"
+ok ok ok  07_generics_types.go  (engine 30 ms)
+ok XX XX  08_panic_index.go  (engine 21 ms)
+   real  exit=2 stdout="before\n" stderr="panic: runtime error: index out of range [5] with length 3\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-8c2aWc/main.go:9 +0x4a\n"
+   wasm  exit=1 stdout="before\n" stderr="6:8: panic: main.main(...)\nreflect: slice index out of range\n"
+ok XX XX  09_panic_nil_map.go  (engine 22 ms)
+   real  exit=2 stdout="0 0\n" stderr="panic: assignment to entry in nil map\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-UudGaC/main.go:8 +0xa7\n"
+   wasm  exit=1 stdout="0 0\n" stderr="6:6: panic: main.main(...)\nassignment to entry in nil map\n"
+ok XX XX  10_panic_nil_pointer.go  (engine 21 ms)
+   real  exit=2 stdout="" stderr="panic: runtime error: invalid memory address or nil pointer dereference\n[signal 0xc0000005 code=0x0 addr=0x0 pc=0x7ff6cc505216]\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-CjfPfO/main.go:9 +0x16\n"
+   wasm  exit=1 stdout="" stderr="8:8: panic: main.main(...)\nreflect: call of reflect.Value.Field on zero Value\n"
+ok XX XX  11_panic_custom.go  (engine 18 ms)
+   real  exit=2 stdout="start\n" stderr="panic: something went wrong\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-dMJb3C/main.go:7 +0x58\n"
+   wasm  exit=1 stdout="start\n" stderr="6:2: panic: main.main(...)\nsomething went wrong\n"
+ok ok XX  12_panic_in_goroutine.go  (engine 24 ms)
+   real  exit=2 stdout="" stderr="panic: goroutine blew up\n\ngoroutine 7 [running]:\nmain.main.func1()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-BTEaEL/main.go:10 +0x25\ncreated by main.main in goroutine 1\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-BTEaEL/main.go:9 +0x1a\n"
+   wasm  exit=2 stdout="" stderr="10:3: panic: main.main.func(...)\npanic: goroutine blew up [recovered, repanicked]\n\ngoroutine 10 [running]:\ngithub.com/traefik/yaegi/interp.runCfg.func1()\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/run.go:226 +0x19\npanic({0xec8110, 0x1570c90})\n\truntime/panic.go:859 +0x1c\ng"
+ok ok ok  13_deadlock.go  (engine 45 ms)
+XX XX XX  14_os_exit.go  (engine 21 ms)
+   real  exit=3 stdout="exiting\n" stderr=""
+   wasm  exit=1 stdout="exiting\ndeferred: not printed\n" stderr="9:8: panic: main.main(...)\nos.Exit(3)\n"
+XX XX XX  15_compile_unused_var.go  (engine 18 ms)
+   real  exit=1 stdout="" stderr="# prog\n.\\main.go:6:2: declared and not used: x\n"
+   wasm  exit=0 stdout="hi\n" stderr=""
+ok ok XX  16_compile_type_mismatch.go  (engine 17 ms)
+   real  exit=1 stdout="" stderr="# prog\n.\\main.go:8:14: invalid operation: a + b (mismatched types int and int64)\n"
+   wasm  exit=1 stdout="" stderr="8:14: invalid operation: mismatched types int and int64\n"
+ok ok ok  17_loopvar_122.go  (engine 19 ms)
+ok ok ok  18_range_int.go  (engine 23 ms)
+XX XX XX  19_range_func_iter.go  (engine 23 ms)
+   real  exit=0 stdout="0 1 2 3 \n" stderr=""
+   wasm  exit=2 stdout="" stderr="2026/09/15 01:36:26 nil type\npanic: nil type\n\ngoroutine 9 [running]:\nlog.Panic({0x1523308, 0x1, 0x1})\n\tlog/log.go:451 +0x5\ngithub.com/traefik/yaegi/interp.(*scope).add(0x1105290, 0x0)\n\tgithub.com/traefik/yaegi@v0.16.2-0.20260209085605-fcb76d1ece0c/interp/scope.go:215 +0x3\ngithub.com/traefik/yaegi/in"
+XX XX XX  20_min_max_clear.go  (engine 18 ms)
+   real  exit=0 stdout="1 2.5\n0\n" stderr=""
+   wasm  exit=1 stdout="" stderr="6:14: undefined: min\n"
+ok ok ok  21_strings_runes.go  (engine 20 ms)
+XX XX XX  22_slices_maps_pkgs.go  (engine 21 ms)
+   real  exit=0 stdout="[1 2 3] true 2\n[a b c]\n" stderr=""
+   wasm  exit=1 stdout="" stderr="12:2: undefined selector: slices.Sort\n"
+XX XX XX  23_errors_wrap.go  (engine 22 ms)
+   real  exit=0 stdout="find user: select: not found\ntrue\ntrue select\nfalse\na\nb\n" stderr=""
+   wasm  exit=1 stdout="find user: %!w(*struct { Query string; Err error }=&{select 0x1647a60})\nfalse\n" stderr="24:9: panic: main.main(...)\nerrors: *target must be interface or implement error\n"
+XX ok ok  24_defer_recover.go  (engine 19 ms)
+   real  exit=0 stdout="x = 2\ndeferred x = 1\n5 <nil>\n0 recovered: runtime error: integer divide by zero\n2 1 0 " stderr=""
+   wasm  exit=0 stdout="x = 2\ndeferred x = 2\n5 <nil>\n0 recovered: runtime error: integer divide by zero\n2 1 0 " stderr=""
+XX ok ok  25_nil_interface.go  (engine 18 ms)
+   real  exit=0 stdout="false\n*main.MyErr true\n" stderr=""
+   wasm  exit=0 stdout="true\n<nil> false\n" stderr=""
+ok ok ok  26_embedding_methodsets.go  (engine 21 ms)
+XX ok ok  27_json_tags.go  (engine 27 ms)
+   real  exit=0 stdout="{\"id\":1,\"name\":\"Ada\",\"tags\":null} <nil>\n{ID:7 Name:Bob Email: password: Tags:[a]} <nil>\n" stderr=""
+   wasm  exit=0 stdout="{\"id\":1,\"name\":\"Ada\",\"Xpassword\":\"x\",\"tags\":null} <nil>\n{ID:7 Name:Bob Email: Xpassword: Tags:[a]} <nil>\n" stderr=""
+ok ok ok  28_int_overflow_division.go  (engine 42 ms)
+ok XX XX  29_divide_by_zero.go  (engine 47 ms)
+   real  exit=2 stdout="" stderr="panic: runtime error: integer divide by zero\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-g9wyjn/main.go:7 +0x9\n"
+   wasm  exit=1 stdout="" stderr="6:2: panic: main.main(...)\nruntime error: integer divide by zero\n"
+ok XX XX  30_type_assertion_panic.go  (engine 37 ms)
+   real  exit=2 stdout="0 false\n" stderr="panic: interface conversion: interface {} is string, not int\n\ngoroutine 1 [running]:\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/goforge-LExi1R/main.go:9 +0x89\n"
+   wasm  exit=1 stdout="0 false\n" stderr="6:8: panic: main.main(...)\n9:14: interface conversion: interface {} is string, not int\n"
+XX ok ok  31_type_switch_iota.go  (engine 39 ms)
+   real  exit=0 stdout="int 1 string s stringer Tue other float64\nMon\n" stderr=""
+   wasm  exit=0 stdout="int 1 string s other stdlib._fmt_Stringer other float64\nMon\n" stderr=""
+ok ok ok  32_slice_aliasing.go  (engine 52 ms)
+ok ok ok  33_map_iteration_random.go  (engine 58 ms)
+XX ok ok  34_runtime_info.go  (engine 45 ms)
+   real  exit=0 stdout="windows amd64 16 16\n" stderr=""
+   wasm  exit=0 stdout="js wasm 1 1\n" stderr=""
+XX XX XX  35_unsafe_sizeof.go  (engine 49 ms)
+   real  exit=0 stdout="8 24 16 24\n" stderr=""
+   wasm  exit=1 stdout="" stderr="5:2: import \"unsafe\" error: unable to find source related to: \"unsafe\"\n"
+ok ok ok  36_buffered_close_send_panic.go  (engine 65 ms)
+ok ok ok  37_worker_pool_fanin.go  (engine 46 ms)
+ok ok ok  38_io_reader_writer.go  (engine 68 ms)
+ok ok ok  39_testing_pkg.go  (engine 68 ms)
+ok ok ok  40_http_handler_and_listen.go  (engine 78 ms)
+XX XX XX  41_compile_unused_import.go  (engine 40 ms)
+   real  exit=1 stdout="" stderr="# prog\n.\\main.go:5:2: \"os\" imported and not used\n"
+   wasm  exit=0 stdout="hi\n" stderr=""
+ok ok ok  42_numgoroutine.go  (engine 221 ms)
+XX XX XX  43_generic_constraint_methods.go  (engine 54 ms)
+   real  exit=0 stdout="C1C2\n9 b\n" stderr=""
+   wasm  exit=1 stdout="" stderr="26:12: undefined type for T\n"
+ok ok ok  44_select_block_forever.go  (engine 71 ms)
+ok XX XX  45_waitgroup_negative.go  (engine 56 ms)
+   real  exit=2 stdout="" stderr="panic: sync: negative WaitGroup counter\n\ngoroutine 1 [running]:\nsync.(*WaitGroup).Add(0x37091c08c000, 0xffffffffffffffff)\n\tC:/Program Files/Go/src/sync/waitgroup.go:118 +0x23a\nsync.(*WaitGroup).Done(...)\n\tC:/Program Files/Go/src/sync/waitgroup.go:156\nmain.main()\n\tC:/Users/ajitp/AppData/Local/Temp/go"
+   wasm  exit=1 stdout="" stderr="6:9: panic: main.main(...)\nsync: negative WaitGroup counter\n"
+ok ok ok  46_value_copy_struct_array.go  (engine 62 ms)
