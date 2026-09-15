@@ -1,0 +1,146 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[audit] started\napp: INFO ready\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[audit] started\napp: INFO ready\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "admin ana\nhello, ana\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "admin ana\nhello, ana\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "admin ana\nhello, admin ana\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "admin ana\nhello, admin ana\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "promotion-and-shadowing": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "pen SKU-7 7\n{Base:{ID:7 name:pen} ID:SKU-7}\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "pen SKU-7 7\n{Base:{ID:7 name:pen} ID:SKU-7}\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "ambiguous": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:20:16: ambiguous selector f.Close\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:20:16: ambiguous selector f.Close\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestCountingCache/is_a_Cache",
+      "TestCountingCache/Set_passes_through",
+      "TestCountingCache/Get_counts_hits_and_misses",
+      "TestCountingCache/GetOr_counts_too",
+      "TestCountingCache/counted_through_the_interface"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestCountingCache/is_a_Cache": "PASS",
+        "TestCountingCache/Set_passes_through": "PASS",
+        "TestCountingCache/Get_counts_hits_and_misses": "PASS",
+        "TestCountingCache/GetOr_counts_too": "PASS",
+        "TestCountingCache/counted_through_the_interface": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestCountingCache/is_a_Cache": "PASS",
+        "TestCountingCache/Set_passes_through": "PASS",
+        "TestCountingCache/Get_counts_hits_and_misses": "FAIL",
+        "TestCountingCache/GetOr_counts_too": "FAIL",
+        "TestCountingCache/counted_through_the_interface": "FAIL"
+      }
+    },
+    "wrong": {
+      "only-get.go": {
+        "passed": false,
+        "cases": {
+          "TestCountingCache/is_a_Cache": "PASS",
+          "TestCountingCache/Set_passes_through": "PASS",
+          "TestCountingCache/Get_counts_hits_and_misses": "PASS",
+          "TestCountingCache/GetOr_counts_too": "FAIL",
+          "TestCountingCache/counted_through_the_interface": "FAIL"
+        }
+      },
+      "value-receiver.go": {
+        "passed": false,
+        "cases": {
+          "TestCountingCache/is_a_Cache": "PASS",
+          "TestCountingCache/Set_passes_through": "PASS",
+          "TestCountingCache/Get_counts_hits_and_misses": "FAIL",
+          "TestCountingCache/GetOr_counts_too": "FAIL",
+          "TestCountingCache/counted_through_the_interface": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "admin ana\nhello, admin ana\n",
+    "lockedLines": [
+      25,
+      26,
+      27,
+      28,
+      29
+    ]
+  }
+}

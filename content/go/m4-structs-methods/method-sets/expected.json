@@ -1,0 +1,148 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:20:18: cannot use d (variable of struct type Dog) as Speaker value in variable declaration: Dog does not implement Speaker (method Speak has pointer receiver)\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:20:18: cannot use d (variable of struct type Dog) as Speaker value in variable declaration: Dog does not implement Speaker (method Speak has pointer receiver)\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "2 12\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "2 12\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "8 48\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "8 48\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "not-addressable": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:11:9: cannot call pointer method Scale on Rect\n./main.go:12:13: cannot call pointer method Scale on Rect\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:11:9: cannot call pointer method Scale on Rect\n./main.go:12:13: cannot call pointer method Scale on Rect\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "count-method-sets": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1 2\n2\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1 2\n2\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestMeter/empty_meter",
+      "TestMeter/observations_kept_through_the_interface",
+      "TestMeter/meters_are_independent",
+      "TestMeter/zero_Meter_as_a_struct_field",
+      "TestMeter/a_pointer_to_Meter_is_a_Metric"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestMeter/empty_meter": "PASS",
+        "TestMeter/observations_kept_through_the_interface": "PASS",
+        "TestMeter/meters_are_independent": "PASS",
+        "TestMeter/zero_Meter_as_a_struct_field": "PASS",
+        "TestMeter/a_pointer_to_Meter_is_a_Metric": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestMeter/empty_meter": "PASS",
+        "TestMeter/observations_kept_through_the_interface": "FAIL",
+        "TestMeter/meters_are_independent": "PASS",
+        "TestMeter/zero_Meter_as_a_struct_field": "FAIL",
+        "TestMeter/a_pointer_to_Meter_is_a_Metric": "FAIL"
+      }
+    },
+    "wrong": {
+      "shared-meter.go": {
+        "passed": false,
+        "cases": {
+          "TestMeter/empty_meter": "PASS",
+          "TestMeter/observations_kept_through_the_interface": "PASS",
+          "TestMeter/meters_are_independent": "FAIL",
+          "TestMeter/zero_Meter_as_a_struct_field": "PASS",
+          "TestMeter/a_pointer_to_Meter_is_a_Metric": "PASS"
+        }
+      },
+      "value-receivers-behind-pointer.go": {
+        "passed": false,
+        "cases": {
+          "TestMeter/empty_meter": "PASS",
+          "TestMeter/observations_kept_through_the_interface": "FAIL",
+          "TestMeter/meters_are_independent": "PASS",
+          "TestMeter/zero_Meter_as_a_struct_field": "FAIL",
+          "TestMeter/a_pointer_to_Meter_is_a_Metric": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "8 48\n",
+    "lockedLines": [
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ]
+  }
+}

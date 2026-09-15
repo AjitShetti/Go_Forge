@@ -1,0 +1,4 @@
+[
+  "NewMeter returns a Meter value inside the interface, and Observe has a value receiver. Each Observe call gets its own copy of the Meter, adds to the copy, and throws it away. Nothing you observe is kept.",
+  "Give Observe a pointer receiver (func (m *Meter) Observe) and return &Meter{} from NewMeter. Only *Meter has Observe in its method set, so the interface must hold the pointer. Each call to NewMeter must return a new Meter."
+]

@@ -1,0 +1,4 @@
+[
+  "The starter compiles because every Cache method is promoted from the embedded field, so nothing counts anything yet. Declaring Get on CountingCache shadows the embedded Get. But the promoted GetOr still runs on the inner cache, and inside it the receiver is the inner cache, so it calls the inner Get and never reaches yours.",
+  "Declare both Get and GetOr on *CountingCache. Pointer receivers are required, or Hits and Misses change on a copy. Get calls c.Cache.Get and counts. GetOr calls c.Get, your counting one, and returns def on a miss."
+]
