@@ -1,0 +1,4 @@
+[
+  "go/format.Source is gofmt as a function: it returns the canonical bytes, or an error if the file doesn't parse. Formatted means those bytes equal the input exactly, so don't trim anything, because the final newline is part of the format. A parse error is its own kind of report. And ranging over a map gives a random order.",
+  "For each name and src: out, err := format.Source([]byte(src)). If err != nil, append name + \" (syntax error)\". Otherwise, if !bytes.Equal(out, []byte(src)), append name. Finish with slices.Sort(bad) and return bad (nil when nothing was reported)."
+]

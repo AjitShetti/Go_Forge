@@ -1,0 +1,153 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "return a*b + c*(a-b) <nil>\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "return a*b + c*(a-b) <nil>\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "gofmt refused: 5:10: expected '}', found 'EOF'\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "gofmt refused: 5:10: expected '}', found 'EOF'\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "package shop\n\nfunc Total(prices []int) int {\n\tt := 0\n\tfor _, p := range prices {\n\t\tt += p\n\t}\n\treturn t\n}\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "package shop\n\nfunc Total(prices []int) int {\n\tt := 0\n\tfor _, p := range prices {\n\t\tt += p\n\t}\n\treturn t\n}\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "gofmt-cases": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "\"package p\\n\\nvar x = 1\\n\" <nil>\n\"package p\\n\\nvar x = 1\\n\" <nil>\n\"\" 2:11: expected '}', found 'EOF'\n\"package p\\n\\nimport \\\"os\\\"\\n\\nvar unused = 1\\n\" <nil>\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "\"package p\\n\\nvar x = 1\\n\" <nil>\n\"package p\\n\\nvar x = 1\\n\" <nil>\n\"\" 2:11: expected '}', found 'EOF'\n\"package p\\n\\nimport \\\"os\\\"\\n\\nvar unused = 1\\n\" <nil>\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestUnformatted/nothing_to_check",
+      "TestUnformatted/already_formatted",
+      "TestUnformatted/spacing",
+      "TestUnformatted/indented_with_spaces",
+      "TestUnformatted/missing_final_newline",
+      "TestUnformatted/extra_blank_lines_at_the_end",
+      "TestUnformatted/does_not_parse",
+      "TestUnformatted/unused_import_is_still_formatted",
+      "TestUnformatted/sorted_report"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestUnformatted/nothing_to_check": "PASS",
+        "TestUnformatted/already_formatted": "PASS",
+        "TestUnformatted/spacing": "PASS",
+        "TestUnformatted/indented_with_spaces": "PASS",
+        "TestUnformatted/missing_final_newline": "PASS",
+        "TestUnformatted/extra_blank_lines_at_the_end": "PASS",
+        "TestUnformatted/does_not_parse": "PASS",
+        "TestUnformatted/unused_import_is_still_formatted": "PASS",
+        "TestUnformatted/sorted_report": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestUnformatted/nothing_to_check": "PASS",
+        "TestUnformatted/already_formatted": "PASS",
+        "TestUnformatted/spacing": "FAIL",
+        "TestUnformatted/indented_with_spaces": "FAIL",
+        "TestUnformatted/missing_final_newline": "FAIL",
+        "TestUnformatted/extra_blank_lines_at_the_end": "FAIL",
+        "TestUnformatted/does_not_parse": "FAIL",
+        "TestUnformatted/unused_import_is_still_formatted": "PASS",
+        "TestUnformatted/sorted_report": "FAIL"
+      }
+    },
+    "wrong": {
+      "skips-syntax-errors.go": {
+        "passed": false,
+        "cases": {
+          "TestUnformatted/nothing_to_check": "PASS",
+          "TestUnformatted/already_formatted": "PASS",
+          "TestUnformatted/spacing": "PASS",
+          "TestUnformatted/indented_with_spaces": "PASS",
+          "TestUnformatted/missing_final_newline": "PASS",
+          "TestUnformatted/extra_blank_lines_at_the_end": "PASS",
+          "TestUnformatted/does_not_parse": "FAIL",
+          "TestUnformatted/unused_import_is_still_formatted": "PASS",
+          "TestUnformatted/sorted_report": "FAIL"
+        }
+      },
+      "trims-whitespace.go": {
+        "passed": false,
+        "cases": {
+          "TestUnformatted/nothing_to_check": "PASS",
+          "TestUnformatted/already_formatted": "PASS",
+          "TestUnformatted/spacing": "PASS",
+          "TestUnformatted/indented_with_spaces": "PASS",
+          "TestUnformatted/missing_final_newline": "FAIL",
+          "TestUnformatted/extra_blank_lines_at_the_end": "FAIL",
+          "TestUnformatted/does_not_parse": "PASS",
+          "TestUnformatted/unused_import_is_still_formatted": "PASS",
+          "TestUnformatted/sorted_report": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "package shop\n\nfunc Total(prices []int) int {\n\tt := 0\n\tfor _, p := range prices {\n\t\tt += p\n\t}\n\treturn t\n}\n",
+    "lockedLines": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  }
+}
