@@ -1,0 +1,142 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "200 no such item\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "200 no such item\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "200 \"item 7\\n\"\n400 \"bad id\\nitem 0\\n\"\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "200 \"item 7\\n\"\n400 \"bad id\\nitem 0\\n\"\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "200 \"item 7\\n\"\n400 \"bad id\\n\"\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "200 \"item 7\\n\"\n400 \"bad id\\n\"\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "mux-patterns": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "GET /items/7 -> 200 \"item 7\" Allow=\"\"\nGET /items/7/reviews -> 200 \"items subtree\" Allow=\"\"\nPOST /items/7 -> 405 \"Method Not Allowed\\n\" Allow=\"GET, HEAD\"\nPOST /items/7 -> 200 \"catch-all\" Allow=\"\"\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "GET /items/7 -> 200 \"item 7\" Allow=\"\"\nGET /items/7/reviews -> 200 \"items subtree\" Allow=\"\"\nPOST /items/7 -> 405 \"Method Not Allowed\\n\" Allow=\"GET, HEAD\"\nPOST /items/7 -> 200 \"catch-all\" Allow=\"\"\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestServer/missing_key_is_404",
+      "TestServer/put_then_get",
+      "TestServer/delete",
+      "TestServer/servers_don't_share_data",
+      "TestServer/wrong_method_is_405_with_Allow",
+      "TestServer/request_ID_echoed_on_success",
+      "TestServer/request_ID_on_errors,_default_none"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestServer/missing_key_is_404": "PASS",
+        "TestServer/put_then_get": "PASS",
+        "TestServer/delete": "PASS",
+        "TestServer/servers_don't_share_data": "PASS",
+        "TestServer/wrong_method_is_405_with_Allow": "PASS",
+        "TestServer/request_ID_echoed_on_success": "PASS",
+        "TestServer/request_ID_on_errors,_default_none": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestServer/missing_key_is_404": "FAIL",
+        "TestServer/put_then_get": "FAIL",
+        "TestServer/delete": "FAIL",
+        "TestServer/servers_don't_share_data": "PASS",
+        "TestServer/wrong_method_is_405_with_Allow": "FAIL",
+        "TestServer/request_ID_echoed_on_success": "FAIL",
+        "TestServer/request_ID_on_errors,_default_none": "FAIL"
+      }
+    },
+    "wrong": {
+      "header-after-next.go": {
+        "passed": false,
+        "cases": {
+          "TestServer/missing_key_is_404": "PASS",
+          "TestServer/put_then_get": "PASS",
+          "TestServer/delete": "PASS",
+          "TestServer/servers_don't_share_data": "PASS",
+          "TestServer/wrong_method_is_405_with_Allow": "PASS",
+          "TestServer/request_ID_echoed_on_success": "FAIL",
+          "TestServer/request_ID_on_errors,_default_none": "FAIL"
+        }
+      },
+      "manual-method-switch.go": {
+        "passed": false,
+        "cases": {
+          "TestServer/missing_key_is_404": "PASS",
+          "TestServer/put_then_get": "PASS",
+          "TestServer/delete": "PASS",
+          "TestServer/servers_don't_share_data": "PASS",
+          "TestServer/wrong_method_is_405_with_Allow": "FAIL",
+          "TestServer/request_ID_echoed_on_success": "PASS",
+          "TestServer/request_ID_on_errors,_default_none": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "200 \"item 7\\n\"\n400 \"bad id\\n\"\n",
+    "lockedLines": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  }
+}

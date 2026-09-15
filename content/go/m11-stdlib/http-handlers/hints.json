@@ -1,0 +1,4 @@
+[
+  "Since Go 1.22, a ServeMux pattern can include a method and a wildcard, like \"GET /keys/{key}\", and r.PathValue(\"key\") reads the wildcard. When a path matches but the method has no pattern, the mux itself replies 405 and sets Allow. For the header, remember the order of a response: headers, then status, then body. A header set after the handler has written anything never goes out.",
+  "Register \"GET /keys/{key}\", \"PUT /keys/{key}\" and \"DELETE /keys/{key}\" on one mux, with the map and a sync.Mutex created inside NewServer. Use http.Error(w, \"not found\", 404) and return; w.WriteHeader(204) for PUT and DELETE. Wrap the mux: http.HandlerFunc(func(w, r) { w.Header().Set(\"X-Request-ID\", id or \"none\"); mux.ServeHTTP(w, r) }), setting the header BEFORE the call."
+]
