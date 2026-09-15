@@ -1,4 +1,5 @@
 // Shapes shared by the rule engine, the scenarios and the report UI.
+import type { NodeKind } from "@/lib/canvas/catalog";
 import type { DesignGraph } from "@/lib/canvas/graph";
 
 export type Severity = "violation" | "warning" | "tradeoff";
@@ -17,7 +18,16 @@ export type RuleId =
   | "cross-region-sync"
   | "replica-reads"
   | "queue-backlog"
-  | "unreachable";
+  | "unreachable"
+  // P7 scenario rules
+  | "async-fanout"
+  | "rate-limit-entry"
+  | "limiter-shared-state"
+  | "blob-through-app"
+  | "cdn-for-blobs"
+  | "storage-capacity"
+  | "presence-store"
+  | "durable-store";
 
 /** One enabled rule in a scenario. `severity` overrides the rule's default. */
 export type RuleConfig = { rule: RuleId; severity?: Severity };
@@ -42,8 +52,16 @@ export type Scenario = {
     readHeavyRatio: number;
     /** latency-budget: allowed p99 sum along the slowest synchronous path. */
     p99BudgetMs: number;
+    /** limiter-shared-state: the per-key limit each limiter replica would enforce on its own. */
+    perKeyLimitRps?: number;
+    /** blob-through-app: average object size, to turn upload rps into bandwidth. */
+    avgObjectMb?: number;
+    /** storage-capacity: persistent storage the scenario needs, and which node kinds count toward it. */
+    storage?: { kinds: NodeKind[]; requiredGb: number; what: string };
   };
   rules: RuleConfig[];
+  /** One sentence per rule on why it matters in this scenario, appended to that rule's findings. */
+  why?: Partial<Record<RuleId, string>>;
 };
 
 export type Finding = {

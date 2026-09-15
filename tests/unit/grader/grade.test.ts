@@ -197,14 +197,17 @@ describe("edge cases", () => {
   });
 
   it("the scenarios migration seeds exactly the TypeScript scenarios", () => {
-    const sql = readFileSync(resolve(import.meta.dirname, "..", "..", "..", "supabase", "migrations", "20260915000500_scenarios.sql"), "utf8");
+    const sql = readFileSync(resolve(import.meta.dirname, "..", "..", "..", "supabase", "migrations", "20260915000600_scenarios_p7.sql"), "utf8");
+    const lit = "'((?:[^']|'')*)'";
+    const un = (v: string) => v.replaceAll("''", "'");
     for (const s of SCENARIOS) {
-      const m = sql.match(new RegExp(`'${s.slug}',\\s*'([^']*)',\\s*'([^']*)'::jsonb,\\s*'([^']*)'::jsonb,\\s*'([^']*)'::jsonb`));
+      const m = sql.match(new RegExp(`'${s.slug}',\\s*${lit},\\s*${lit}::jsonb,\\s*${lit}::jsonb,\\s*${lit}::jsonb`));
       expect(m, s.slug).not.toBeNull();
-      expect(m![1]).toBe(s.title);
-      expect(JSON.parse(m![2])).toEqual({ summary: s.summary, functional: s.functional, scale: s.scale, params: s.params });
-      expect(JSON.parse(m![3])).toEqual(s.constraints);
-      expect(JSON.parse(m![4])).toEqual(s.rules);
+      expect(un(m![1])).toBe(s.title);
+      expect(JSON.parse(un(m![2]))).toEqual({ summary: s.summary, functional: s.functional, scale: s.scale, params: s.params });
+      expect(JSON.parse(un(m![3]))).toEqual(s.constraints);
+      expect(JSON.parse(un(m![4]))).toEqual(s.rules);
     }
+    expect(sql.match(/^\s+\('/gm)?.length).toBe(SCENARIOS.length);
   });
 });

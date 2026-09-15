@@ -2,13 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DesignEditor } from "@/components/canvas/editor";
 import { Caption } from "@/components/ui";
-import type { DesignGraph } from "@/lib/canvas/graph";
 import { designAccess } from "@/lib/canvas/designs.server";
-import { TICKETING_GOOD, TICKETING_NAIVE } from "@/lib/grader/examples";
+import { STARTS } from "@/lib/grader/examples";
 import { scenarioBySlug } from "@/lib/grader/scenarios";
-
-/** Starting designs a scenario page can link to: /canvas/new?scenario=<slug>&start=<name>. */
-const STARTS: Record<string, Record<string, DesignGraph>> = { "ticketing-flash-sale": { naive: TICKETING_NAIVE, reference: TICKETING_GOOD } };
 
 export const metadata: Metadata = { title: "New design" };
 export const dynamic = "force-dynamic";
@@ -17,7 +13,7 @@ export default async function NewDesignPage({ searchParams }: { searchParams: Pr
   const sp = await searchParams;
   const access = await designAccess();
   const scenario = typeof sp.scenario === "string" ? scenarioBySlug(sp.scenario) : null;
-  const startGraph = scenario && typeof sp.start === "string" ? (STARTS[scenario.slug]?.[sp.start] ?? null) : null;
+  const startGraph = scenario && typeof sp.start === "string" ? (sp.start === "naive" || sp.start === "reference" ? (STARTS[scenario.slug]?.[sp.start] ?? null) : null) : null;
   return (
     <main className="mx-auto w-full max-w-[1500px] px-4 pb-24 sm:px-8">
       <div className="flex flex-wrap items-center gap-4 pt-6 pb-4">

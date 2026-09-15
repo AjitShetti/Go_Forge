@@ -19,7 +19,8 @@
     "verify:p5": "node scripts/verify-p5.mjs",
     "verify:p6": "node scripts/verify-p6.mjs",
     "scenarios:sql": "node scripts/gen-scenarios-sql.mjs",
-    "verify:p7": "node scripts/verify-p7.mjs"
+    "verify:p7": "node scripts/verify-p7.mjs",
+    "verify:scenarios": "node scripts/verify-scenarios.mjs"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",

@@ -26,7 +26,6 @@ export default function ScenariosPage() {
           </li>
         ))}
       </ul>
-      <p className="mt-6 font-mono text-[0.72rem] text-ink-3">More scenarios (URL shortener, news feed, rate-limited API, file storage, chat) are scheduled for P7.</p>
     </Page>
   );
 }

@@ -11,6 +11,8 @@
 //     split evenly over their outgoing connections. Their qpsOut is ignored.
 //   - Rate limiters and CDNs send min(qpsOut, load in) down each connection.
 //   - Every other node sends its qpsOut down EACH outgoing connection.
+//   - Connections into a queue labelled "dead letter"/"DLQ" carry no load:
+//     failed messages are assumed rare.
 //   - Capacity = replicas × qpsIn (replicas = 1 when the kind has none).
 import { NODE_SPECS, type NodeKind } from "@/lib/canvas/catalog";
 import type { DesignEdge, DesignGraph, DesignNode } from "@/lib/canvas/graph";
@@ -33,6 +35,14 @@ const DEFAULT_SEVERITY: Record<RuleId, Severity> = {
   "replica-reads": "tradeoff",
   "queue-backlog": "tradeoff",
   unreachable: "warning",
+  "async-fanout": "violation",
+  "rate-limit-entry": "violation",
+  "limiter-shared-state": "violation",
+  "blob-through-app": "warning",
+  "cdn-for-blobs": "violation",
+  "storage-capacity": "violation",
+  "presence-store": "violation",
+  "durable-store": "violation",
 };
 
 const REQUEST = new Set(["sync", "async", "cache_read"]);
@@ -70,7 +80,8 @@ export function grade(graph: DesignGraph, scenario: Scenario): GradeReport {
 
   for (const { rule, severity } of scenario.rules) {
     const sev = severity ?? DEFAULT_SEVERITY[rule];
-    for (const d of RULES[rule](c)) findings.push({ rule, severity: sev, ...d });
+    const why = scenario.why?.[rule];
+    for (const d of RULES[rule](c)) findings.push({ rule, severity: sev, ...d, ...(why ? { detail: `${d.detail} ${why}` } : {}) });
     if (rule === "has-entry" && findings.some((f) => f.rule === "has-entry" && f.severity === "violation")) break;
   }
 
@@ -82,6 +93,8 @@ export function grade(graph: DesignGraph, scenario: Scenario): GradeReport {
   if (others.length) assumptions.push(`${list(others.map((n) => n.config.label))}: QPS out is sent down each outgoing request connection${others.some((n) => CAPPED.has(n.kind)) ? " (rate limiters and CDNs never send more than they receive)" : ""}.`);
   const managed = graph.nodes.filter((n) => c.onPath.has(n.id) && n.config.replicas === undefined && !ENTRY.has(n.kind));
   if (managed.length) assumptions.push(`${list(managed.map((n) => n.config.label))} ha${managed.length === 1 ? "s" : "ve"} no replica setting and ${managed.length === 1 ? "is" : "are"} treated as a managed multi-zone service: not a single point of failure.`);
+  const dlqIn = graph.edges.filter((e) => REQUEST.has(e.kind) && c.onPath.has(e.source) && isDlq(c.byId.get(e.target)));
+  if (dlqIn.length) assumptions.push(`Connections into ${list([...new Set(dlqIn.map((e) => c.label(e.target)))])} carry no load: failed messages are assumed rare.`);
   if (c.cycle.length) assumptions.push(`Load is not propagated around the cycle through ${list(c.cycle.map(c.label))}; those nodes only count load from outside the cycle.`);
 
   const violations = findings.filter((f) => f.severity === "violation");
@@ -147,6 +160,7 @@ function context(g: DesignGraph, s: Scenario): Ctx {
       else if (PASS_THROUGH.has(n.kind)) v = inLoad / outs.length;
       else if (CAPPED.has(n.kind)) v = Math.min(n.config.qpsOut ?? 0, inLoad);
       else v = n.config.qpsOut ?? 0;
+      if (isDlq(byId.get(e.target))) v = 0;
       edgeLoad.set(e.id, v);
       load.set(e.target, load.get(e.target)! + v);
     }
@@ -185,6 +199,9 @@ function reach(start: string[], out: Map<string, DesignEdge[]>, follow: (e: Desi
 
 const list = (xs: string[]) => (xs.length <= 1 ? (xs[0] ?? "") : `${xs.slice(0, -1).join(", ")} and ${xs[xs.length - 1]}`);
 const replicas = (n: DesignNode) => n.config.replicas ?? 1;
+const isDlq = (n: DesignNode | undefined) => n?.kind === "queue" && DLQ_LABEL.test(n.config.label);
+const STORES = new Set<NodeKind>(["sql_db", "nosql", "cache", "search_index", "object_store"]);
+const PRESENCE_LABEL = /presence/i;
 const isStrongStore = (n: DesignNode) => (n.kind === "sql_db" && n.config.role !== "replica") || (n.kind === "nosql" && n.config.consistency === "strong");
 
 // ----------------------------------------------------------------- rules ---
@@ -282,10 +299,8 @@ const RULES: Record<RuleId, Rule> = {
     if (stores.some((n) => isStrongStore(n) && n.config.persistence !== false)) return [];
     return [
       {
-        title: "No strongly consistent store for inventory",
-        detail: stores.length
-          ? `None of the stores on the request path is both strongly consistent and persistent, so two buyers can both see and take the last seat.`
-          : "No SQL DB (primary) or NoSQL store is on the request path, so seat inventory has nowhere safe to live.",
+        title: "No strongly consistent store",
+        detail: stores.length ? "None of the stores on the request path is both strongly consistent and persistent." : "No SQL DB (primary) or NoSQL store is on the request path.",
         math: stores.length ? stores.map((n) => `${n.config.label}: consistency = ${n.kind === "sql_db" ? "strong (SQL primary)" : n.config.consistency}, persistent = ${n.config.persistence}`) : ["SQL primaries + NoSQL stores on the request path = 0"],
         nodeIds: stores.map((n) => n.id),
         edgeIds: [],
@@ -370,9 +385,9 @@ const RULES: Record<RuleId, Rule> = {
         const outPer = n.config.qpsOut ?? 0;
         if (inLoad <= outPer + EPS) return [];
         if (n.kind === "rate_limiter")
-          return [{ title: "Rate limiter rejects traffic", detail: `${n.config.label} admits ${fmt(outPer)} of ${fmt(inLoad)} rps per connection; ${fmt(inLoad - outPer)} rps (${fmt((100 * (inLoad - outPer)) / inLoad)}%) get rejected. Say what those buyers see.`, math: [`${fmt(inLoad)} − ${fmt(outPer)} = ${fmt(inLoad - outPer)} rps rejected`], nodeIds: [n.id], edgeIds: [] }];
+          return [{ title: "Rate limiter rejects traffic", detail: `${n.config.label} admits ${fmt(outPer)} of ${fmt(inLoad)} rps per connection; ${fmt(inLoad - outPer)} rps (${fmt((100 * (inLoad - outPer)) / inLoad)}%) get rejected. Say what rejected callers see.`, math: [`${fmt(inLoad)} − ${fmt(outPer)} = ${fmt(inLoad - outPer)} rps rejected`], nodeIds: [n.id], edgeIds: [] }];
         if (n.kind === "cdn")
-          return [{ title: "CDN hit rate assumed", detail: `${n.config.label} sends ${fmt(outPer)} of ${fmt(inLoad)} rps to origin, which assumes ${fmt((100 * (inLoad - outPer)) / inLoad)}% of requests are cache hits. Seat availability changes every second; say which responses are cacheable.`, math: [`hit rate = (${fmt(inLoad)} − ${fmt(outPer)}) / ${fmt(inLoad)} = ${fmt((100 * (inLoad - outPer)) / inLoad)}%`], nodeIds: [n.id], edgeIds: [] }];
+          return [{ title: "CDN hit rate assumed", detail: `${n.config.label} sends ${fmt(outPer)} of ${fmt(inLoad)} rps to origin, which assumes ${fmt((100 * (inLoad - outPer)) / inLoad)}% of requests are cache hits. Say which responses are cacheable.`, math: [`hit rate = (${fmt(inLoad)} − ${fmt(outPer)}) / ${fmt(inLoad)} = ${fmt((100 * (inLoad - outPer)) / inLoad)}%`], nodeIds: [n.id], edgeIds: [] }];
         const cached = c.out.get(n.id)!.some((e) => e.kind === "cache_read");
         return [
           {
@@ -402,7 +417,7 @@ const RULES: Record<RuleId, Rule> = {
       .filter((n) => c.onPath.has(n.id) && n.kind === "sql_db" && n.config.role === "replica" && c.inc.get(n.id)!.some((e) => WAITS.has(e.kind)))
       .map((n) => ({
         title: "Reads from a replica are stale",
-        detail: `${n.config.label} is a read replica serving ${fmt(c.load.get(n.id)!)} rps. It lags the primary, so a seat can show as free after it sold. The final check before a sale has to read the primary.`,
+        detail: `${n.config.label} is a read replica serving ${fmt(c.load.get(n.id)!)} rps. It lags the primary, so callers can read data that has already changed.`,
         nodeIds: [n.id],
         edgeIds: c.inc.get(n.id)!.filter((e) => WAITS.has(e.kind)).map((e) => e.id),
       })),
@@ -415,7 +430,7 @@ const RULES: Record<RuleId, Rule> = {
         const drain = n.config.qpsOut ?? 0;
         if (inLoad <= drain + EPS) return [];
         const grow = inLoad - drain;
-        return [{ title: "Queue backlog grows during the spike", detail: `${n.config.label} takes in ${fmt(inLoad)} rps and drains ${fmt(drain)} rps, so the line grows by ${fmt(grow)} messages a second. That is the point of the queue; say how long buyers wait and when you stop accepting.`, math: [`${fmt(inLoad)} − ${fmt(drain)} = ${fmt(grow)} msg/s`, `after 60 s: ${fmt(grow * 60)} messages waiting`], nodeIds: [n.id], edgeIds: [] }];
+        return [{ title: "Queue backlog grows during the spike", detail: `${n.config.label} takes in ${fmt(inLoad)} rps and drains ${fmt(drain)} rps, so the line grows by ${fmt(grow)} messages a second. Say how long the backlog takes to clear and when you stop accepting.`, math: [`${fmt(inLoad)} − ${fmt(drain)} = ${fmt(grow)} msg/s`, `after 60 s: ${fmt(grow * 60)} messages waiting`], nodeIds: [n.id], edgeIds: [] }];
       }),
 
   unreachable: (c) => {
@@ -424,4 +439,227 @@ const RULES: Record<RuleId, Rule> = {
     if (lost.length === 0) return [];
     return [{ title: "Components not connected to any request path", detail: `${list(lost.map((n) => n.config.label))} ${lost.length === 1 ? "is" : "are"} not reachable from a Client or Cron, so the grader ignores ${lost.length === 1 ? "it" : "them"}.`, math: [`unreachable components = ${lost.length}`], nodeIds: lost.map((n) => n.id), edgeIds: [] }];
   },
+
+  // ---------------------------------------------------- P7 scenario rules ---
+
+  "async-fanout": (c) => {
+    const found: Draft[] = [];
+    const handoffs = c.g.edges.filter((e) => e.kind === "async" && c.onPath.has(e.source) && FANOUT.has(c.byId.get(e.target)!.kind) && !isDlq(c.byId.get(e.target)));
+    if (handoffs.length === 0)
+      found.push({
+        title: "Fan-out has no asynchronous hand-off",
+        detail: "No Pub/Sub topic or Message Queue on the request path receives an async connection, so delivery to every recipient happens while the sender waits, and one sender with a large audience holds the request open for all of them.",
+        math: ["Pub/Sub topics + Message Queues fed by an async connection = 0"],
+        nodeIds: [],
+        edgeIds: [],
+      });
+    for (const w of c.g.nodes.filter((n) => n.kind === "worker")) {
+      const p = pathFrom(c, clientIds(c), (id) => id === w.id, (e) => WAITS.has(e.kind));
+      if (!p) continue;
+      found.push({
+        title: "The sender waits on fan-out work",
+        detail: `${p.nodes.map(c.label).join(" → ")} reaches ${w.config.label} over connections the caller waits on, so the sender's response time includes delivery.`,
+        math: [`path: ${p.nodes.map(c.label).join(" → ")}`, "async connections on this path = 0"],
+        nodeIds: p.nodes,
+        edgeIds: p.edges,
+      });
+    }
+    return found;
+  },
+
+  "rate-limit-entry": (c) => {
+    const found: Draft[] = [];
+    const protectedKind = (k: NodeKind) => k === "app_service" || k === "worker" || STORES.has(k);
+    // BFS that never enters a rate limiter and stops at the first protected node on each path.
+    const parent = new Map<string, DesignEdge | null>(clientIds(c).map((id) => [id, null]));
+    const q = clientIds(c);
+    const hits: string[] = [];
+    while (q.length) {
+      const id = q.shift()!;
+      for (const e of c.out.get(id)!) {
+        if (!REQUEST.has(e.kind) || parent.has(e.target)) continue;
+        const k = c.byId.get(e.target)!.kind;
+        if (k === "rate_limiter") continue;
+        parent.set(e.target, e);
+        if (protectedKind(k)) hits.push(e.target);
+        else q.push(e.target);
+      }
+    }
+    for (const t of hits) {
+      const p = unwind(parent, t);
+      found.push({
+        title: "Traffic reaches the backend without a rate limiter",
+        detail: `${p.nodes.map(c.label).join(" → ")} reaches ${c.label(t)} without passing a Rate Limiter, so traffic above any limit arrives unchecked: up to the full ${fmt(c.s.scale.peakQps)} rps peak.`,
+        math: [`path: ${p.nodes.map(c.label).join(" → ")}`, "Rate Limiter nodes on this path = 0"],
+        nodeIds: p.nodes,
+        edgeIds: p.edges,
+      });
+    }
+    return found;
+  },
+
+  "limiter-shared-state": (c) =>
+    c.g.nodes
+      .filter((n) => n.kind === "rate_limiter" && c.onPath.has(n.id) && replicas(n) >= 2)
+      .filter((n) => !c.out.get(n.id)!.some((e) => REQUEST.has(e.kind) && SHARED_COUNTERS.has(c.byId.get(e.target)!.kind)))
+      .map((n) => {
+        const r = replicas(n);
+        const limit = c.s.params.perKeyLimitRps;
+        return {
+          title: "Rate limiter replicas count separately",
+          detail: `${n.config.label} has ${r} replicas and no connection to a Cache or NoSQL store for shared counters, so each replica counts a key's requests on its own and the real limit is ${r}× the configured one.`,
+          math: limit ? [`${r} replicas × ${fmt(limit)} rps per key = ${fmt(r * limit)} rps per key actually allowed`, `Cache or NoSQL connections from ${n.config.label} = 0`] : [`Cache or NoSQL connections from ${n.config.label} = 0`],
+          nodeIds: [n.id],
+          edgeIds: [],
+        };
+      }),
+
+  "blob-through-app": (c) => {
+    // BFS over waited-on connections with a flag: has the path passed a service that would hold the bytes?
+    const key = (id: string, t: boolean) => `${id}|${t ? 1 : 0}`;
+    const parent = new Map<string, { e: DesignEdge; from: string } | null>(clientIds(c).map((id) => [key(id, false), null]));
+    const q = clientIds(c).map((id) => ({ id, t: false }));
+    const hits = new Map<string, string>();
+    while (q.length) {
+      const { id, t } = q.shift()!;
+      for (const e of c.out.get(id)!) {
+        if (!WAITS.has(e.kind)) continue;
+        const target = c.byId.get(e.target)!;
+        const nt = t || BYTE_HOLDERS.has(target.kind);
+        const k = key(e.target, nt);
+        if (parent.has(k)) continue;
+        parent.set(k, { e, from: key(id, t) });
+        if (target.kind === "object_store") {
+          if (nt && !hits.has(target.id)) hits.set(target.id, k);
+        } else q.push({ id: e.target, t: nt });
+      }
+    }
+    const { peakQps, readWriteRatio } = c.s.scale;
+    const uploads = peakQps / (readWriteRatio + 1);
+    const mb = c.s.params.avgObjectMb;
+    return [...hits].map(([storeId, k]) => {
+      const edges: DesignEdge[] = [];
+      for (let p = parent.get(k); p; p = parent.get(p.from)) edges.unshift(p.e);
+      const nodes = [edges[0].source, ...edges.map((e) => e.target)];
+      const holders = nodes.filter((id) => BYTE_HOLDERS.has(c.byId.get(id)!.kind)).map(c.label);
+      return {
+        title: "File bytes flow through a service",
+        detail: `${nodes.map(c.label).join(" → ")}: every upload and download to ${c.label(storeId)} streams through ${list(holders)}, which then needs the bandwidth and memory for the files themselves. Hand the client a signed URL instead.`,
+        math: [
+          `path: ${nodes.map(c.label).join(" → ")}`,
+          `uploads at peak = ${fmt(peakQps)} ÷ (${fmt(readWriteRatio)} + 1) = ${fmt(uploads)} per second`,
+          ...(mb ? [`upload bytes through ${list(holders)} = ${fmt(uploads)} × ${fmt(mb)} MB = ${fmt(uploads * mb)} MB/s (${fmt((uploads * mb * 8) / 1000)} Gbps)`] : []),
+        ],
+        nodeIds: nodes,
+        edgeIds: edges.map((e) => e.id),
+      };
+    });
+  },
+
+  "cdn-for-blobs": (c) => {
+    const stores = c.g.nodes.filter((n) => n.kind === "object_store" && c.onPath.has(n.id));
+    if (stores.length === 0) return [];
+    if (c.g.edges.some((e) => REQUEST.has(e.kind) && c.byId.get(e.source)!.kind === "cdn" && c.onPath.has(e.source) && c.byId.get(e.target)!.kind === "object_store")) return [];
+    const { peakQps, readWriteRatio } = c.s.scale;
+    const downloads = (peakQps * readWriteRatio) / (readWriteRatio + 1);
+    const regions = [...new Set(stores.map((n) => n.config.region ?? "unset"))];
+    return [
+      {
+        title: "Downloads come straight from origin",
+        detail: `No CDN on the request path connects to ${list(stores.map((n) => n.config.label))}, so ${fmt(downloads)} downloads a second are served from ${list(regions)}. Viewers far from there wait on the round trip, a popular file hits origin on every view, and egress is paid at origin prices.`,
+        math: [`downloads at peak = ${fmt(peakQps)} × ${fmt(readWriteRatio)} ÷ ${fmt(readWriteRatio + 1)} = ${fmt(downloads)} rps`, "CDN → Object Store connections = 0"],
+        nodeIds: stores.map((n) => n.id),
+        edgeIds: [],
+      },
+    ];
+  },
+
+  "storage-capacity": (c) => {
+    const st = c.s.params.storage;
+    if (!st) return [];
+    const nodes = c.g.nodes.filter((n) => st.kinds.includes(n.kind) && c.onPath.has(n.id) && n.config.persistence !== false && n.config.role !== "replica");
+    const total = nodes.reduce((a, n) => a + (n.config.storageGb ?? 0), 0);
+    if (total >= st.requiredGb - EPS) return [];
+    const kinds = list(st.kinds.map((k) => NODE_SPECS[k].title));
+    return [
+      {
+        title: "Not enough storage",
+        detail: nodes.length
+          ? `The persistent ${kinds} nodes on the request path hold ${fmt(total)} GB; the scenario needs ${fmt(st.requiredGb)} GB for ${st.what}.`
+          : `No persistent ${kinds} is on the request path, so there is nowhere to keep ${st.what} (${fmt(st.requiredGb)} GB).`,
+        math: [...nodes.map((n) => `${n.config.label}: ${fmt(n.config.storageGb ?? 0)} GB`), `total = ${fmt(total)} GB < ${fmt(st.requiredGb)} GB required`, `short by ${fmt(st.requiredGb - total)} GB`],
+        nodeIds: nodes.map((n) => n.id),
+        edgeIds: [],
+      },
+    ];
+  },
+
+  "presence-store": (c) => {
+    const stores = c.g.nodes.filter((n) => STORES.has(n.kind) && c.onPath.has(n.id) && PRESENCE_LABEL.test(n.config.label));
+    if (stores.length === 0)
+      return [
+        {
+          title: "No presence store",
+          detail: 'No Cache, DB or store on the request path is labelled "presence", so the grader cannot find where online status lives. Label the node that takes heartbeats.',
+          math: ["stores labelled /presence/ on the request path = 0"],
+          nodeIds: [],
+          edgeIds: [],
+        },
+      ];
+    return stores
+      .filter((n) => n.config.persistence !== false)
+      .map((n) => ({
+        title: "Presence written to durable storage",
+        detail: `${n.config.label} (${NODE_SPECS[n.kind].title}) persists what it receives: ${fmt(c.load.get(n.id)!)} rps of heartbeats go to disk and replication for data that is stale within a minute and worthless after a restart.`,
+        math: [`${n.config.label}: persistence = true`, `heartbeat load arriving = ${fmt(c.load.get(n.id)!)} rps`],
+        nodeIds: [n.id],
+        edgeIds: c.inc.get(n.id)!.map((e) => e.id),
+      }));
+  },
+
+  "durable-store": (c) => {
+    const stores = c.g.nodes.filter((n) => c.onPath.has(n.id) && (n.kind === "nosql" || (n.kind === "sql_db" && n.config.role !== "replica")));
+    if (stores.some((n) => n.config.persistence !== false)) return [];
+    return [
+      {
+        title: "No persistent store for acknowledged writes",
+        detail: stores.length
+          ? `Every SQL primary and NoSQL store on the request path has persistence off, so an acknowledged write is lost when that process restarts.`
+          : "No SQL DB (primary) or NoSQL store is on the request path, so an acknowledged write has nowhere durable to go.",
+        math: stores.length ? stores.map((n) => `${n.config.label}: persistence = false`) : ["SQL primaries + NoSQL stores on the request path = 0"],
+        nodeIds: stores.map((n) => n.id),
+        edgeIds: [],
+      },
+    ];
+  },
 };
+
+const FANOUT = new Set<NodeKind>(["pubsub", "queue"]);
+const SHARED_COUNTERS = new Set<NodeKind>(["cache", "nosql"]);
+const BYTE_HOLDERS = new Set<NodeKind>(["app_service", "api_gateway", "worker"]);
+
+function clientIds(c: Ctx): string[] {
+  return c.g.nodes.filter((n) => n.kind === "client").map((n) => n.id);
+}
+
+function unwind(parent: Map<string, DesignEdge | null>, target: string): { nodes: string[]; edges: string[] } {
+  const edges: DesignEdge[] = [];
+  for (let e = parent.get(target); e; e = parent.get(e.source)) edges.unshift(e);
+  return { nodes: [edges[0].source, ...edges.map((e) => e.target)], edges: edges.map((e) => e.id) };
+}
+
+/** Shortest path (BFS) from any start to a node matching `hit`, following edges `follow` allows. */
+function pathFrom(c: Ctx, starts: string[], hit: (id: string) => boolean, follow: (e: DesignEdge) => boolean): { nodes: string[]; edges: string[] } | null {
+  const parent = new Map<string, DesignEdge | null>(starts.map((id) => [id, null]));
+  const q = [...starts];
+  while (q.length) {
+    const id = q.shift()!;
+    for (const e of c.out.get(id)!) {
+      if (!follow(e) || parent.has(e.target)) continue;
+      parent.set(e.target, e);
+      if (hit(e.target)) return unwind(parent, e.target);
+      q.push(e.target);
+    }
+  }
+  return null;
+}

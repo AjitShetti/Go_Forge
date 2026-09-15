@@ -3,10 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Caption, Page, PixelHeading } from "@/components/ui";
 import { scenarioBySlug } from "@/lib/grader/scenarios";
+import type { RuleId } from "@/lib/grader/types";
 
 export const metadata: Metadata = { title: "Scenario" };
 
-const RULE_TEXT: Record<string, string> = {
+const RULE_TEXT: Record<RuleId, string> = {
   "has-entry": "There is a Client with at least one request connection.",
   "client-direct-data": "No Client connects straight to a DB, cache or search index.",
   spof: "Every node on the request path that has a replica setting has at least 2, or is a SQL primary replicating to a replica.",
@@ -21,6 +22,14 @@ const RULE_TEXT: Record<string, string> = {
   "queue-backlog": "Where a queue takes in more than it drains, the backlog growth is shown.",
   "replica-reads": "Reads served by a replica are called out as stale.",
   "cross-region-sync": "Synchronous calls between regions are called out.",
+  "async-fanout": "A Pub/Sub topic or Message Queue on the request path is fed by an async connection, and no Worker is on a path the caller waits on.",
+  "rate-limit-entry": "Every client path passes a Rate Limiter before its first App Service, Worker or data store.",
+  "limiter-shared-state": "A Rate Limiter with 2+ replicas connects to a Cache or NoSQL store for shared counters.",
+  "blob-through-app": "No App Service, API Gateway or Worker sits on a waited-on path from a Client to an Object Store.",
+  "cdn-for-blobs": "A CDN on the request path connects to the Object Store.",
+  "storage-capacity": "Storage of the persistent stores that count ≥ what the scenario needs.",
+  "presence-store": "A store labelled “presence” is on the request path, and it is not persistent.",
+  "durable-store": "A persistent SQL primary or NoSQL store is on the request path.",
 };
 
 export default async function ScenarioPage({ params }: { params: Promise<{ slug: string }> }) {

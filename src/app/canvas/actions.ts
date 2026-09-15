@@ -36,7 +36,7 @@ export async function saveDesignVersion(input: { designKey: string | null; baseV
   let scenario_id: string | null = null;
   if (scenarioSlug !== null) {
     const { data, error } = await supabase.from("scenarios").select("id").eq("slug", scenarioSlug).maybeSingle();
-    if (error || !data) return { ok: false, error: `Scenario "${scenarioSlug}" is not in the database: ${error?.message ?? "apply migration 20260915000500_scenarios.sql"}` };
+    if (error || !data) return { ok: false, error: `Scenario "${scenarioSlug}" is not in the database: ${error?.message ?? "apply migration 20260915000600_scenarios_p7.sql"}` };
     scenario_id = data.id;
   }
   const row = { name: name.value, graph: canonicalGraph(graph.value), scenario_id };
