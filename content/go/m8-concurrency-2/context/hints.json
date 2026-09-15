@@ -1,0 +1,4 @@
+[
+  "Three separate jobs: run the fetches concurrently, stop the others when one fails, and don't return until all of them have actually stopped. Cancelling is a request. A cancelled fetch still needs time to notice and return, and FetchAll has to wait for that.",
+  "Derive ctx, cancel := context.WithCancel(ctx) and defer cancel(). Start each fetch with wg.Go, writing bodies[i]. On an error, use a sync.Once to record the first error and call cancel(). After the loop, wg.Wait(), then return the first error if there was one. The caller's timeout needs no extra code: the fetches get a child of that ctx and return its error."
+]

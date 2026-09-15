@@ -1,0 +1,125 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [sync.Mutex.Lock]:\ninternal/sync.runtime_SemacquireMutex(...)\n\truntime/sema.go:95\ninternal/sync.(*Mutex).lockSlow(...)\n\tinternal/sync/mutex.go:149\ninternal/sync.(*Mutex).Lock(...)\n\tinternal/sync/mutex.go:70\nsync.(*Mutex).Lock(...)\n\tsync/mutex.go:46\nmain.(*Cache).Has(...)\n\tmain.go:14\nmain.(*Cache).GetOrSet(...)\n\tmain.go:23\nmain.main()\n\tmain.go:31\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [sync.Mutex.Lock]:\ninternal/sync.runtime_SemacquireMutex(...)\n\truntime/sema.go:95\ninternal/sync.(*Mutex).lockSlow(...)\n\tinternal/sync/mutex.go:149\ninternal/sync.(*Mutex).Lock(...)\n\tinternal/sync/mutex.go:70\nsync.(*Mutex).Lock(...)\n\tsync/mutex.go:46\nmain.(*Cache).Has(...)\n\tmain.go:14\nmain.(*Cache).GetOrSet(...)\n\tmain.go:23\nmain.main()\n\tmain.go:31\n",
+        "exitCode": 2,
+        "status": "deadlock"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [sync.Mutex.Lock]:\ninternal/sync.runtime_SemacquireMutex(...)\n\truntime/sema.go:95\ninternal/sync.(*Mutex).lockSlow(...)\n\tinternal/sync/mutex.go:149\ninternal/sync.(*Mutex).Lock(...)\n\tinternal/sync/mutex.go:70\nsync.(*Mutex).Lock(...)\n\tsync/mutex.go:46\nmain.(*Account).Balance(...)\n\tmain.go:20\nmain.(*Account).Transfer(...)\n\tmain.go:35\nmain.main()\n\tmain.go:11\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [sync.Mutex.Lock]:\ninternal/sync.runtime_SemacquireMutex(...)\n\truntime/sema.go:95\ninternal/sync.(*Mutex).lockSlow(...)\n\tinternal/sync/mutex.go:149\ninternal/sync.(*Mutex).Lock(...)\n\tinternal/sync/mutex.go:70\nsync.(*Mutex).Lock(...)\n\tsync/mutex.go:46\nmain.(*Account).Balance(...)\n\tmain.go:20\nmain.(*Account).Transfer(...)\n\tmain.go:35\nmain.main()\n\tmain.go:11\n",
+        "exitCode": 2,
+        "status": "deadlock"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "true 70 30\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "true 70 30\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "once": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "loading config\nrecovered: config file missing\ndone\ncomputing port\n8080 8080\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "loading config\nrecovered: config file missing\ndone\ncomputing port\n8080 8080\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestInventory/reserve_and_stock",
+      "TestInventory/loads_once,_one_caller_at_a_time",
+      "TestInventory/loads_once_with_concurrent_first_calls",
+      "TestInventory/no_overselling"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestInventory/reserve_and_stock": "PASS",
+        "TestInventory/loads_once,_one_caller_at_a_time": "PASS",
+        "TestInventory/loads_once_with_concurrent_first_calls": "PASS",
+        "TestInventory/no_overselling": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestInventory/reserve_and_stock": "PASS",
+        "TestInventory/loads_once,_one_caller_at_a_time": "PASS",
+        "TestInventory/loads_once_with_concurrent_first_calls": "FAIL",
+        "TestInventory/no_overselling": "FAIL"
+      }
+    },
+    "wrong": {
+      "lock-each-access.go": {
+        "passed": false,
+        "cases": {
+          "TestInventory/reserve_and_stock": "PASS",
+          "TestInventory/loads_once,_one_caller_at_a_time": "PASS",
+          "TestInventory/loads_once_with_concurrent_first_calls": "PASS",
+          "TestInventory/no_overselling": "FAIL"
+        }
+      },
+      "nil-check-load.go": {
+        "passed": false,
+        "cases": {
+          "TestInventory/reserve_and_stock": "PASS",
+          "TestInventory/loads_once,_one_caller_at_a_time": "PASS",
+          "TestInventory/loads_once_with_concurrent_first_calls": "FAIL",
+          "TestInventory/no_overselling": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "true 70 30\n",
+    "lockedLines": [
+      8,
+      9,
+      10,
+      11,
+      12
+    ]
+  }
+}

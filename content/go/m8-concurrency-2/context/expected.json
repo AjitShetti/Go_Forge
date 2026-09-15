@@ -1,0 +1,131 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "working 0\ncancelled: context canceled\nworking 1\nworking 2\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "working 0\ncancelled: context canceled\nworking 1\nworking 2\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "5 <nil>\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "5 <nil>\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "2 context deadline exceeded\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "2 context deadline exceeded\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "tree": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "context canceled r-42\ntrue\ncontext deadline exceeded true\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "context canceled r-42\ntrue\ncontext deadline exceeded true\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestFetchAll/all_succeed,_in_order",
+      "TestFetchAll/concurrent",
+      "TestFetchAll/first_error_cancels_the_rest",
+      "TestFetchAll/nothing_still_running_after_return",
+      "TestFetchAll/caller's_timeout"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestFetchAll/all_succeed,_in_order": "PASS",
+        "TestFetchAll/concurrent": "PASS",
+        "TestFetchAll/first_error_cancels_the_rest": "PASS",
+        "TestFetchAll/nothing_still_running_after_return": "PASS",
+        "TestFetchAll/caller's_timeout": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestFetchAll/all_succeed,_in_order": "PASS",
+        "TestFetchAll/concurrent": "FAIL",
+        "TestFetchAll/first_error_cancels_the_rest": "FAIL",
+        "TestFetchAll/nothing_still_running_after_return": "PASS",
+        "TestFetchAll/caller's_timeout": "PASS"
+      }
+    },
+    "wrong": {
+      "no-cancel.go": {
+        "passed": false,
+        "cases": {
+          "TestFetchAll/all_succeed,_in_order": "PASS",
+          "TestFetchAll/concurrent": "PASS",
+          "TestFetchAll/first_error_cancels_the_rest": "FAIL",
+          "TestFetchAll/nothing_still_running_after_return": "PASS",
+          "TestFetchAll/caller's_timeout": "PASS"
+        }
+      },
+      "returns-before-cleanup.go": {
+        "passed": false,
+        "cases": {
+          "TestFetchAll/all_succeed,_in_order": "PASS",
+          "TestFetchAll/concurrent": "PASS",
+          "TestFetchAll/first_error_cancels_the_rest": "PASS",
+          "TestFetchAll/nothing_still_running_after_return": "FAIL",
+          "TestFetchAll/caller's_timeout": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "2 context deadline exceeded\n",
+    "lockedLines": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  }
+}

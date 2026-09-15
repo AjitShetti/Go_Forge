@@ -1,0 +1,4 @@
+[
+  "Two different problems. First, lazy loading: a plain flag lets every goroutine that arrives during the slow Load call it again. Second, overselling: many buyers can read \"1 seat left\" before any of them writes. Locking each map access separately doesn't help, because another buyer can still slip in between the read and the write.",
+  "Add once sync.Once and mu sync.Mutex fields. ensureLoaded becomes inv.once.Do(func() { inv.stock = inv.Load() }). In Reserve, call inv.mu.Lock() with defer inv.mu.Unlock() before reading the stock, and hold the lock through OnCheck and the write. Stock also locks while it reads."
+]
