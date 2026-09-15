@@ -20,7 +20,7 @@ export default function TrackPage() {
               <h2 className="font-mono text-sm tracking-[0.12em] uppercase">
                 <span className="text-blue">{m.code}</span> · {m.title}
               </h2>
-              <span className="label">{m.lessons.length} lessons</span>
+              <span className="label">{m.lessons.length} {m.lessons.length === 1 ? "lesson" : "lessons"}</span>
             </div>
             <ul className="divide-y divide-rule">
               {m.lessons.map((l) => {

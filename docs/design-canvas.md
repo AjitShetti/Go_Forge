@@ -41,7 +41,7 @@ The five edge kinds are sync request, async event, replication, cache read-throu
 
 ## Export and import
 
-Export downloads `go-forge/design-export@1` JSON: name, version (null when there are unsaved changes), export time, and the canonical graph. Import accepts that format or a bare graph. A bad file lists its problems and leaves the canvas untouched. An imported design replaces what's on the canvas. On a saved design, the next save turns it into a new version.
+Export downloads `go-forge/design-export@1` JSON: name, version (null when there are unsaved changes), export time, the scenario slug (or null), and the canonical graph. Import accepts that format or a bare graph. A known scenario in the file is selected on import; an unknown one is ignored with a notice, and files without the field (exported before P8) still import. A bad file lists its problems and leaves the canvas untouched. An imported design replaces what's on the canvas. On a saved design, the next save turns it into a new version.
 
 ## Diff
 

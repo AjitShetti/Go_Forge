@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { loadLessonBundle } from "@/lib/content/load";
-import { contentRef, findLesson } from "@/lib/content/track";
+import { isLessonAuthored } from "@/lib/content/authored";
+import { contentRef, findLesson, nextLesson } from "@/lib/content/track";
 import { getSupabaseConfig } from "@/lib/supabase/config";
 import { createSupabaseServer, getCurrentUser } from "@/lib/supabase/server";
 import { LessonPlayer, type PersistenceContext } from "./lesson-player";
@@ -21,8 +22,19 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
 
   const persistence = await resolvePersistence(contentRef(module, lesson), bundle.lesson.frontmatter.trap.concept);
   const lessonIndex = ref.module.lessons.findIndex((l) => l.slug === lesson);
+  const next = nextLesson(module, lesson);
+  const [, , nextModule, nextSlug] = next?.href.split("/") ?? [];
 
-  return <LessonPlayer bundle={bundle} moduleCode={ref.module.code} moduleTitle={ref.module.title} lessonNumber={lessonIndex + 1} persistence={persistence} />;
+  return (
+    <LessonPlayer
+      bundle={bundle}
+      moduleCode={ref.module.code}
+      moduleTitle={ref.module.title}
+      lessonNumber={lessonIndex + 1}
+      persistence={persistence}
+      next={next && isLessonAuthored(nextModule, nextSlug) ? next : null}
+    />
+  );
 }
 
 async function resolvePersistence(ref: string, trapConcept: string): Promise<PersistenceContext> {

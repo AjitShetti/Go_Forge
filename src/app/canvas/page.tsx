@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { utcStamp } from "@/lib/format";
 import Link from "next/link";
 import { Caption, Page, PixelHeading } from "@/components/ui";
 import { designAccess, listDesigns } from "@/lib/canvas/designs.server";
@@ -83,7 +84,7 @@ export default async function CanvasPage() {
                     v{d.latestVersion} · {d.versions} version{d.versions === 1 ? "" : "s"}
                   </span>
                   <time className="font-mono text-[0.74rem] text-ink-3" dateTime={d.updatedAt}>
-                    saved {new Date(d.updatedAt).toISOString().slice(0, 16).replace("T", " ")} UTC
+                    saved {utcStamp(d.updatedAt)}
                   </time>
                   <DeleteDesignButton designKey={d.designKey} name={d.name} versions={d.versions} />
                 </li>

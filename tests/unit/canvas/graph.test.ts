@@ -141,13 +141,22 @@ describe("connectionProblem", () => {
 describe("export / import", () => {
   it("round-trips a design exactly", () => {
     const s = sample();
-    const text = exportDesign("Ticketing v1", 3, s, new Date("2026-09-15T00:00:00Z"));
+    const text = exportDesign("Ticketing v1", 3, s, { scenario: "ticketing-flash-sale", now: new Date("2026-09-15T00:00:00Z") });
     const back = importDesign(text);
     expect(back.ok).toBe(true);
     if (!back.ok) return;
     expect(back.value.name).toBe("Ticketing v1");
+    expect(back.value.scenario).toBe("ticketing-flash-sale");
     expect(back.value.graph).toEqual(canonicalGraph(s));
     expect(JSON.parse(text)).toMatchObject({ schema: "go-forge/design-export@1", version: 3, exportedAt: "2026-09-15T00:00:00.000Z" });
+  });
+
+  it("imports files exported before the scenario field existed", () => {
+    const old = JSON.parse(exportDesign("Old", null, sample()));
+    delete old.scenario;
+    const r = importDesign(JSON.stringify(old));
+    expect(r.ok && r.value.scenario).toBeNull();
+    expect(importDesign(JSON.stringify({ ...old, scenario: 42 })).ok).toBe(false);
   });
 
   it("accepts a bare graph", () => {

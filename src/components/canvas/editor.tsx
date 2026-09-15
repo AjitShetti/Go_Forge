@@ -1,6 +1,7 @@
 "use client";
 
 import "@xyflow/react/dist/style.css";
+import { utcStamp } from "@/lib/format";
 import {
   Background,
   BackgroundVariant,
@@ -239,7 +240,7 @@ function EditorInner({ mode, design, versions: initialVersions, startScenario = 
   }, [dirty, save]);
 
   const doExport = () => {
-    const text = exportDesign(name.trim() || "Untitled design", saved && !dirty ? baseVersion : null, graph);
+    const text = exportDesign(name.trim() || "Untitled design", saved && !dirty ? baseVersion : null, graph, { scenario: scenarioSlug });
     const slug = (name.trim() || "design").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "design";
     const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
     const a = document.createElement("a");
@@ -260,7 +261,14 @@ function EditorInner({ mode, design, versions: initialVersions, startScenario = 
     setNodes(toFlowNodes(res.value.graph));
     setEdges(toFlowEdges(res.value.graph));
     if (res.value.name) setName(res.value.name);
-    flash(`Imported ${res.value.graph.nodes.length} components and ${res.value.graph.edges.length} connections${designKey ? " · save to make it a new version" : ""}`);
+    // Only an export file carries a scenario; a bare graph leaves the current choice alone.
+    const unknownScenario = res.value.scenario !== null && !scenarioBySlug(res.value.scenario);
+    if (res.value.scenario !== null && !unknownScenario) setScenarioSlug(res.value.scenario);
+    flash(
+      `Imported ${res.value.graph.nodes.length} components and ${res.value.graph.edges.length} connections` +
+        (unknownScenario ? ` · unknown scenario "${res.value.scenario}" ignored` : "") +
+        (designKey ? " · save to make it a new version" : ""),
+    );
     window.setTimeout(() => flow.fitView({ padding: 0.2 }), 50);
   };
 
@@ -558,7 +566,7 @@ function HistoryPanel({ designKey, versions, current, dirty }: { designKey: stri
             <span className="w-10 text-blue">v{v.version}</span>
             <span className="min-w-0 flex-1 truncate">{v.name}</span>
             <time className="text-ink-3" dateTime={v.createdAt}>
-              {new Date(v.createdAt).toLocaleString()}
+              {utcStamp(v.createdAt)}
             </time>
             {v.version === current ? (
               <span className="text-ok">on canvas</span>

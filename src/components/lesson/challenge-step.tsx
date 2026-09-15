@@ -89,6 +89,8 @@ export function ChallengeStep({ bundle, state, dispatch, engineReady }: StepProp
                   <button className="btn btn-primary" data-testid={`reveal-hint-${i + 1}`} onClick={() => dispatch({ type: "REVEAL_HINT", at: Date.now() })}>
                     Reveal hint {i + 1}
                   </button>
+                ) : state.passed || state.gaveUp ? (
+                  <p className="font-mono text-sm text-ink-3">Hint {i + 1} · not used</p>
                 ) : (
                   <p className="font-mono text-sm text-ink-3">
                     Hint {i + 1} · locked · unlocks after {threshold} failed attempts

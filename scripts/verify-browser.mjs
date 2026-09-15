@@ -65,7 +65,9 @@ if (only.includes("p1")) {
   await page.screenshot({ path: join(shots, "p1-track.png"), fullPage: true });
 
   await page.goto(BASE + "/notebook");
-  check("/notebook shows NOT IMPLEMENTED badge", await page.getByTestId("not-implemented").first().isVisible());
+  // P8 built the notebook; signed out it gates like the canvas list.
+  check("/notebook has no NOT IMPLEMENTED badge", (await page.getByTestId("not-implemented").count()) === 0);
+  check("/notebook (signed out) shows the sign-in gate", (await page.getByTestId("notebook-gate").getAttribute("data-kind")) === (configured ? "signed-out" : "not-configured"));
   // P5 built the canvas and P6 its grader; the badge must be gone.
   await page.goto(BASE + "/canvas");
   check("/canvas no longer shows a NOT IMPLEMENTED badge", (await page.getByTestId("not-implemented").count()) === 0);

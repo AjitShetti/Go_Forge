@@ -84,6 +84,17 @@ describe("challenge", () => {
     expect(view(state).failuresUntilNextHint).toBe(null);
   });
 
+  it("no hints once the challenge is passed or given up", () => {
+    const pass: Ev = { type: "CHALLENGE_RESULT", passed: true, failedCases: [] };
+    let { state, rejected } = run([...toChallenge, fail, fail, pass, { type: "REVEAL_HINT" }]);
+    expect(state.hintsRevealed).toBe(0);
+    expect(view(state).canRevealHint).toBe(false);
+    expect(rejected.at(-1)).toMatch(/challenge is over/);
+    ({ state, rejected } = run([...toChallenge, fail, fail, { type: "GIVE_UP" }, { type: "REVEAL_HINT" }]));
+    expect(state.hintsRevealed).toBe(0);
+    expect(rejected.at(-1)).toMatch(/challenge is over/);
+  });
+
   it("the solution is locked until a pass or giving up", () => {
     let { rejected } = run([...toChallenge, fail, { type: "REVEAL_SOLUTION" }]);
     expect(rejected.at(-1)).toMatch(/solution unlocks/);

@@ -32,12 +32,14 @@ export function LessonPlayer({
   moduleTitle,
   lessonNumber,
   persistence,
+  next,
 }: {
   bundle: LessonBundle;
   moduleCode: string;
   moduleTitle: string;
   lessonNumber: number;
   persistence: PersistenceContext;
+  next: { href: string; title: string } | null;
 }) {
   const fm = bundle.lesson.frontmatter;
   const recorder: LessonRecorder = useMemo(() => {
@@ -159,7 +161,7 @@ export function LessonPlayer({
           {(state.step === "rebuild" || stepAfter(state, "rebuild")) && <RebuildStep bundle={bundle} state={state} dispatch={dispatch} engineReady={engineReady} />}
           {(state.step === "challenge" || stepAfter(state, "challenge")) && <ChallengeStep bundle={bundle} state={state} dispatch={dispatch} engineReady={engineReady} />}
           {(state.step === "stretch" || state.step === "complete") && <StretchStep bundle={bundle} state={state} dispatch={dispatch} />}
-          {state.step === "complete" && <CompleteStep state={state} persistent={recorder.persistent} />}
+          {state.step === "complete" && <CompleteStep state={state} persistent={recorder.persistent} next={next} />}
         </div>
       )}
     </main>

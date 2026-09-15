@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { buildHarness, parseTestOutput, testNames } from "@/lib/content/harness";
 import { changedLockedLines, normalizeForCompare, observedOutput, parseLessonMd } from "@/lib/content/lesson";
+import { nextLesson, track } from "@/lib/content/track";
 
 const lessonDir = join(process.cwd(), "content", "go", "m3-slices-maps", "slice-aliasing");
 
@@ -86,5 +87,15 @@ describe("challenge harness", () => {
     expect(r.incomplete).toBe(true);
     expect(r.passed).toBe(false);
     expect(parseTestOutput("", 0).passed).toBe(false);
+  });
+});
+
+describe("nextLesson", () => {
+  it("steps within a module, crosses into the next one, and ends after the capstone", () => {
+    expect(nextLesson("m5-interfaces", "nil-interface")?.href).toBe("/track/m5-interfaces/implicit-satisfaction");
+    const lastOfM0 = track.modules[0].lessons.at(-1)!.slug;
+    expect(nextLesson("m0-compiled", lastOfM0)?.href).toBe(`/track/${track.modules[1].slug}/${track.modules[1].lessons[0].slug}`);
+    expect(nextLesson("m12-capstone", "kv-store")).toBeNull();
+    expect(nextLesson("m5-interfaces", "nope")).toBeNull();
   });
 });

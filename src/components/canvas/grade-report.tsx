@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { utcStamp } from "@/lib/format";
 import type { Finding, GradeReport, Scenario, Severity } from "@/lib/grader/types";
 
 export type RecordState =
@@ -122,7 +123,7 @@ function RecordChip({ record }: { record: RecordState }) {
     case "recording":
       return <span data-testid="grade-record" data-kind="recording" className={`${base} border-ink-3 text-ink-3`}>Recording…</span>;
     case "recorded":
-      return <span data-testid="grade-record" data-kind="recorded" className={`${base} border-ok text-ok`}>Recorded · {new Date(record.createdAt).toLocaleString()}</span>;
+      return <span data-testid="grade-record" data-kind="recorded" className={`${base} border-ok text-ok`}>Recorded · {utcStamp(record.createdAt)}</span>;
     case "not-recorded":
       return <span data-testid="grade-record" data-kind="not-recorded" title={record.reason} className={`${base} border-warn text-warn`}>Not recorded · {record.reason}</span>;
     case "error":

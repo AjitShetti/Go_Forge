@@ -56,3 +56,28 @@ In a git worktree whose `node_modules` is a junction, Turbopack refuses to build
 ## Scenarios (`verify:scenarios`)
 
 `npm run build && npm run verify:scenarios` runs 43 checks on port 3410. They cover all six design scenarios signed out, the live `scenarios` rows against `src/lib/grader/scenarios.ts`, and one grade recorded while signed in. It deletes the design it creates, so no reset is needed. Details are in [grading.md](grading.md).
+
+## P8 user flows (`test:e2e`)
+
+`@playwright/test` specs in `tests/e2e`, one per journey, in headless Edge against `next start` on port 3700. The config starts the server itself.
+
+```
+npm run build
+# run supabase/e2e-reset.sql first (the lesson flow refuses a learner with defer-evaluation history)
+npm run test:e2e
+```
+
+| Spec | Journey |
+|---|---|
+| 01-visitor | Landing, then the track, then a lesson with NOT SAVED. Every nav link opens its page. Signed-out pages show their gates. The styled 404 appears. The magic-link form confirms: the OTP request is intercepted, so no email is sent. A bogus callback lands on `/login` with an error. Nothing scrolls sideways at 390 px. |
+| 02-learner-lesson | M6 defer-timing, start to finish: a wrong prediction, a mismatch, Decode, a rebuild that meets its goal, two failing challenge attempts (hint 1 unlocks), a pass (hints read "not used"), a stretch answer, and a completion with a Next-lesson link. A reload resumes at the end. The mistake shows in the ledger, a review card is answered, the dashboard says completed, and the stretch answer is in the notebook. |
+| 03-notebook | Add a note tied to a lesson (whitespace is kept, and it's checked in the DB as the learner's row). Filter Stretch and Notes. Delete it (checked gone in the DB). |
+| 04-designer-canvas | Ticketing scenario, naive start, grade 35 with the capacity arithmetic. Fix replicas and watch it regrade live. Save v1, add a cache, Ctrl+S saves v2. The grade is recorded (checked in the DB). History and diff (+1 Cache). Export, then import into a new canvas with the scenario restored. A bad file is refused. Delete from the list (checked gone in the DB). |
+| 05-engine | The goroutine sample prints the right output. The compile error and the nil-map panic match `go run`, including exit code 2. |
+| 06-sign-out | Signed in, `/login` redirects to `/track`. After sign-out, the notebook and review pages are gated and lessons show NOT SAVED. |
+
+Failures keep a trace and a screenshot in `test-results/`; the HTML report is in `playwright-report/`.
+
+The flows cover different lessons and concepts from the older suites. The notebook and canvas flows delete what they create. The lesson flow leaves rows behind, so reset before re-running it.
+
+**Not covered by automation:** receiving a real magic-link email and following it. Supabase sends that, and the first manual test should cover it.

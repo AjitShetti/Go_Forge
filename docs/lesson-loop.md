@@ -15,7 +15,7 @@ The machine is pure: `transition(state, event)` returns either the new state or 
 | Run is locked until a prediction exists | `TRAP_RUN_STARTED` is rejected without `prediction`; `view.canRunTrap` |
 | A prediction can't change once locked | a second `PREDICT` is rejected |
 | The explanation stays hidden until after collide | `DecodeStep` isn't rendered before step ≥ decode (not in the DOM); `EXPAND_SECTION` is rejected |
-| Hint 1 after 2 failed attempts, hint 2 after 4 | `HINT_THRESHOLDS`; `REVEAL_HINT` is rejected while locked |
+| Hint 1 after 2 failed attempts, hint 2 after 4 | `HINT_THRESHOLDS`; `REVEAL_HINT` is rejected while locked, and after a pass or give-up (the reference solution replaces hints then) |
 | Solution only after a pass or "I give up" | `REVEAL_SOLUTION` is rejected otherwise |
 | Giving up marks the lesson for review, never complete | `view.completed` requires `passed && !gaveUp` |
 | Can't leave the challenge without passing or giving up | `CONTINUE` is rejected |
@@ -27,7 +27,7 @@ Every accepted event is appended to `lesson_events` (payload = the event) and up
 - `TRAP_RESULT` writes `predictions` (with the trap's concept tag) and a `collide` row in `runs`
 - `REBUILD_RUN` writes a `rebuild` row in `runs`
 - `CHALLENGE_RESULT` writes `challenge_attempts` (code, failed cases, hints used, solution revealed, duration)
-- `SUBMIT_STRETCH` writes `notebook`
+- `SUBMIT_STRETCH` writes `notebook` (kind `stretch`); `/notebook` lists these next to free notes (kind `note`), which the learner can add and delete there
 
 **Resuming is a replay:** on load, the stored events are folded through the same `transition`. A run left in flight by a closed tab gets a `TRAP_RUN_FAILED` event.
 

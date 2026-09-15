@@ -131,6 +131,7 @@ export function transition(s: LessonState, e: LessonEvent): Transition {
 
     case "REVEAL_HINT": {
       if (s.step !== "challenge") return reject(s, "hints belong to the challenge");
+      if (s.passed || s.gaveUp) return reject(s, "the challenge is over: the reference solution is available instead");
       if (s.hintsRevealed >= availableHints(s)) return reject(s, `hint ${s.hintsRevealed + 1} is still locked`);
       return accept({ ...s, hintsRevealed: s.hintsRevealed + 1 });
     }
@@ -181,7 +182,7 @@ export function view(s: LessonState) {
     showDecode: canSeeDecode(s),
     canContinue:
       s.step === "collide" || s.step === "decode" || s.step === "rebuild" || (s.step === "challenge" && (s.passed || s.gaveUp)),
-    canRevealHint: s.step === "challenge" && s.hintsRevealed < availableHints(s),
+    canRevealHint: s.step === "challenge" && !s.passed && !s.gaveUp && s.hintsRevealed < availableHints(s),
     failuresUntilNextHint: nextHint === undefined ? null : Math.max(0, nextHint - s.failedAttempts),
     canGiveUp: s.step === "challenge" && !s.passed && !s.gaveUp,
     canRevealSolution: (s.passed || s.gaveUp) && !s.solutionRevealed,

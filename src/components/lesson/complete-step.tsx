@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Plate } from "@/components/ui";
 import { view, type LessonState } from "@/lib/lesson/machine";
 
-export function CompleteStep({ state, persistent }: { state: LessonState; persistent: boolean }) {
+export function CompleteStep({ state, persistent, next }: { state: LessonState; persistent: boolean; next: { href: string; title: string } | null }) {
   const v = view(state);
   const rows: [string, string][] = [
     ["Prediction", state.trap?.correct ? "correct" : "wrong: logged to your mistake ledger"],
@@ -28,9 +28,16 @@ export function CompleteStep({ state, persistent }: { state: LessonState; persis
           ))}
         </dl>
         {!persistent && <p className="mt-5 font-mono text-sm text-bad">None of this was saved. Sign in with Supabase configured to keep your progress.</p>}
-        <Link href="/track" className="btn btn-primary mt-6">
-          Back to the track
-        </Link>
+        <div className="mt-6 flex flex-wrap gap-3">
+          {next && (
+            <Link href={next.href} className="btn btn-primary" data-testid="next-lesson">
+              Next: {next.title} →
+            </Link>
+          )}
+          <Link href="/track" className={next ? "btn" : "btn btn-primary"}>
+            Back to the track
+          </Link>
+        </div>
       </Plate>
     </section>
   );
