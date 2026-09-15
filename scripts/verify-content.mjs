@@ -36,13 +36,16 @@ const NONDETERMINISTIC_RUNS = 5;
 
 const GOENV = { ...process.env, GOFLAGS: "-mod=mod", GOTOOLCHAIN: "local" };
 
-/** `go run` / `go build` / `go test -v` over files in a temp module. */
-export function realGo(files, { mode = "run", lang, gcflags, timeoutMs = 120000 } = {}) {
+/**
+ * `go run` / `go build` / `go test` over files in a temp module. testArgs
+ * replaces the default `-v` for test mode (e.g. `-run=^$ -bench=.`).
+ */
+export function realGo(files, { mode = "run", lang, gcflags, testArgs, timeoutMs = 120000 } = {}) {
   const dir = mkdtempSync(join(tmpdir(), "goforge-"));
   try {
     writeFileSync(join(dir, "go.mod"), `module prog\n\ngo ${(lang ?? LANG_DEFAULT).replace(/^go/, "")}\n`);
     for (const f of files) writeFileSync(join(dir, f.name), f.content);
-    const args = mode === "build" ? ["build", "-o", join(dir, "prog.exe")] : mode === "test" ? ["test", "-v", "-count=1"] : ["run"];
+    const args = mode === "build" ? ["build", "-o", join(dir, "prog.exe")] : mode === "test" ? ["test", "-count=1", ...(testArgs ?? ["-v"])] : ["run"];
     if (gcflags) args.push(`-gcflags=${gcflags.join(" ")}`);
     args.push(".");
     const res = spawnSync("go", args, { cwd: dir, encoding: "utf8", timeout: timeoutMs, killSignal: "SIGKILL", env: GOENV });
@@ -65,7 +68,30 @@ export function realGo(files, { mode = "run", lang, gcflags, timeoutMs = 120000 
 export function norm(s) {
   return normalizeOutput(s)
     .replace(/^# prog \[prog\.test\]\n/m, "")
-    .replace(/\.\\([\w.-]+\.go)/g, "./$1");
+    .replace(/\.\\([\w.-]+\.go)/g, "./$1")
+    .replace(/[A-Za-z]:[\\/][^\s:]*?[\\/]goforge-[^\\/\s]+[\\/]([\w.-]+\.go)/g, "$1");
+}
+
+/**
+ * compare=shape: output whose numbers legitimately change between runs
+ * (benchmark timings, fuzzing progress, test durations, worker counts). Only
+ * those parts are replaced; everything else must match exactly, and the block
+ * is run twice to prove the shape is stable.
+ */
+export function shapeOf(s) {
+  return s
+    .split("\n")
+    .filter((l) => !/^fuzz: /.test(l))
+    .map((l) =>
+      l
+        .replace(/^(Benchmark\S+?)(-\d+)?(\s+)\d+(\s+)[\d.]+ ns\/op/, "$1-P$3N$4N ns/op")
+        .replace(/^cpu: .*$/, "cpu: <this machine>")
+        .replace(/^goos: \S+$/, "goos: <os>")
+        .replace(/\(\d+\.\d+s\)/g, "(N.NNs)")
+        .replace(/^(ok|FAIL)(\s+)prog(\s+)\d+\.\d+s$/, "$1$2prog$3N.NNNs")
+        .replace(/testdata(?:[\\/][\w.-]+)+/g, (p) => p.replaceAll("\\", "/")),
+    )
+    .join("\n");
 }
 
 let engine;
@@ -93,14 +119,38 @@ async function runProgram(id, code, meta, lang, errs) {
   if (!["run", "build", "local"].includes(mode)) errs.push(`${id}: mode must be run|build|local`);
   if (meta.nondeterministic && meta.nondeterministic !== "sorted-lines") errs.push(`${id}: nondeterministic must be "sorted-lines"`);
   if (mode === "local" && typeof meta.reason !== "string") errs.push(`${id}: mode=local needs reason=<why the browser can't run it>`);
-  const compare = meta.nondeterministic === "sorted-lines" ? "sorted-lines" : "exact";
-  const opts = { mode: mode === "build" ? "build" : "run", lang: typeof meta.lang === "string" ? meta.lang : lang, gcflags: typeof meta.gcflags === "string" ? meta.gcflags.split(",") : undefined };
-  const files = [{ name: "main.go", content: code }];
+  const cmd = meta.cmd ?? "run";
+  if (!["run", "test"].includes(cmd)) errs.push(`${id}: cmd must be run|test`);
+  if (cmd === "test" && mode !== "local") errs.push(`${id}: cmd=test is only for mode=local blocks (the browser has no go test)`);
+  if (meta.compare !== undefined && meta.compare !== "shape") errs.push(`${id}: compare must be "shape"`);
+  if (meta.compare === "shape" && mode !== "local") errs.push(`${id}: compare=shape is only for mode=local blocks`);
+  const compare = meta.nondeterministic === "sorted-lines" ? "sorted-lines" : meta.compare === "shape" ? "shape" : "exact";
+  const testArgs = cmd === "test" ? (typeof meta.args === "string" ? meta.args.split(",") : ["-v"]) : undefined;
+  const opts = {
+    mode: cmd === "test" ? "test" : mode === "build" ? "build" : "run",
+    lang: typeof meta.lang === "string" ? meta.lang : lang,
+    gcflags: typeof meta.gcflags === "string" ? meta.gcflags.split(",") : undefined,
+    testArgs,
+    timeoutMs: 180000,
+  };
+  const files = [{ name: cmd === "test" ? "main_test.go" : "main.go", content: code }];
 
   const real = realGo(files, opts);
   const block = { mode, compare };
+  if (cmd === "test") {
+    block.cmd = "test";
+    block.args = testArgs;
+  }
   if (opts.lang) block.lang = opts.lang;
   if (opts.gcflags) block.gcflags = opts.gcflags;
+  if (compare === "shape") {
+    real.stdout = shapeOf(real.stdout);
+    real.stderr = shapeOf(real.stderr);
+    const again = realGo(files, opts);
+    again.stdout = shapeOf(again.stdout);
+    again.stderr = shapeOf(again.stderr);
+    if (!sameResult(real, again)) errs.push(`${id}: output shape differs between two runs; not a stable property\n    run 1: ${JSON.stringify(real).slice(0, 600)}\n    run 2: ${JSON.stringify(again).slice(0, 600)}`);
+  }
   if (compare === "sorted-lines") {
     const seen = new Set([real.stdout]);
     for (let i = 1; i < NONDETERMINISTIC_RUNS; i++) {

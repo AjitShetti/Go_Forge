@@ -12,6 +12,7 @@ import { StretchStep } from "@/components/lesson/stretch-step";
 import type { Dispatch } from "@/components/lesson/types";
 import { Caption, PixelHeading } from "@/components/ui";
 import type { LessonBundle } from "@/lib/content/load";
+import { LOCAL_ONLY, localOnlyFeatures } from "@/lib/engine/features";
 import { getExecutor } from "@/lib/engine/wasm-executor";
 import { initialState, replay, transition, view, type LessonEvent, type LessonState } from "@/lib/lesson/machine";
 import { NullRecorder, SupabaseRecorder, type LessonRecorder, type SaveStatus } from "@/lib/lesson/recorder";
@@ -129,6 +130,8 @@ export function LessonPlayer({
         ))}
       </div>
 
+      <LocalOnlyBanner requires={fm.requires} />
+
       <Stepper state={state} />
 
       {engineError && (
@@ -160,6 +163,34 @@ export function LessonPlayer({
         </div>
       )}
     </main>
+  );
+}
+
+/**
+ * Spec §3: a lesson must never be silently broken by what the engine can't do.
+ * These lessons still run their trap, rebuild and challenge in the browser;
+ * the parts that need a native toolchain are marked where they appear.
+ */
+function LocalOnlyBanner({ requires }: { requires: string[] }) {
+  const missing = localOnlyFeatures(requires);
+  if (missing.length === 0) return null;
+  return (
+    <div data-testid="local-banner" data-features={missing.join(",")} className="mt-6 border border-warn bg-paper px-4 py-3">
+      <p className="font-mono text-[0.72rem] tracking-[0.14em] text-warn uppercase">Parts of this lesson run on your machine</p>
+      <ul className="prose-serif mt-2 grid gap-1 text-[1rem] text-ink-2">
+        {missing.map((f) => {
+          const info = LOCAL_ONLY[f];
+          return (
+            <li key={f}>
+              <strong>{info?.label ?? f}</strong>: {info?.why ?? "not available in the browser engine"}. Locally: <code className="font-mono text-[0.85em]">{info?.command}</code>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="prose-serif mt-2 text-[1rem] text-ink-2 italic">
+        The trap, rebuild and challenge below still run in your browser. Output marked “run locally” was recorded from real Go by the content pipeline; anything that wasn&apos;t verified says so.
+      </p>
+    </div>
   );
 }
 

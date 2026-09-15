@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Caption, NotImplemented, Page, PixelHeading } from "@/components/ui";
 import { isLessonAuthored } from "@/lib/content/authored";
 import { track } from "@/lib/content/track";
+import { LOCAL_ONLY, localOnlyFeatures } from "@/lib/engine/features";
 
 export const metadata: Metadata = { title: "Track" };
 
@@ -39,6 +40,17 @@ export default function TrackPage() {
                           {c}
                         </span>
                       ))}
+                      {authored && localOnlyFeatures(l.requires).length > 0 && (
+                        <span
+                          data-testid={`local-badge-${l.slug}`}
+                          title={`Needs ${localOnlyFeatures(l.requires)
+                            .map((f) => LOCAL_ONLY[f]?.label ?? f)
+                            .join(", ")}: those parts show recorded real-Go output or a command to run locally.`}
+                          className="border border-warn px-1.5 py-0.5 font-mono text-[0.68rem] tracking-[0.1em] text-warn uppercase"
+                        >
+                          Partly run locally
+                        </span>
+                      )}
                       {!authored && <NotImplemented what="lesson not authored" />}
                     </span>
                   </li>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ENGINE_FEATURES } from "./features";
 import type { EngineCapabilities, ExecResult, ExecStatus, GoExecutor, GoFile, RunOptions } from "./types";
 
 export const DEFAULT_MAX_OUTPUT_BYTES = 1 << 20;
@@ -115,22 +116,7 @@ export class WasmExecutor implements GoExecutor {
       goarch: "wasm",
       stdlib: this.readyInfo.packages,
       // Established empirically: docs/execution-engine.md §3–4.
-      features: {
-        goroutines: true,
-        channels: true,
-        select: true,
-        sync: true,
-        context: true,
-        generics: true,
-        deadlockDetection: true,
-        escapeAnalysis: true,
-        languageVersion: true,
-        parallelism: false,
-        raceDetector: false,
-        fuzzing: false,
-        benchmarkTiming: false,
-        netListen: false,
-      },
+      features: { ...ENGINE_FEATURES },
     };
   }
 

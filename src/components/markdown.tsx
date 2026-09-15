@@ -131,16 +131,24 @@ export function Markdown({ source, verified = {}, goVersion }: MarkdownProps) {
             if (lang === "diagram" && typeof meta.name === "string") return <Diagram key={i} name={meta.name} />;
             const id = typeof meta.id === "string" ? meta.id : null;
             const out = id ? verified[id] : undefined;
+            const local = meta.mode === "local";
+            const command = local ? (meta.cmd === "test" ? `go test ${String(meta.args ?? "").split(",").filter(Boolean).join(" ")}`.trim() : "go run .") : null;
+            const shell = lang === "shell";
             return (
-              <figure key={i} className="panel not-prose font-mono">
+              <figure key={i} className="panel not-prose font-mono" data-testid={local ? `local-block-${String(id)}` : shell ? "shell-block" : undefined}>
                 <div className="panel-head">
                   <span className="label">{lang || "text"}</span>
-                  {meta.verified && <span className="label text-ok">verified{goVersion ? ` · ${goVersion}` : ""}</span>}
+                  {meta.verified && !local && <span className="label text-ok">verified{goVersion ? ` · ${goVersion}` : ""}</span>}
+                  {meta.verified && local && <span className="label text-warn">run locally · real Go output recorded{goVersion ? ` · ${goVersion}` : ""}</span>}
+                  {shell && <span className="label text-warn">run locally · output not shown</span>}
                 </div>
                 <pre className="code-block overflow-x-auto p-4">{b.code}</pre>
                 {out && (
                   <div className="border-t border-rule bg-paper-2 px-4 py-3">
-                    <p className="label mb-1">Output</p>
+                    <p className="label mb-1">
+                      Output{command ? ` of \`${command}\`` : ""}
+                      {meta.compare === "shape" ? " · numbers that change from run to run are shown as N" : ""}
+                    </p>
                     <pre className="code-block">
                       {out.stdout}
                       {out.stderr && <span className="text-bad">{out.stderr}</span>}
