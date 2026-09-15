@@ -1,4 +1,4 @@
-# Whole-app verification (P0–P4)
+# Whole-app verification (P0–P5)
 
 Every check runs in real Microsoft Edge (headless) against `next start`. The signed-in parts run against the live Supabase project as `e2e@goforge.test`.
 
@@ -8,15 +8,17 @@ npx tsc --noEmit && npm test && npm run build
 npm run verify:browser -- --only=p1,engine,p2,p2auth
 npm run verify:p4
 npm run verify:e2e
+npm run verify:p5
 ```
 
-The suites touch different lessons and concepts, so one reset covers all three:
+The suites touch different lessons, concepts and tables, so one reset covers all four:
 
 | Suite | Lesson | Concept |
 |---|---|---|
 | p2auth | slice-aliasing | none |
 | p4 | none | nil-map |
 | e2e | integer-division | integer-division, toolchain |
+| p5 | none (designs only) | none |
 
 ## What `verify:e2e` adds
 

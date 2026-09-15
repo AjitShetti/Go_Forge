@@ -130,6 +130,50 @@
     font-size: 9px;
     margin-left: 6px;
   }
+  /* Design canvas: React Flow restyled to the paper/ink/blue language. */
+  .gf-canvas .react-flow {
+    --xy-background-color: transparent;
+    --xy-edge-stroke: var(--color-ink);
+    --xy-controls-button-background-color: var(--color-paper);
+    --xy-controls-button-background-color-hover: var(--color-paper-2);
+    --xy-controls-button-border-color: var(--color-ink);
+    --xy-controls-box-shadow: none;
+    --xy-attribution-background-color: transparent;
+    font-family: var(--font-mono);
+  }
+  .react-flow__controls {
+    border: 1px solid var(--color-ink);
+  }
+  .react-flow__node-design {
+    border-radius: 0;
+  }
+  .gf-handle.react-flow__handle {
+    width: 9px;
+    height: 9px;
+    border-radius: 0;
+    border: 1px solid var(--color-blue);
+    background: var(--color-paper);
+    opacity: 0;
+    transition: opacity 100ms;
+  }
+  .react-flow__node:hover .gf-handle,
+  .react-flow__node.selected .gf-handle,
+  .react-flow__handle.connectingfrom,
+  .react-flow__handle.connectingto,
+  .react-flow.gf-connecting .gf-handle {
+    opacity: 1;
+  }
+  .gf-handle.react-flow__handle:hover,
+  .gf-handle.react-flow__handle.connectingto {
+    background: var(--color-blue);
+  }
+  @media (hover: none) {
+    .gf-handle.react-flow__handle {
+      opacity: 1;
+      width: 14px;
+      height: 14px;
+    }
+  }
   .code-block {
     font-family: var(--font-mono);
     font-size: 0.85rem;
