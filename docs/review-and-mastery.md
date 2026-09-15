@@ -46,7 +46,7 @@ Implemented as both of these:
 - **A.** A correct first-try prediction tagged with the concept, made **after** the concept's first prediction, on a **different question**.
 - **B.** A challenge in a lesson touching the concept, passed before its solution was ever shown.
 
-Three interpretation choices you may want to change:
+Three interpretation choices, confirmed by the project owner on 2026-09-15:
 
 1. **A review card counts as "a later lesson".** Many concepts appear in only one lesson in M0–M3 (e.g. `integer-division`, `nil-map`). Read literally, the rule would make them unmasterable until M7+. A review card is a new, verified program on the same concept, answered after the first encounter, so it counts. The lesson's own trap re-asked as a card does not.
 2. **Mastery can be lost.** A newer wrong prediction on the concept removes mastery until A holds again. The spec doesn't say whether mastery is permanent.
