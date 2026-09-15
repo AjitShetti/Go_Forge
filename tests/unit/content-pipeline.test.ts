@@ -68,9 +68,10 @@ describe("trap answer check", () => {
 });
 
 describe("committed content", () => {
-  it("covers every lesson in M0–M3", () => {
-    const m0to3 = track.modules.slice(0, 4).flatMap((m: { slug: string; lessons: { slug: string }[] }) => m.lessons.map((l) => `${m.slug}/${l.slug}`));
-    expect(authored.map((a) => `${a.module}/${a.slug}`).filter((s) => m0to3.includes(s)).sort()).toEqual([...m0to3].sort());
+  it("covers every lesson in the track (M0–M12)", () => {
+    const all = track.modules.flatMap((m: { slug: string; lessons: { slug: string }[] }) => m.lessons.map((l) => `${m.slug}/${l.slug}`));
+    expect(all).toHaveLength(43);
+    expect(authored.map((a) => `${a.module}/${a.slug}`).sort()).toEqual([...all].sort());
   });
 
   for (const { module, slug, dir } of authored) {

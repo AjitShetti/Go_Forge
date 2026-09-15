@@ -73,9 +73,9 @@ try {
     const r = await fetch(BASE + path);
     check(`GET ${path} → 200`, r.status === 200, `status=${r.status}`);
   }
-  for (const path of ["/track/m4-structs-methods/method-sets", "/track/nope/nope", "/track/..%2F..%2Fpackage.json/x", "/review/not-a-concept", "/definitely-not-a-page"]) {
+  for (const path of ["/track/m4-structs-methods/not-a-lesson", "/track/nope/nope", "/track/..%2F..%2Fpackage.json/x", "/review/not-a-concept", "/definitely-not-a-page"]) {
     const r = await fetch(BASE + path);
-    check(`GET ${path} → 404 (unauthored, unknown or traversal)`, r.status === 404, `status=${r.status}`);
+    check(`GET ${path} → 404 (unknown lesson or traversal)`, r.status === 404, `status=${r.status}`);
   }
   const loc = async (path) => {
     const r = await fetch(BASE + path, { redirect: "manual" });
