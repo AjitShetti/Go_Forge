@@ -1,0 +1,120 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "booked: 5 of 3 seats\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "booked: 5 of 3 seats\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "approved: 5 declined: 0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "approved: 5 declined: 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "approved: 2 declined: 3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "approved: 2 declined: 3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestProfiles/add_and_read",
+      "TestProfiles/concurrent_duplicates",
+      "TestProfiles/caller's_changes_stay_out",
+      "TestProfiles/appending_to_a_result_doesn't_add_tags"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestProfiles/add_and_read": "PASS",
+        "TestProfiles/concurrent_duplicates": "PASS",
+        "TestProfiles/caller's_changes_stay_out": "PASS",
+        "TestProfiles/appending_to_a_result_doesn't_add_tags": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestProfiles/add_and_read": "PASS",
+        "TestProfiles/concurrent_duplicates": "FAIL",
+        "TestProfiles/caller's_changes_stay_out": "FAIL",
+        "TestProfiles/appending_to_a_result_doesn't_add_tags": "FAIL"
+      }
+    },
+    "wrong": {
+      "lock-each-access.go": {
+        "passed": false,
+        "cases": {
+          "TestProfiles/add_and_read": "PASS",
+          "TestProfiles/concurrent_duplicates": "FAIL",
+          "TestProfiles/caller's_changes_stay_out": "PASS",
+          "TestProfiles/appending_to_a_result_doesn't_add_tags": "PASS"
+        }
+      },
+      "returns-internal-slice.go": {
+        "passed": false,
+        "cases": {
+          "TestProfiles/add_and_read": "PASS",
+          "TestProfiles/concurrent_duplicates": "PASS",
+          "TestProfiles/caller's_changes_stay_out": "FAIL",
+          "TestProfiles/appending_to_a_result_doesn't_add_tags": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "approved: 2 declined: 3\n",
+    "lockedLines": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ]
+  }
+}

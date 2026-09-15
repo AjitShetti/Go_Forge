@@ -1,0 +1,4 @@
+[
+  "Two ways memory gets shared without a lock. First, time: AddTag reads under the lock and writes under the lock, but not in one critical section, so twenty goroutines can all see \"no vip yet\" before any of them writes. Second, escape: Tags returns the slice stored in the map, so the caller reads and writes the same backing array (M3) after the lock is released.",
+  "In AddTag, lock once with defer p.mu.Unlock(), then read, call OnRead, check with slices.Contains, and append, all under that one lock. In Tags, return slices.Clone(p.tags[user]) so the caller gets its own copy."
+]
