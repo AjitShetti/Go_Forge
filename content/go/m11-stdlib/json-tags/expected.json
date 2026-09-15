@@ -1,0 +1,136 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "{\"name\":\"Ana\"} <nil>\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "{\"name\":\"Ana\"} <nil>\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "<nil>\nno id\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "<nil>\nno id\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "<nil>\nid=42 tags=2\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "<nil>\nid=42 tags=2\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "decode-rules": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "{X:1 Y:2} <nil>\njson: unknown field \"z\"\nmap[string]interface {}{\"list\":[]interface {}{1, \"two\", interface {}(nil)}, \"n\":1.2345678901234567e+19}\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "{X:1 Y:2} <nil>\njson: unknown field \"z\"\nmap[string]interface {}{\"list\":[]interface {}{1, \"two\", interface {}(nil)}, \"n\":1.2345678901234567e+19}\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestOrderJSON/marshal",
+      "TestOrderJSON/empty_note_is_omitted",
+      "TestOrderJSON/decode",
+      "TestOrderJSON/round_trip",
+      "TestOrderJSON/unknown_status_is_an_error",
+      "TestOrderJSON/unknown_field_is_an_error"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestOrderJSON/marshal": "PASS",
+        "TestOrderJSON/empty_note_is_omitted": "PASS",
+        "TestOrderJSON/decode": "PASS",
+        "TestOrderJSON/round_trip": "PASS",
+        "TestOrderJSON/unknown_status_is_an_error": "PASS",
+        "TestOrderJSON/unknown_field_is_an_error": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestOrderJSON/marshal": "FAIL",
+        "TestOrderJSON/empty_note_is_omitted": "FAIL",
+        "TestOrderJSON/decode": "FAIL",
+        "TestOrderJSON/round_trip": "PASS",
+        "TestOrderJSON/unknown_status_is_an_error": "FAIL",
+        "TestOrderJSON/unknown_field_is_an_error": "PASS"
+      }
+    },
+    "wrong": {
+      "allows-unknown-fields.go": {
+        "passed": false,
+        "cases": {
+          "TestOrderJSON/marshal": "PASS",
+          "TestOrderJSON/empty_note_is_omitted": "PASS",
+          "TestOrderJSON/decode": "PASS",
+          "TestOrderJSON/round_trip": "PASS",
+          "TestOrderJSON/unknown_status_is_an_error": "PASS",
+          "TestOrderJSON/unknown_field_is_an_error": "FAIL"
+        }
+      },
+      "value-receiver-unmarshal.go": {
+        "passed": false,
+        "cases": {
+          "TestOrderJSON/marshal": "PASS",
+          "TestOrderJSON/empty_note_is_omitted": "PASS",
+          "TestOrderJSON/decode": "FAIL",
+          "TestOrderJSON/round_trip": "FAIL",
+          "TestOrderJSON/unknown_status_is_an_error": "PASS",
+          "TestOrderJSON/unknown_field_is_an_error": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "<nil>\nid=42 tags=2\n",
+    "lockedLines": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ]
+  }
+}

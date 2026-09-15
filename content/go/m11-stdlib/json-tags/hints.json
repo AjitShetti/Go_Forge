@@ -1,0 +1,4 @@
+[
+  "Three separate mechanisms. Tags control names and omission: `json:\"note,omitempty\"`. A type controls its own encoding by implementing json.Marshaler and json.Unmarshaler, whose methods receive and return raw JSON, so a string needs its quotes. And json.Unmarshal always skips unknown fields; only a json.Decoder can be told not to.",
+  "Add `,omitempty` to Note's tag. Write func (s Status) MarshalJSON() ([]byte, error) { return json.Marshal(name) } and func (s *Status) UnmarshalJSON(data []byte) error that decodes into a string, looks it up, sets *s, or returns an error naming the unknown value. The pointer receiver matters. In DecodeOrder, use dec := json.NewDecoder(bytes.NewReader(data)); dec.DisallowUnknownFields(); dec.Decode(&o)."
+]
