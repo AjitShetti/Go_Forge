@@ -1,0 +1,4 @@
+[
+  "Work part by part. Store: a map of entries holding a value and an expiry time (zero means never), behind a mutex; Get checks expiry itself, and an entry is gone when now is not before its expiry. Handler: the method patterns from M11, time.ParseDuration for ttl. Pool: a buffered jobs channel and workers ranging over it, so closing the channel drains the queue. Submit and Shutdown share a lock so a send can never hit a closed channel.",
+  "Pool: NewPool makes jobs := make(chan func(), queue), starts workers with for job := range p.jobs { job() }, and closes a done channel after they all exit. Submit takes an RLock, returns ErrClosed if closed, else selects on p.jobs <- job and <-ctx.Done(). Shutdown takes the Lock, sets closed and closes jobs once, unlocks, then selects on <-p.done (nil) and <-ctx.Done() (ctx.Err())."
+]

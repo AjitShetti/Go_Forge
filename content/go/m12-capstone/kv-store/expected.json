@@ -1,0 +1,185 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "ana true\n false\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "ana true\n false\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "processed: 0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "processed: 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "processed: 5\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "processed: 5\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "server-shutdown": {
+      "mode": "local",
+      "compare": "exact",
+      "real": {
+        "stdout": "PUT: 204 <nil>\nShutdown: <nil>\nServe returned: http: Server closed\nslow request: finished anyway\nafter shutdown, new request fails: true\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestStore/set_and_get",
+      "TestStore/expires_exactly_at_its_deadline,_before_any_sweep",
+      "TestStore/zero_ttl_never_expires",
+      "TestStore/set_again_replaces_the_expiry",
+      "TestStore/delete_and_sweep",
+      "TestHandler/put,_get,_delete",
+      "TestHandler/ttl_from_the_query_string",
+      "TestHandler/bad_ttl_is_400_and_stores_nothing",
+      "TestPool/never_more_workers_than_asked",
+      "TestPool/shutdown_runs_everything_already_queued",
+      "TestPool/submit_after_shutdown",
+      "TestPool/submit_waits_for_room,_but_not_past_its_context",
+      "TestPool/shutdown_gives_up_when_its_context_ends"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestStore/set_and_get": "PASS",
+        "TestStore/expires_exactly_at_its_deadline,_before_any_sweep": "PASS",
+        "TestStore/zero_ttl_never_expires": "PASS",
+        "TestStore/set_again_replaces_the_expiry": "PASS",
+        "TestStore/delete_and_sweep": "PASS",
+        "TestHandler/put,_get,_delete": "PASS",
+        "TestHandler/ttl_from_the_query_string": "PASS",
+        "TestHandler/bad_ttl_is_400_and_stores_nothing": "PASS",
+        "TestPool/never_more_workers_than_asked": "PASS",
+        "TestPool/shutdown_runs_everything_already_queued": "PASS",
+        "TestPool/submit_after_shutdown": "PASS",
+        "TestPool/submit_waits_for_room,_but_not_past_its_context": "PASS",
+        "TestPool/shutdown_gives_up_when_its_context_ends": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestStore/set_and_get": "FAIL",
+        "TestStore/expires_exactly_at_its_deadline,_before_any_sweep": "FAIL",
+        "TestStore/zero_ttl_never_expires": "FAIL",
+        "TestStore/set_again_replaces_the_expiry": "FAIL",
+        "TestStore/delete_and_sweep": "FAIL",
+        "TestHandler/put,_get,_delete": "FAIL",
+        "TestHandler/ttl_from_the_query_string": "FAIL",
+        "TestHandler/bad_ttl_is_400_and_stores_nothing": "FAIL",
+        "TestPool/never_more_workers_than_asked": "FAIL",
+        "TestPool/shutdown_runs_everything_already_queued": "FAIL",
+        "TestPool/submit_after_shutdown": "FAIL",
+        "TestPool/submit_waits_for_room,_but_not_past_its_context": "FAIL",
+        "TestPool/shutdown_gives_up_when_its_context_ends": "FAIL"
+      }
+    },
+    "wrong": {
+      "bad-ttl-ignored.go": {
+        "passed": false,
+        "cases": {
+          "TestStore/set_and_get": "PASS",
+          "TestStore/expires_exactly_at_its_deadline,_before_any_sweep": "PASS",
+          "TestStore/zero_ttl_never_expires": "PASS",
+          "TestStore/set_again_replaces_the_expiry": "PASS",
+          "TestStore/delete_and_sweep": "PASS",
+          "TestHandler/put,_get,_delete": "PASS",
+          "TestHandler/ttl_from_the_query_string": "PASS",
+          "TestHandler/bad_ttl_is_400_and_stores_nothing": "FAIL",
+          "TestPool/never_more_workers_than_asked": "PASS",
+          "TestPool/shutdown_runs_everything_already_queued": "PASS",
+          "TestPool/submit_after_shutdown": "PASS",
+          "TestPool/submit_waits_for_room,_but_not_past_its_context": "PASS",
+          "TestPool/shutdown_gives_up_when_its_context_ends": "PASS"
+        }
+      },
+      "get-ignores-expiry.go": {
+        "passed": false,
+        "cases": {
+          "TestStore/set_and_get": "PASS",
+          "TestStore/expires_exactly_at_its_deadline,_before_any_sweep": "FAIL",
+          "TestStore/zero_ttl_never_expires": "PASS",
+          "TestStore/set_again_replaces_the_expiry": "PASS",
+          "TestStore/delete_and_sweep": "PASS",
+          "TestHandler/put,_get,_delete": "PASS",
+          "TestHandler/ttl_from_the_query_string": "FAIL",
+          "TestHandler/bad_ttl_is_400_and_stores_nothing": "PASS",
+          "TestPool/never_more_workers_than_asked": "PASS",
+          "TestPool/shutdown_runs_everything_already_queued": "PASS",
+          "TestPool/submit_after_shutdown": "PASS",
+          "TestPool/submit_waits_for_room,_but_not_past_its_context": "PASS",
+          "TestPool/shutdown_gives_up_when_its_context_ends": "PASS"
+        }
+      },
+      "shutdown-drops-queue.go": {
+        "passed": false,
+        "cases": {
+          "TestStore/set_and_get": "PASS",
+          "TestStore/expires_exactly_at_its_deadline,_before_any_sweep": "PASS",
+          "TestStore/zero_ttl_never_expires": "PASS",
+          "TestStore/set_again_replaces_the_expiry": "PASS",
+          "TestStore/delete_and_sweep": "PASS",
+          "TestHandler/put,_get,_delete": "PASS",
+          "TestHandler/ttl_from_the_query_string": "PASS",
+          "TestHandler/bad_ttl_is_400_and_stores_nothing": "PASS",
+          "TestPool/never_more_workers_than_asked": "PASS",
+          "TestPool/shutdown_runs_everything_already_queued": "FAIL",
+          "TestPool/submit_after_shutdown": "PASS",
+          "TestPool/submit_waits_for_room,_but_not_past_its_context": "PASS",
+          "TestPool/shutdown_gives_up_when_its_context_ends": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "processed: 5\n",
+    "lockedLines": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ]
+  }
+}
