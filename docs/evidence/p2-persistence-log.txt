@@ -1,0 +1,18 @@
+﻿
+== P2 persistence (signed in, live Supabase) ==
+PASS  e2e user signs in
+PASS  header shows the signed-in email
+PASS  save status is saved (persistence on)
+PASS  after reload, the locked prediction is restored (cannot re-predict)
+PASS  correct prediction recognised
+PASS  after reload, the lesson resumes at decode
+PASS  after reload, collide result is still shown
+PASS  after reload, the finished lesson shows 'marked for review'
+PASS  every transition is in lesson_events, in order  PREDICT,TRAP_RUN_STARTED,TRAP_RESULT,CONTINUE,CONTINUE,REBUILD_RUN,CONTINUE,CHALLENGE_RESULT,GIVE_UP,CONTINUE,SKIP_STRETCH
+PASS  prediction row: text, correct, concept tag  [{"id":"547c00ff-13b7-4d10-95a1-6b507ef9e9f8","user_id":"61e52a99-c42e-46f0-ae02-87d9802460ad","lesson_id":"8d431aa7-a0ef-4b62-85c0-ae17a970f3e5","concept_id":"4df5f596-694d-4726-918e-c8c31b1a08ea","text":"42 42","correct":true,"created_at":"2026-09-15T04:24:37.830285+00:00"}]
+PASS  runs: one collide, one rebuild, with output  [["rebuild","42 42\n","ok"],["collide","42 42\n","ok"]]
+PASS  challenge attempt: failed, cases recorded  [[false,["TestAppendCopy/empty_with_spare_capacity","TestAppendCopy/spare_capacity","TestAppendCopyTwiceDoesNotCollide"]]]
+PASS  lesson_progress: complete state, marked for review, not completed  [{"user_id":"61e52a99-c42e-46f0-ae02-87d9802460ad","lesson_id":"8d431aa7-a0ef-4b62-85c0-ae17a970f3e5","state":"complete","completed":false,"marked_for_review":true,"updated_at":"2026-09-15T04:24:43.007+00:00"}]
+PASS  no uncaught page errors
+
+ALL PASS

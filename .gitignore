@@ -1,5 +1,6 @@
 node_modules/
 public/engine/gen/
+public/monaco/
 .next/
 out/
 coverage/

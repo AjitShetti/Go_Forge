@@ -1,0 +1,72 @@
+﻿
+== P1 shell ==
+PASS  home renders pixel headline
+PASS  Supabase configured: header offers Sign in
+PASS  nav → /track
+PASS  nav → /review
+PASS  nav → /canvas
+PASS  nav → /notebook
+PASS  nav → /engine
+PASS  track lists 13 modules
+PASS  /review shows NOT IMPLEMENTED badge
+PASS  /canvas shows NOT IMPLEMENTED badge
+PASS  /notebook shows NOT IMPLEMENTED badge
+PASS  login shows the magic-link form
+PASS  auth callback with a bogus code redirects to /login with an error  status=307 location=http://localhost:3100/login?error=PKCE%20code%20verifier%20not%20found%20in%20storage.%20This%20can%20happen%20if%20the%20auth%20flow%20was%20initiated%20in%20a%20different%20browser%20or%20device%2C%20or%20if%20the%20storage%20was%20cleared.%20For%20SSR%20frameworks%20(Next.js%2C%20SvelteKit%2C%20etc.)%2C%20use%20%40supabase%2Fssr%20on%20both%20the%20server%20and%20client%20to%20store%20the%20code%20verifier%20in%20cookies.
+PASS  hashed engine binaries are served immutable  public, max-age=31536000, immutable
+
+== Engine page (P0 exit criteria, now inside Next) ==
+engine cold start: 1527 ms
+PASS  goroutines + WaitGroup + channel matches go run  status=ok total=1375ms
+PASS  panic: index out of range matches go run  status=exit total=358ms
+PASS  deadlock matches go run  status=deadlock total=310ms
+PASS  loop variable capture (try go1.21) [go1.21] matches go run  status=ok total=335ms
+PASS  compile error matches go run  status=compile_error total=29ms
+PASS  infinite loop stopped by timeout
+PASS  engine recovers after timeout
+
+== P2 lesson (signed out) ==
+PASS  save status is not-saved  kind=not-saved
+PASS  Run is disabled before predicting
+PASS  Run button says predict first
+PASS  Decode is not in the DOM before collide
+PASS  lock-in is disabled with no choice
+PASS  prediction locks: choices disabled
+PASS  collide shows the real Go output  page="42 42" go="42 42\n"
+PASS  wrong prediction is stated plainly
+PASS  no engine divergence warning
+PASS  still no explanation at collide
+PASS  decode explains the mechanism
+PASS  verified blocks show recorded output
+PASS  Python/JS contrast expands
+PASS  editing a locked line blocks the run
+PASS  rebuild goal met with a legal edit
+PASS  cannot continue from the challenge before passing
+PASS  hint 1 starts locked
+PASS  solution is not offered before passing
+PASS  starter (naive append) fails hidden tests
+PASS  failed cases are named  FAIL TestAppendCopy/empty_with_spare_capacity
+challenge_test.go:32: wrote 7 into the input's spare capacity | FAIL TestAppendCopy/spare_capacity
+challenge_test.go:32: wrote 3 into the input's spare capacity | FAIL TestAppendCopyTwiceDoesNotCollide
+challenge_test.go:50: b[3], c[3] = 42, 42; want 99, 42
+PASS  hint 1 still locked after 1 failure
+PASS  hint 1 unlocks after 2 failures
+PASS  hint 1 revealed
+PASS  hint 2 locked with countdown
+PASS  compile errors are reported, not a pass
+PASS  correct solution passes  data-passed=true results=5/5 CASES PASS
+430 MS
+PASS TestAppendCopy/nil_slice
+PASS TestAppendCopy/empty_with_spare_capacity
+PASS TestAppendCopy/full_slice
+PASS TestAppendCopy/spare_capacity
+PASS TestAppendCopyTwiceDoesNotCollide
+PASS  solution unlocks after passing
+PASS  lesson complete after pass without solution reveal
+PASS  machine reached complete
+
+== P2 persistence (signed in, live Supabase) ==
+FAIL  e2e user signs in  fetch failed
+PASS  no uncaught page errors
+
+1 FAILED

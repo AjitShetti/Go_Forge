@@ -41,14 +41,16 @@ const check = (label, ok, detail = "") => {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? "  " + detail : ""}`);
 };
 
-export const ctxApi = { page, check, BASE, shots, runRealGo, normalizeOutput };
+export const ctxApi = { page, ctx, check, BASE, shots, runRealGo, normalizeOutput, root };
 
 // ------------------------------------------------------------------- P1 ---
 if (only.includes("p1")) {
   console.log("\n== P1 shell ==");
   await page.goto(BASE + "/");
   check("home renders pixel headline", (await page.locator("h1").innerText()).toLowerCase().includes("first principles"));
-  check("DB not connected badge is visible", await page.getByTestId("supabase-status").isVisible());
+  const configured = (await page.getByTestId("supabase-status").count()) === 0;
+  if (configured) check("Supabase configured: header offers Sign in", await page.getByRole("link", { name: "Sign in" }).isVisible());
+  else check("DB not connected badge is visible", await page.getByTestId("supabase-status").isVisible());
   await page.screenshot({ path: join(shots, "p1-home.png"), fullPage: true });
 
   for (const [label, href] of [["Track", "/track"], ["Review", "/review"], ["Canvas", "/canvas"], ["Notebook", "/notebook"], ["Engine", "/engine"]]) {
@@ -68,10 +70,15 @@ if (only.includes("p1")) {
   }
 
   await page.goto(BASE + "/login");
-  check("login states Supabase is not configured", /supabase not configured/i.test(await page.getByTestId("not-implemented").innerText()));
-
-  const cb = await fetch(BASE + "/auth/callback?code=x", { redirect: "manual" });
-  check("auth callback without Supabase redirects to /login with error", cb.status === 307 && (cb.headers.get("location") ?? "").includes("/login?error="), `status=${cb.status}`);
+  if (configured) {
+    check("login shows the magic-link form", await page.getByRole("button", { name: "Email me a magic link" }).isVisible());
+    const cb = await fetch(BASE + "/auth/callback?code=not-a-real-code", { redirect: "manual" });
+    check("auth callback with a bogus code redirects to /login with an error", cb.status === 307 && (cb.headers.get("location") ?? "").includes("/login?error="), `status=${cb.status} location=${cb.headers.get("location")}`);
+  } else {
+    check("login states Supabase is not configured", /supabase not configured/i.test(await page.getByTestId("not-implemented").innerText()));
+    const cb = await fetch(BASE + "/auth/callback?code=x", { redirect: "manual" });
+    check("auth callback without Supabase redirects to /login with error", cb.status === 307 && (cb.headers.get("location") ?? "").includes("/login?error="), `status=${cb.status}`);
+  }
 
   const manifest = await (await fetch(BASE + "/engine/gen/manifest.json")).json();
   const head = await fetch(BASE + "/engine/gen/" + manifest.tools.compile.file, { method: "HEAD" });
@@ -123,6 +130,11 @@ if (only.includes("p2")) {
     if (e.code === "ERR_MODULE_NOT_FOUND") console.log("\n(P2 checks not present yet)");
     else throw e;
   }
+}
+
+if (only.includes("p2auth")) {
+  const { verifyP2Persistence } = await import("./verify-p2-persistence.mjs");
+  await verifyP2Persistence(ctxApi);
 }
 
 check("no uncaught page errors", pageErrors.length === 0, pageErrors.slice(0, 5).join(" | "));

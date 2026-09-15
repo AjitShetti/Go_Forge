@@ -3,8 +3,9 @@ import { initialState, replay, transition, view, type LessonEvent, type LessonSt
 
 let t = 1000;
 const at = () => (t += 1000);
+type Ev = LessonEvent extends infer E ? (E extends LessonEvent ? Omit<E, "at"> : never) : never;
 
-function run(events: Omit<LessonEvent, "at">[]): { state: LessonState; rejected: string[] } {
+function run(events: Ev[]): { state: LessonState; rejected: string[] } {
   let state = initialState;
   const rejected: string[] = [];
   for (const e of events) {
@@ -15,7 +16,7 @@ function run(events: Omit<LessonEvent, "at">[]): { state: LessonState; rejected:
   return { state, rejected };
 }
 
-const toChallenge: Omit<LessonEvent, "at">[] = [
+const toChallenge: Ev[] = [
   { type: "PREDICT", text: "99 42" },
   { type: "TRAP_RUN_STARTED" },
   { type: "TRAP_RESULT", observed: "42 42", correct: false },
@@ -23,7 +24,7 @@ const toChallenge: Omit<LessonEvent, "at">[] = [
   { type: "CONTINUE" },
   { type: "CONTINUE" },
 ];
-const fail = { type: "CHALLENGE_RESULT", passed: false, failedCases: ["TestX/a"] } as const;
+const fail: Ev = { type: "CHALLENGE_RESULT", passed: false, failedCases: ["TestX/a"] };
 
 describe("prediction gate", () => {
   it("run is disabled until a prediction is locked in", () => {
@@ -106,7 +107,7 @@ describe("challenge", () => {
 });
 
 describe("completion and replay", () => {
-  const full: Omit<LessonEvent, "at">[] = [
+  const full: Ev[] = [
     ...toChallenge,
     fail,
     { type: "CHALLENGE_RESULT", passed: true, failedCases: [] },

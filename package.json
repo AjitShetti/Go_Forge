@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/copy-monaco.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/copy-monaco.mjs",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",

@@ -121,6 +121,15 @@
     outline: 2px solid var(--color-blue);
     outline-offset: -1px;
   }
+  .gf-locked-line {
+    background: repeating-linear-gradient(135deg, rgba(61, 77, 240, 0.07) 0 6px, transparent 6px 12px);
+  }
+  .gf-locked-glyph::before {
+    content: "■";
+    color: var(--color-blue);
+    font-size: 9px;
+    margin-left: 6px;
+  }
   .code-block {
     font-family: var(--font-mono);
     font-size: 0.85rem;
