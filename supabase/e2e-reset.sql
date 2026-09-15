@@ -6,3 +6,4 @@ delete from public.predictions where user_id = (select id from auth.users where 
 delete from public.runs where user_id = (select id from auth.users where email = 'e2e@goforge.test');
 delete from public.challenge_attempts where user_id = (select id from auth.users where email = 'e2e@goforge.test');
 delete from public.notebook where user_id = (select id from auth.users where email = 'e2e@goforge.test');
+delete from public.mastery where user_id = (select id from auth.users where email = 'e2e@goforge.test');
