@@ -84,6 +84,9 @@ export function normalizeOutput(s) {
     .replace(/[A-Za-z]:\/[^\n:]*?\/Go\/src\//g, "")
     .replace(/ \+0x[0-9a-f]+/g, "")
     .replace(/\((0x[0-9a-f]+(, )?|\.\.\.(, )?)+\)/g, "(...)")
+    // Stack frame arguments that are strings or slices print as {ptr, len},
+    // and natively as "maybe" values with a trailing ?, e.g. main.handle({0x7ff6?, 0x5?}).
+    .replace(/([\w.)\]*])\((?:\{?(?:0x[0-9a-f]+\??|\.\.\.)\}?(?:, )?)+\)/g, "$1(...)")
     .replace(/goroutine \d+/g, "goroutine N")
     .replace(/^\[signal .*\]\n/gm, "");
 }

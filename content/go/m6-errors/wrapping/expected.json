@@ -1,0 +1,169 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "load user 7: not found\nfalse true\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "load user 7: not found\nfalse true\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "other: read config app.yaml: bad indent at line 3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "other: read config app.yaml: bad indent at line 3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "line 3 in read config app.yaml: bad indent at line 3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "line 3 in read config app.yaml: bad indent at line 3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "walk-the-chain": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "handle GET /users/7: query users: not found\n*fmt.wrapError: handle GET /users/7: query users: not found\n*fmt.wrapError: query users: not found\n*errors.errorString: not found\ntrue true\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "handle GET /users/7: query users: not found\n*fmt.wrapError: handle GET /users/7: query users: not found\n*fmt.wrapError: query users: not found\n*errors.errorString: not found\ntrue true\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestClassify/nil",
+      "TestClassify/bare_sentinel",
+      "TestClassify/bare_typed_error",
+      "TestClassify/wrapped_once_with_%w",
+      "TestClassify/wrapped_three_times",
+      "TestClassify/inside_OpError",
+      "TestClassify/OpError_inside_%w",
+      "TestClassify/joined_with_another_error",
+      "TestClassify/wrapped_with_%v_loses_the_chain",
+      "TestClassify/same_text_is_not_the_sentinel",
+      "TestClassify/plain_error",
+      "TestOpErrorMessage"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestClassify/nil": "PASS",
+        "TestClassify/bare_sentinel": "PASS",
+        "TestClassify/bare_typed_error": "PASS",
+        "TestClassify/wrapped_once_with_%w": "PASS",
+        "TestClassify/wrapped_three_times": "PASS",
+        "TestClassify/inside_OpError": "PASS",
+        "TestClassify/OpError_inside_%w": "PASS",
+        "TestClassify/joined_with_another_error": "PASS",
+        "TestClassify/wrapped_with_%v_loses_the_chain": "PASS",
+        "TestClassify/same_text_is_not_the_sentinel": "PASS",
+        "TestClassify/plain_error": "PASS",
+        "TestOpErrorMessage": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestClassify/nil": "PASS",
+        "TestClassify/bare_sentinel": "PASS",
+        "TestClassify/bare_typed_error": "PASS",
+        "TestClassify/wrapped_once_with_%w": "FAIL",
+        "TestClassify/wrapped_three_times": "FAIL",
+        "TestClassify/inside_OpError": "FAIL",
+        "TestClassify/OpError_inside_%w": "FAIL",
+        "TestClassify/joined_with_another_error": "FAIL",
+        "TestClassify/wrapped_with_%v_loses_the_chain": "PASS",
+        "TestClassify/same_text_is_not_the_sentinel": "PASS",
+        "TestClassify/plain_error": "PASS",
+        "TestOpErrorMessage": "PASS"
+      }
+    },
+    "wrong": {
+      "no-unwrap-method.go": {
+        "passed": false,
+        "cases": {
+          "TestClassify/nil": "PASS",
+          "TestClassify/bare_sentinel": "PASS",
+          "TestClassify/bare_typed_error": "PASS",
+          "TestClassify/wrapped_once_with_%w": "PASS",
+          "TestClassify/wrapped_three_times": "PASS",
+          "TestClassify/inside_OpError": "FAIL",
+          "TestClassify/OpError_inside_%w": "FAIL",
+          "TestClassify/joined_with_another_error": "PASS",
+          "TestClassify/wrapped_with_%v_loses_the_chain": "PASS",
+          "TestClassify/same_text_is_not_the_sentinel": "PASS",
+          "TestClassify/plain_error": "PASS",
+          "TestOpErrorMessage": "PASS"
+        }
+      },
+      "unwrap-once.go": {
+        "passed": false,
+        "cases": {
+          "TestClassify/nil": "PASS",
+          "TestClassify/bare_sentinel": "PASS",
+          "TestClassify/bare_typed_error": "PASS",
+          "TestClassify/wrapped_once_with_%w": "PASS",
+          "TestClassify/wrapped_three_times": "FAIL",
+          "TestClassify/inside_OpError": "PASS",
+          "TestClassify/OpError_inside_%w": "FAIL",
+          "TestClassify/joined_with_another_error": "FAIL",
+          "TestClassify/wrapped_with_%v_loses_the_chain": "PASS",
+          "TestClassify/same_text_is_not_the_sentinel": "PASS",
+          "TestClassify/plain_error": "PASS",
+          "TestOpErrorMessage": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "line 3 in read config app.yaml: bad indent at line 3\n",
+    "lockedLines": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  }
+}

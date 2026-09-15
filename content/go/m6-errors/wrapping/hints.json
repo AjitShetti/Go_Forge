@@ -1,0 +1,4 @@
+[
+  "== and a type assertion only look at the outermost error, and every case in the tests is wrapped. errors.Is(err, target) and errors.As(err, &ptr) walk the chain by calling Unwrap() over and over. But that only works if every layer has an Unwrap method, and *OpError doesn't have one yet.",
+  "Add func (e *OpError) Unwrap() error { return e.Err }. In Classify, use errors.Is(err, ErrNotFound), then var rl *RateLimitError; if errors.As(err, &rl) { return \"retry after \" + rl.RetryAfter.String() }. errors.Join needs nothing extra: Is and As already look inside it."
+]

@@ -1,0 +1,4 @@
+[
+  "Callers check ErrEmpty with ==, which compares the interface's type and pointer, not the text. errors.New(\"port: empty\") makes a new pointer every time, so only the ErrEmpty variable itself matches. The other two cases need errors whose dynamic type is exactly *RangeError or *SyntaxError.",
+  "Return ErrEmpty for \"\". Call strconv.Atoi(s): if it fails, return &SyntaxError{Input: s}, not Atoi's own error. If n < 1 or n > 65535, return &RangeError{Value: n}. Otherwise return n, nil."
+]

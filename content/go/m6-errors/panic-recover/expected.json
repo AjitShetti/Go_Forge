@@ -1,0 +1,130 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "main done\n",
+        "stderr": "panic: assignment to entry in nil map\n\ngoroutine N [running]:\nmain.safely()\n\tmain.go:16\nmain.main()\n\tmain.go:7\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "main done\n",
+        "stderr": "panic: assignment to entry in nil map\n\ngoroutine N [running]:\nmain.safely()\n\tmain.go:16\nmain.main()\n\tmain.go:7\n",
+        "exitCode": 2,
+        "status": "exit"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "/ok 200\n",
+        "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n\ngoroutine N [running]:\nmain.handle(...)\n\tmain.go:20\nmain.serve(...)\n\tmain.go:14\nmain.main()\n\tmain.go:7\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "/ok 200\n",
+        "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n\ngoroutine N [running]:\nmain.handle(...)\n\tmain.go:20\nmain.serve(...)\n\tmain.go:14\nmain.main()\n\tmain.go:7\n",
+        "exitCode": 2,
+        "status": "exit"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "/ok 200\n/boom 500\n/ok 200\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "/ok 200\n/boom 500\n/ok 200\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "recover-values": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "<nil>\nruntime error: index out of range [3] with length 0 true\nbad state 7\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "<nil>\nruntime error: index out of range [3] with length 0 true\nbad state 7\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestEval/valid_expressions",
+      "TestEval/syntax_errors_are_returned,_not_panicked",
+      "TestEval/error_message",
+      "TestEval/division_by_zero_still_panics",
+      "TestEval/usable_after_an_error"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestEval/valid_expressions": "PASS",
+        "TestEval/syntax_errors_are_returned,_not_panicked": "PASS",
+        "TestEval/error_message": "PASS",
+        "TestEval/division_by_zero_still_panics": "PASS",
+        "TestEval/usable_after_an_error": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestEval/valid_expressions": "PASS",
+        "TestEval/syntax_errors_are_returned,_not_panicked": "FAIL",
+        "TestEval/error_message": "FAIL",
+        "TestEval/division_by_zero_still_panics": "PASS",
+        "TestEval/usable_after_an_error": "PASS"
+      }
+    },
+    "wrong": {
+      "recover-in-helper.go": {
+        "passed": false,
+        "cases": {
+          "TestEval/valid_expressions": "PASS",
+          "TestEval/syntax_errors_are_returned,_not_panicked": "FAIL",
+          "TestEval/error_message": "FAIL",
+          "TestEval/division_by_zero_still_panics": "PASS",
+          "TestEval/usable_after_an_error": "PASS"
+        }
+      },
+      "recovers-everything.go": {
+        "passed": false,
+        "cases": {
+          "TestEval/valid_expressions": "PASS",
+          "TestEval/syntax_errors_are_returned,_not_panicked": "PASS",
+          "TestEval/error_message": "PASS",
+          "TestEval/division_by_zero_still_panics": "FAIL",
+          "TestEval/usable_after_an_error": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "/ok 200\n/boom 500\n/ok 200\n",
+    "lockedLines": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  }
+}

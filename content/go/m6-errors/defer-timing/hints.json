@@ -1,0 +1,4 @@
+[
+  "Close must run on every path, including the early return after a write error, so it belongs in a defer. But `defer w.Close()` throws Close's error away, and an ordinary deferred function can't change the returned error unless that error has a name.",
+  "Name the result: func Save(...) (err error). Then defer func() { if cerr := w.Close(); err == nil { err = cerr } }(). By the time the deferred function runs, the return statement has already stored its value in err, so only overwrite err when it's still nil."
+]

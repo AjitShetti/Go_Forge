@@ -1,0 +1,139 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "not found\nfalse true\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "not found\nfalse true\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "ok 20\nunexpected: insufficient funds\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "ok 20\nunexpected: insufficient funds\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "ok 20\ndeclined: insufficient funds\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "ok 20\ndeclined: insufficient funds\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "pointer-identity": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "false true\n*errors.errorString main.valueErr\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "false true\n*errors.errorString main.valueErr\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestParsePort/valid_ports",
+      "TestParsePort/empty_is_the_ErrEmpty_sentinel",
+      "TestParsePort/out_of_range_is_a_*RangeError",
+      "TestParsePort/not_a_number_is_a_*SyntaxError",
+      "TestParsePort/messages"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestParsePort/valid_ports": "PASS",
+        "TestParsePort/empty_is_the_ErrEmpty_sentinel": "PASS",
+        "TestParsePort/out_of_range_is_a_*RangeError": "PASS",
+        "TestParsePort/not_a_number_is_a_*SyntaxError": "PASS",
+        "TestParsePort/messages": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestParsePort/valid_ports": "FAIL",
+        "TestParsePort/empty_is_the_ErrEmpty_sentinel": "FAIL",
+        "TestParsePort/out_of_range_is_a_*RangeError": "FAIL",
+        "TestParsePort/not_a_number_is_a_*SyntaxError": "FAIL",
+        "TestParsePort/messages": "FAIL"
+      }
+    },
+    "wrong": {
+      "new-error-same-text.go": {
+        "passed": false,
+        "cases": {
+          "TestParsePort/valid_ports": "PASS",
+          "TestParsePort/empty_is_the_ErrEmpty_sentinel": "FAIL",
+          "TestParsePort/out_of_range_is_a_*RangeError": "PASS",
+          "TestParsePort/not_a_number_is_a_*SyntaxError": "PASS",
+          "TestParsePort/messages": "PASS"
+        }
+      },
+      "string-errors.go": {
+        "passed": false,
+        "cases": {
+          "TestParsePort/valid_ports": "PASS",
+          "TestParsePort/empty_is_the_ErrEmpty_sentinel": "PASS",
+          "TestParsePort/out_of_range_is_a_*RangeError": "FAIL",
+          "TestParsePort/not_a_number_is_a_*SyntaxError": "FAIL",
+          "TestParsePort/messages": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "ok 20\ndeclined: insufficient funds\n",
+    "lockedLines": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ]
+  }
+}

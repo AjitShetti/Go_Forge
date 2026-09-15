@@ -77,7 +77,7 @@ Written by `--update`. The lesson player reads it:
 }
 ```
 
-Outputs are normalized only where platforms legitimately differ: temp paths, `.\file.go` versus `./file.go`, PC offsets, goroutine ids, and the `# prog` build header (`scripts/real-go.mjs` `normalizeOutput`, plus `norm` in the verifier).
+Outputs are normalized only where platforms legitimately differ: temp paths, `.\file.go` versus `./file.go`, PC offsets, goroutine ids, argument values in stack frames, and the `# prog` build header (`scripts/real-go.mjs` `normalizeOutput`, plus `norm` in the verifier).
 
 ## Engine divergences in M0–M3
 

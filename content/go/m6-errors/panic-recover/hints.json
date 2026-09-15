@@ -1,0 +1,4 @@
+[
+  "The parser panics with a parseError value, and nothing stops that panic before it leaves Eval. Only a deferred function that calls recover() itself can stop it. Calling recover from a helper, or from a function that isn't deferred, returns nil.",
+  "At the top of Eval: defer func() { r := recover(); if r == nil { return }; pe, ok := r.(parseError); if !ok { panic(r) }; result, err = 0, pe }(). The named results let the deferred function set what Eval returns, and panic(r) sends anything else, like division by zero, back on its way."
+]
