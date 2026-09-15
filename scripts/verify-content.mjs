@@ -84,7 +84,9 @@ export function shapeOf(s) {
     .filter((l) => !/^fuzz: /.test(l))
     .map((l) =>
       l
-        .replace(/^(Benchmark\S+?)(-\d+)?(\s+)\d+(\s+)[\d.]+ ns\/op/, "$1-P$3N$4N ns/op")
+        // Benchmark columns are padded to the width of the numbers, so the
+        // spacing changes with them too: one space between fields.
+        .replace(/^(Benchmark\S+?)(?:-\d+)?\s+\d+\s+[\d.]+ ns\/op(.*)$/, (_, name, rest) => `${name}-P N N ns/op${rest.replace(/\s+/g, " ")}`)
         .replace(/^cpu: .*$/, "cpu: <this machine>")
         .replace(/^goos: \S+$/, "goos: <os>")
         .replace(/\(\d+\.\d+s\)/g, "(N.NNs)")

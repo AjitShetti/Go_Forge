@@ -1,0 +1,141 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "8\n4\n1\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "8\n4\n1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "alpha,beta,gamma,delta,epsilon,zeta,eta,theta\n4\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "alpha,beta,gamma,delta,epsilon,zeta,eta,theta\n4\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "alpha,beta,gamma,delta,epsilon,zeta,eta,theta\n1\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "alpha,beta,gamma,delta,epsilon,zeta,eta,theta\n1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "bench": {
+      "mode": "local",
+      "compare": "shape",
+      "cmd": "test",
+      "args": [
+        "-run=^$",
+        "-bench=.",
+        "-benchmem"
+      ],
+      "real": {
+        "stdout": "goos: <os>\ngoarch: amd64\npkg: prog\ncpu: <this machine>\nBenchmarkConcat-P N N ns/op 248 B/op 8 allocs/op\nBenchmarkBuilder-P N N ns/op 120 B/op 4 allocs/op\nBenchmarkBuilderGrow-P N N ns/op 64 B/op 1 allocs/op\nPASS\nok  \tprog\tN.NNNs\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false
+    },
+    "fuzz": {
+      "mode": "local",
+      "compare": "shape",
+      "cmd": "test",
+      "args": [
+        "-run=^$",
+        "-fuzz=FuzzFirstWord",
+        "-fuzztime=20s"
+      ],
+      "real": {
+        "stdout": "--- FAIL: FuzzFirstWord (N.NNs)\n    --- FAIL: FuzzFirstWord (N.NNs)\n        testing.go:2076: panic: runtime error: slice bounds out of range [:-1]\n            goroutine N [running]:\n            runtime/debug.Stack()\n            \truntime/debug/stack.go:26\n            testing.tRunner.func1()\n            \ttesting/testing.go:2076\n            panic(...)\n            \truntime/panic.go:859\n            prog.firstWord(...)\n            \tmain_test.go:11\n            prog.FuzzFirstWord.func1(...)\n            \tmain_test.go:17\n            reflect.Value.call(...)\n            \treflect/value.go:586\n            reflect.Value.Call(...)\n            \treflect/value.go:369\n            testing.(*F).Fuzz.func1.1(...)\n            \ttesting/fuzz.go:341\n            testing.tRunner(...)\n            \ttesting/testing.go:2193\n            created by testing.(*F).Fuzz.func1 in goroutine N\n            \ttesting/fuzz.go:328\n            \n    \n    Failing input written to testdata/fuzz/FuzzFirstWord/771e938e4458e983\n    To re-run:\n    go test -run=FuzzFirstWord/771e938e4458e983\nFAIL\nexit status 1\nFAIL\tprog\tN.NNNs\n",
+        "stderr": "",
+        "exitCode": 1
+      },
+      "diverges": false
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestReverse/examples",
+      "TestReverse/regressions",
+      "TestReverse/property_over_generated_strings",
+      "TestReverse/at_most_one_allocation"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestReverse/examples": "PASS",
+        "TestReverse/regressions": "PASS",
+        "TestReverse/property_over_generated_strings": "PASS",
+        "TestReverse/at_most_one_allocation": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestReverse/examples": "FAIL",
+        "TestReverse/regressions": "FAIL",
+        "TestReverse/property_over_generated_strings": "FAIL",
+        "TestReverse/at_most_one_allocation": "FAIL"
+      }
+    },
+    "wrong": {
+      "ascii-fast-path.go": {
+        "passed": false,
+        "cases": {
+          "TestReverse/examples": "FAIL",
+          "TestReverse/regressions": "FAIL",
+          "TestReverse/property_over_generated_strings": "FAIL",
+          "TestReverse/at_most_one_allocation": "PASS"
+        }
+      },
+      "rune-slice.go": {
+        "passed": false,
+        "cases": {
+          "TestReverse/examples": "PASS",
+          "TestReverse/regressions": "PASS",
+          "TestReverse/property_over_generated_strings": "PASS",
+          "TestReverse/at_most_one_allocation": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "alpha,beta,gamma,delta,epsilon,zeta,eta,theta\n1\n",
+    "lockedLines": [
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  }
+}

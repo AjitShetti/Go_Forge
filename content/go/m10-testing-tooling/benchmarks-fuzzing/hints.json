@@ -1,0 +1,4 @@
+[
+  "Reversing bytes breaks any character stored in more than one byte, which is everything outside ASCII in UTF-8. Reversing a []rune is correct, but converting to []rune and back to string allocates twice. The allocation test wants one: a buffer sized once, filled, and handed back without copying.",
+  "Use a strings.Builder with b.Grow(len(s)). Loop while len(s) > 0: r, size := utf8.DecodeLastRuneInString(s); b.WriteRune(r); s = s[:len(s)-size]. Return b.String(), which doesn't copy the buffer."
+]
