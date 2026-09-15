@@ -1,0 +1,4 @@
+[
+  "The goroutine spends almost all its life blocked on out <- i. If the reader has gone, that send never completes, and a check of ctx before or after it never runs. Cancellation has to be something the goroutine can notice while it's blocked. Separately, a reader ranging over the channel only stops when the channel is closed.",
+  "Replace the plain send with select { case out <- i: case <-ctx.Done(): return }, and put defer close(out) at the top of the goroutine. Only the producer closes, and only after it has stopped sending."
+]

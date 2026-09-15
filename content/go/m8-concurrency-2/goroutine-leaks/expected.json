@@ -1,0 +1,113 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "timeout\ntimeout\ntimeout\nstill running: 3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "timeout\ntimeout\ntimeout\nstill running: 3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "file0 line0\nfile1 line0\nfile2 line0\nstill running: 3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "file0 line0\nfile1 line0\nfile2 line0\nstill running: 3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "file0 line0\nfile1 line0\nfile2 line0\nstill running: 0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "file0 line0\nfile1 line0\nfile2 line0\nstill running: 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestNumbers/counts_from_zero",
+      "TestNumbers/closes_after_cancel",
+      "TestNumbers/stops_when_nobody_is_reading",
+      "TestNumbers/already_cancelled"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestNumbers/counts_from_zero": "PASS",
+        "TestNumbers/closes_after_cancel": "PASS",
+        "TestNumbers/stops_when_nobody_is_reading": "PASS",
+        "TestNumbers/already_cancelled": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestNumbers/counts_from_zero": "PASS",
+        "TestNumbers/closes_after_cancel": "FAIL",
+        "TestNumbers/stops_when_nobody_is_reading": "FAIL",
+        "TestNumbers/already_cancelled": "FAIL"
+      }
+    },
+    "wrong": {
+      "check-between-sends.go": {
+        "passed": false,
+        "cases": {
+          "TestNumbers/counts_from_zero": "PASS",
+          "TestNumbers/closes_after_cancel": "PASS",
+          "TestNumbers/stops_when_nobody_is_reading": "FAIL",
+          "TestNumbers/already_cancelled": "PASS"
+        }
+      },
+      "never-closes.go": {
+        "passed": false,
+        "cases": {
+          "TestNumbers/counts_from_zero": "PASS",
+          "TestNumbers/closes_after_cancel": "FAIL",
+          "TestNumbers/stops_when_nobody_is_reading": "PASS",
+          "TestNumbers/already_cancelled": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "file0 line0\nfile1 line0\nfile2 line0\nstill running: 0\n",
+    "lockedLines": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ]
+  }
+}
