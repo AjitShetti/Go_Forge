@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/lib/supabase/server";
 const NAV = [
   { href: "/track", label: "Track" },
   { href: "/review", label: "Review" },
+  { href: "/dashboard", label: "Progress" },
   { href: "/canvas", label: "Canvas" },
   { href: "/notebook", label: "Notebook" },
   { href: "/engine", label: "Engine" },
