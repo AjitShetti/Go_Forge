@@ -1,0 +1,142 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "0 1\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "0 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "allocs per call: 1\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "allocs per call: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "allocs per call: 0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "allocs per call: 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "escape-m": {
+      "mode": "build",
+      "compare": "exact",
+      "gcflags": [
+        "-m"
+      ],
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:12:9: &point{...} escapes to heap\n",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:12:9: &point{...} escapes to heap\n",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestFields/one_word",
+      "TestFields/two_words",
+      "TestFields/runs_of_spaces",
+      "TestFields/empty",
+      "TestFields/only_spaces",
+      "TestFieldsKeepsDst",
+      "TestFieldsDoesNotAllocate"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestFields/one_word": "PASS",
+        "TestFields/two_words": "PASS",
+        "TestFields/runs_of_spaces": "PASS",
+        "TestFields/empty": "PASS",
+        "TestFields/only_spaces": "PASS",
+        "TestFieldsKeepsDst": "PASS",
+        "TestFieldsDoesNotAllocate": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestFields/one_word": "PASS",
+        "TestFields/two_words": "PASS",
+        "TestFields/runs_of_spaces": "PASS",
+        "TestFields/empty": "PASS",
+        "TestFields/only_spaces": "PASS",
+        "TestFieldsKeepsDst": "PASS",
+        "TestFieldsDoesNotAllocate": "FAIL"
+      }
+    },
+    "wrong": {
+      "builder-per-word.go": {
+        "passed": false,
+        "cases": {
+          "TestFields/one_word": "PASS",
+          "TestFields/two_words": "PASS",
+          "TestFields/runs_of_spaces": "PASS",
+          "TestFields/empty": "PASS",
+          "TestFields/only_spaces": "PASS",
+          "TestFieldsKeepsDst": "PASS",
+          "TestFieldsDoesNotAllocate": "FAIL"
+        }
+      },
+      "split-and-filter.go": {
+        "passed": false,
+        "cases": {
+          "TestFields/one_word": "PASS",
+          "TestFields/two_words": "PASS",
+          "TestFields/runs_of_spaces": "PASS",
+          "TestFields/empty": "PASS",
+          "TestFields/only_spaces": "PASS",
+          "TestFieldsKeepsDst": "PASS",
+          "TestFieldsDoesNotAllocate": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "allocs per call: 0\n",
+    "lockedLines": [
+      18,
+      19,
+      20,
+      21
+    ]
+  }
+}

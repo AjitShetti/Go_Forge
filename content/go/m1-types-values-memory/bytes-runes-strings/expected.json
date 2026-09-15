@@ -1,0 +1,151 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "6 195 Ã\n0:h 1:é 3:l 4:l 5:o \n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "6 195 Ã\n0:h 1:é 3:l 4:l 5:o \n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "\"oll\\xa9\\xc3h\"\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "\"oll\\xa9\\xc3h\"\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "\"olléh\"\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "\"olléh\"\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "bytes-vs-runes": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[195 169] [233]\n6 5 5\n68 c3 a9 6c 6c 6f\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[195 169] [233]\n6 5 5\n68 c3 a9 6c 6c 6f\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestTruncate/ascii_short",
+      "TestTruncate/ascii_exact",
+      "TestTruncate/ascii_cut",
+      "TestTruncate/accent_exact",
+      "TestTruncate/accent_cut_after",
+      "TestTruncate/accent_cut_before",
+      "TestTruncate/japanese",
+      "TestTruncate/emoji",
+      "TestTruncate/empty",
+      "TestTruncate/zero"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestTruncate/ascii_short": "PASS",
+        "TestTruncate/ascii_exact": "PASS",
+        "TestTruncate/ascii_cut": "PASS",
+        "TestTruncate/accent_exact": "PASS",
+        "TestTruncate/accent_cut_after": "PASS",
+        "TestTruncate/accent_cut_before": "PASS",
+        "TestTruncate/japanese": "PASS",
+        "TestTruncate/emoji": "PASS",
+        "TestTruncate/empty": "PASS",
+        "TestTruncate/zero": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestTruncate/ascii_short": "PASS",
+        "TestTruncate/ascii_exact": "PASS",
+        "TestTruncate/ascii_cut": "PASS",
+        "TestTruncate/accent_exact": "FAIL",
+        "TestTruncate/accent_cut_after": "FAIL",
+        "TestTruncate/accent_cut_before": "PASS",
+        "TestTruncate/japanese": "FAIL",
+        "TestTruncate/emoji": "FAIL",
+        "TestTruncate/empty": "PASS",
+        "TestTruncate/zero": "PASS"
+      }
+    },
+    "wrong": {
+      "byte-length-check.go": {
+        "passed": false,
+        "cases": {
+          "TestTruncate/ascii_short": "PASS",
+          "TestTruncate/ascii_exact": "PASS",
+          "TestTruncate/ascii_cut": "PASS",
+          "TestTruncate/accent_exact": "FAIL",
+          "TestTruncate/accent_cut_after": "PASS",
+          "TestTruncate/accent_cut_before": "PASS",
+          "TestTruncate/japanese": "PASS",
+          "TestTruncate/emoji": "PASS",
+          "TestTruncate/empty": "PASS",
+          "TestTruncate/zero": "PASS"
+        }
+      },
+      "byte-slice-cut.go": {
+        "passed": false,
+        "cases": {
+          "TestTruncate/ascii_short": "PASS",
+          "TestTruncate/ascii_exact": "PASS",
+          "TestTruncate/ascii_cut": "PASS",
+          "TestTruncate/accent_exact": "PASS",
+          "TestTruncate/accent_cut_after": "FAIL",
+          "TestTruncate/accent_cut_before": "PASS",
+          "TestTruncate/japanese": "FAIL",
+          "TestTruncate/emoji": "FAIL",
+          "TestTruncate/empty": "PASS",
+          "TestTruncate/zero": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "\"olléh\"\n",
+    "lockedLines": [
+      14
+    ]
+  }
+}

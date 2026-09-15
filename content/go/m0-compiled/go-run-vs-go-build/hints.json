@@ -1,0 +1,4 @@
+[
+  "Read the compiler errors top to bottom and fix them one at a time. Each one names a file, line and column. There are unused imports, and an int being mixed with int64.",
+  "Declare sum as int64, return 0 early when len(xs) == 0, and convert both operands before dividing: float64(sum) / float64(len(xs)). Converting after an integer division throws away the fraction."
+]

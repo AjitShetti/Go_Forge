@@ -1,0 +1,147 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "true 0 true true true\n\"\" [admin] 0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "true 0 true true true\n\"\" [admin] 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "warmest: 0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "warmest: 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "warmest: -3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "warmest: -3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "all-zero-values": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "0 0 false \"\" <nil> [] map[] <nil> [false false]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "0 0 false \"\" <nil> [] map[] <nil> [false false]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "useful-zero": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "ready 5\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "ready 5\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestPort/nil_config",
+      "TestPort/empty_config",
+      "TestPort/set",
+      "TestPort/other_keys_only",
+      "TestPort/explicit_zero",
+      "TestPort/explicit_zero_with_others"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestPort/nil_config": "PASS",
+        "TestPort/empty_config": "PASS",
+        "TestPort/set": "PASS",
+        "TestPort/other_keys_only": "PASS",
+        "TestPort/explicit_zero": "PASS",
+        "TestPort/explicit_zero_with_others": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestPort/nil_config": "PASS",
+        "TestPort/empty_config": "PASS",
+        "TestPort/set": "PASS",
+        "TestPort/other_keys_only": "PASS",
+        "TestPort/explicit_zero": "FAIL",
+        "TestPort/explicit_zero_with_others": "FAIL"
+      }
+    },
+    "wrong": {
+      "len-check.go": {
+        "passed": false,
+        "cases": {
+          "TestPort/nil_config": "PASS",
+          "TestPort/empty_config": "PASS",
+          "TestPort/set": "PASS",
+          "TestPort/other_keys_only": "FAIL",
+          "TestPort/explicit_zero": "PASS",
+          "TestPort/explicit_zero_with_others": "PASS"
+        }
+      },
+      "nil-check-only.go": {
+        "passed": false,
+        "cases": {
+          "TestPort/nil_config": "PASS",
+          "TestPort/empty_config": "FAIL",
+          "TestPort/set": "PASS",
+          "TestPort/other_keys_only": "FAIL",
+          "TestPort/explicit_zero": "PASS",
+          "TestPort/explicit_zero_with_others": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "warmest: -3\n",
+    "lockedLines": [
+      6
+    ]
+  }
+}

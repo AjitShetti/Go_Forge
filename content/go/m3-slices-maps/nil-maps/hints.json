@@ -1,0 +1,4 @@
+[
+  "A zero-value Index has a nil map. Reading a nil map is fine, so Lines already works. Writing to it panics, so Add has to create the map the first time, and the new map has to be stored in the caller's Index, not in a copy.",
+  "Keep the pointer receiver and start Add with: if ix.lines == nil { ix.lines = make(map[string][]int) }. Don't create a new map when one already exists, or you'll lose every word added before."
+]

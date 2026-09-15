@@ -1,0 +1,139 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[1 20 3 40 5]\n3 4\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[1 20 3 40 5]\n3 4\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[1 2 99 4] [1 2 99]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[1 2 99 4] [1 2 99]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[1 2 3 4] [1 2 99]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[1 2 3 4] [1 2 99]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "three-index": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "2 2\n[1 2 3 4 5] [20 3 40]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "2 2\n[1 2 3 4 5] [20 3 40]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestChunkValues/even",
+      "TestChunkValues/remainder",
+      "TestChunkValues/size_bigger_than_input",
+      "TestChunkValues/size_one",
+      "TestChunkValues/empty",
+      "TestChunkWritesDoNotLeak",
+      "TestChunkAppendsDoNotLeak"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestChunkValues/even": "PASS",
+        "TestChunkValues/remainder": "PASS",
+        "TestChunkValues/size_bigger_than_input": "PASS",
+        "TestChunkValues/size_one": "PASS",
+        "TestChunkValues/empty": "PASS",
+        "TestChunkWritesDoNotLeak": "PASS",
+        "TestChunkAppendsDoNotLeak": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestChunkValues/even": "PASS",
+        "TestChunkValues/remainder": "PASS",
+        "TestChunkValues/size_bigger_than_input": "PASS",
+        "TestChunkValues/size_one": "PASS",
+        "TestChunkValues/empty": "PASS",
+        "TestChunkWritesDoNotLeak": "FAIL",
+        "TestChunkAppendsDoNotLeak": "FAIL"
+      }
+    },
+    "wrong": {
+      "drops-remainder.go": {
+        "passed": false,
+        "cases": {
+          "TestChunkValues/even": "PASS",
+          "TestChunkValues/remainder": "FAIL",
+          "TestChunkValues/size_bigger_than_input": "FAIL",
+          "TestChunkValues/size_one": "PASS",
+          "TestChunkValues/empty": "PASS",
+          "TestChunkWritesDoNotLeak": "PASS",
+          "TestChunkAppendsDoNotLeak": "PASS"
+        }
+      },
+      "three-index-slice.go": {
+        "passed": false,
+        "cases": {
+          "TestChunkValues/even": "PASS",
+          "TestChunkValues/remainder": "PASS",
+          "TestChunkValues/size_bigger_than_input": "PASS",
+          "TestChunkValues/size_one": "PASS",
+          "TestChunkValues/empty": "PASS",
+          "TestChunkWritesDoNotLeak": "FAIL",
+          "TestChunkAppendsDoNotLeak": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "[1 2 3 4] [1 2 99]\n",
+    "lockedLines": [
+      10,
+      11,
+      12,
+      13
+    ]
+  }
+}

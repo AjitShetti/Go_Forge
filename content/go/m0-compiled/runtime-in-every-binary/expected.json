@@ -1,0 +1,154 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "before\ndeferred\n",
+        "stderr": "panic: runtime error: index out of range [5] with length 3\n\ngoroutine N [running]:\nmain.main()\n\tmain.go:10\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "before\ndeferred\n",
+        "stderr": "panic: runtime error: index out of range [5] with length 3\n\ngoroutine N [running]:\nmain.main()\n\tmain.go:10\n",
+        "exitCode": 2,
+        "status": "exit"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "panic: runtime error: index out of range [3] with length 3\n\ngoroutine N [running]:\nmain.main()\n\tmain.go:9\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "panic: runtime error: index out of range [3] with length 3\n\ngoroutine N [running]:\nmain.main()\n\tmain.go:9\n",
+        "exitCode": 2,
+        "status": "exit"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "total: 6\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "total: 6\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "const-index": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:7:17: invalid argument: index 5 out of bounds [0:3]\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:7:17: invalid argument: index 5 out of bounds [0:3]\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "runtime-error": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "true runtime error: index out of range [5] with length 3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "true runtime error: index out of range [5] with length 3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestAt/first",
+      "TestAt/last",
+      "TestAt/minus_one",
+      "TestAt/minus_len",
+      "TestAt/too_negative",
+      "TestAt/empty_negative",
+      "TestAt/empty_zero",
+      "TestAt/huge",
+      "TestAt/one_past_the_end"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestAt/first": "PASS",
+        "TestAt/last": "PASS",
+        "TestAt/minus_one": "PASS",
+        "TestAt/minus_len": "PASS",
+        "TestAt/too_negative": "PASS",
+        "TestAt/empty_negative": "PASS",
+        "TestAt/empty_zero": "PASS",
+        "TestAt/huge": "PASS",
+        "TestAt/one_past_the_end": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestAt/first": "PASS",
+        "TestAt/last": "PASS",
+        "TestAt/minus_one": "FAIL"
+      }
+    },
+    "wrong": {
+      "no-negative-indexing.go": {
+        "passed": false,
+        "cases": {
+          "TestAt/first": "PASS",
+          "TestAt/last": "PASS",
+          "TestAt/minus_one": "FAIL",
+          "TestAt/minus_len": "FAIL",
+          "TestAt/too_negative": "PASS",
+          "TestAt/empty_negative": "PASS",
+          "TestAt/empty_zero": "PASS",
+          "TestAt/huge": "PASS",
+          "TestAt/one_past_the_end": "PASS"
+        }
+      },
+      "off-by-one.go": {
+        "passed": false,
+        "cases": {
+          "TestAt/first": "PASS",
+          "TestAt/last": "PASS",
+          "TestAt/minus_one": "PASS",
+          "TestAt/minus_len": "PASS",
+          "TestAt/too_negative": "PASS",
+          "TestAt/empty_negative": "PASS",
+          "TestAt/empty_zero": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "total: 6\n",
+    "lockedLines": [
+      6
+    ]
+  }
+}

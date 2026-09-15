@@ -1,0 +1,150 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1\n1\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1\n1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "balance: 0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "balance: 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "balance: 150\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "balance: 150\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "method-expressions": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "not-addressable": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:11:9: cannot call pointer method IncPtr on Counter\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:11:9: cannot call pointer method IncPtr on Counter\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestStack/pop_on_empty",
+      "TestStack/last_in_first_out",
+      "TestStack/len_follows_push_and_pop",
+      "TestStack/empty_again_after_popping_everything",
+      "TestStack/stack_as_a_struct_field",
+      "TestStack/through_a_pointer"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestStack/pop_on_empty": "PASS",
+        "TestStack/last_in_first_out": "PASS",
+        "TestStack/len_follows_push_and_pop": "PASS",
+        "TestStack/empty_again_after_popping_everything": "PASS",
+        "TestStack/stack_as_a_struct_field": "PASS",
+        "TestStack/through_a_pointer": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestStack/pop_on_empty": "PASS",
+        "TestStack/last_in_first_out": "FAIL",
+        "TestStack/len_follows_push_and_pop": "FAIL",
+        "TestStack/empty_again_after_popping_everything": "PASS",
+        "TestStack/stack_as_a_struct_field": "FAIL",
+        "TestStack/through_a_pointer": "FAIL"
+      }
+    },
+    "wrong": {
+      "pop-value-receiver.go": {
+        "passed": false,
+        "cases": {
+          "TestStack/pop_on_empty": "PASS",
+          "TestStack/last_in_first_out": "FAIL",
+          "TestStack/len_follows_push_and_pop": "FAIL",
+          "TestStack/empty_again_after_popping_everything": "FAIL",
+          "TestStack/stack_as_a_struct_field": "PASS",
+          "TestStack/through_a_pointer": "PASS"
+        }
+      },
+      "push-value-receiver.go": {
+        "passed": false,
+        "cases": {
+          "TestStack/pop_on_empty": "PASS",
+          "TestStack/last_in_first_out": "FAIL",
+          "TestStack/len_follows_push_and_pop": "FAIL",
+          "TestStack/empty_again_after_popping_everything": "PASS",
+          "TestStack/stack_as_a_struct_field": "FAIL",
+          "TestStack/through_a_pointer": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "balance: 150\n",
+    "lockedLines": [
+      14,
+      15,
+      16,
+      17
+    ]
+  }
+}

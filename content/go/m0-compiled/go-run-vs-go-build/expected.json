@@ -1,0 +1,108 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:10:2: declared and not used: count\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:10:2: declared and not used: count\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:5:2: \"os\" imported and not used\n./main.go:13:2: declared and not used: count\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:5:2: \"os\" imported and not used\n./main.go:13:2: declared and not used: count\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "starting\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "starting\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestAverage/empty",
+      "TestAverage/single",
+      "TestAverage/half",
+      "TestAverage/negative_half",
+      "TestAverage/thirds",
+      "TestAverage/large"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestAverage/empty": "PASS",
+        "TestAverage/single": "PASS",
+        "TestAverage/half": "PASS",
+        "TestAverage/negative_half": "PASS",
+        "TestAverage/thirds": "PASS",
+        "TestAverage/large": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {}
+    },
+    "wrong": {
+      "integer-division.go": {
+        "passed": false,
+        "cases": {
+          "TestAverage/empty": "PASS",
+          "TestAverage/single": "PASS",
+          "TestAverage/half": "FAIL",
+          "TestAverage/negative_half": "FAIL",
+          "TestAverage/thirds": "FAIL",
+          "TestAverage/large": "PASS"
+        }
+      },
+      "no-empty-check.go": {
+        "passed": false,
+        "cases": {
+          "TestAverage/empty": "FAIL",
+          "TestAverage/single": "PASS",
+          "TestAverage/half": "PASS",
+          "TestAverage/negative_half": "PASS",
+          "TestAverage/thirds": "PASS",
+          "TestAverage/large": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "starting\n",
+    "lockedLines": [
+      13
+    ]
+  }
+}

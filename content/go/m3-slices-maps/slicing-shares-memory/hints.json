@@ -1,0 +1,4 @@
+[
+  "xs[i:end] is a window: same backing array, pointer moved forward, capacity running to the end of xs. Writes go straight into xs, and appends go into the elements after the window. A three-index slice only fixes the appends.",
+  "For each chunk, allocate chunk := make([]int, end-i) and copy(chunk, xs[i:end]). Keep the min(i+size, len(xs)) bound so the last, shorter chunk is included."
+]

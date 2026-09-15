@@ -1,0 +1,4 @@
+[
+  "strings.Fields and strings.Split each build a new []string, which is a heap allocation on every call. dst already has room. Append straight into it, and make each word a substring of s instead of new memory.",
+  "Walk s byte by byte and remember where the current word started. At each space (and at the end of s), if a word is open, append s[start:i] to dst. Slicing a string shares its bytes, so nothing is allocated."
+]

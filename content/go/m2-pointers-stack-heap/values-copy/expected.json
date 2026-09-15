@@ -1,0 +1,143 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1 1 100\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1 1 100\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[90 85 70]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[90 85 70]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[0 0 0]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[0 0 0]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "sizes": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "24 8000 16\n24 16 8\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "24 8000 16\n24 16 8\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "call-copies": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[1 2 3] [100 2 3]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[1 2 3] [100 2 3]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestClone/nil",
+      "TestClone/empty_rows",
+      "TestClone/square",
+      "TestClone/ragged",
+      "TestClone/spare_capacity"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestClone/nil": "PASS",
+        "TestClone/empty_rows": "PASS",
+        "TestClone/square": "PASS",
+        "TestClone/ragged": "PASS",
+        "TestClone/spare_capacity": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestClone/nil": "PASS",
+        "TestClone/empty_rows": "PASS",
+        "TestClone/square": "FAIL",
+        "TestClone/ragged": "FAIL",
+        "TestClone/spare_capacity": "FAIL"
+      }
+    },
+    "wrong": {
+      "copy-outer-only.go": {
+        "passed": false,
+        "cases": {
+          "TestClone/nil": "PASS",
+          "TestClone/empty_rows": "PASS",
+          "TestClone/square": "FAIL",
+          "TestClone/ragged": "FAIL",
+          "TestClone/spare_capacity": "FAIL"
+        }
+      },
+      "full-slice-expression.go": {
+        "passed": false,
+        "cases": {
+          "TestClone/nil": "PASS",
+          "TestClone/empty_rows": "PASS",
+          "TestClone/square": "FAIL",
+          "TestClone/ragged": "FAIL",
+          "TestClone/spare_capacity": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "[0 0 0]\n",
+    "lockedLines": [
+      12,
+      14
+    ]
+  }
+}

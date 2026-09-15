@@ -1,0 +1,183 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "3\n-3\n-1\n3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "3\n-3\n-1\n3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "average: 3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "average: 3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "average: 3.5\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "average: 3.5\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "untyped-float": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "3 3.5\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "3 3.5\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "typed-mismatch": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:7:20: cannot use n / 2 (value of type int) as float64 value in variable declaration\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:7:20: cannot use n / 2 (value of type int) as float64 value in variable declaration\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestFloorDiv/positive",
+      "TestFloorDiv/negative_dividend",
+      "TestFloorDiv/negative_divisor",
+      "TestFloorDiv/both_negative",
+      "TestFloorDiv/exact_negative",
+      "TestFloorDiv/exact_positive",
+      "TestFloorDiv/zero_dividend",
+      "TestFloorDiv/smaller_than_divisor",
+      "TestFloorMod/positive",
+      "TestFloorMod/negative_dividend",
+      "TestFloorMod/negative_divisor",
+      "TestFloorMod/both_negative",
+      "TestFloorMod/exact"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestFloorDiv/positive": "PASS",
+        "TestFloorDiv/negative_dividend": "PASS",
+        "TestFloorDiv/negative_divisor": "PASS",
+        "TestFloorDiv/both_negative": "PASS",
+        "TestFloorDiv/exact_negative": "PASS",
+        "TestFloorDiv/exact_positive": "PASS",
+        "TestFloorDiv/zero_dividend": "PASS",
+        "TestFloorDiv/smaller_than_divisor": "PASS",
+        "TestFloorMod/positive": "PASS",
+        "TestFloorMod/negative_dividend": "PASS",
+        "TestFloorMod/negative_divisor": "PASS",
+        "TestFloorMod/both_negative": "PASS",
+        "TestFloorMod/exact": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestFloorDiv/positive": "PASS",
+        "TestFloorDiv/negative_dividend": "FAIL",
+        "TestFloorDiv/negative_divisor": "FAIL",
+        "TestFloorDiv/both_negative": "PASS",
+        "TestFloorDiv/exact_negative": "PASS",
+        "TestFloorDiv/exact_positive": "PASS",
+        "TestFloorDiv/zero_dividend": "PASS",
+        "TestFloorDiv/smaller_than_divisor": "FAIL",
+        "TestFloorMod/positive": "PASS",
+        "TestFloorMod/negative_dividend": "FAIL",
+        "TestFloorMod/negative_divisor": "FAIL",
+        "TestFloorMod/both_negative": "PASS",
+        "TestFloorMod/exact": "PASS"
+      }
+    },
+    "wrong": {
+      "abs-mod.go": {
+        "passed": false,
+        "cases": {
+          "TestFloorDiv/positive": "PASS",
+          "TestFloorDiv/negative_dividend": "PASS",
+          "TestFloorDiv/negative_divisor": "PASS",
+          "TestFloorDiv/both_negative": "PASS",
+          "TestFloorDiv/exact_negative": "PASS",
+          "TestFloorDiv/exact_positive": "PASS",
+          "TestFloorDiv/zero_dividend": "PASS",
+          "TestFloorDiv/smaller_than_divisor": "PASS",
+          "TestFloorMod/positive": "PASS",
+          "TestFloorMod/negative_dividend": "PASS",
+          "TestFloorMod/negative_divisor": "FAIL",
+          "TestFloorMod/both_negative": "FAIL",
+          "TestFloorMod/exact": "PASS"
+        }
+      },
+      "subtract-when-negative.go": {
+        "passed": false,
+        "cases": {
+          "TestFloorDiv/positive": "PASS",
+          "TestFloorDiv/negative_dividend": "PASS",
+          "TestFloorDiv/negative_divisor": "FAIL",
+          "TestFloorDiv/both_negative": "FAIL",
+          "TestFloorDiv/exact_negative": "FAIL",
+          "TestFloorDiv/exact_positive": "PASS",
+          "TestFloorDiv/zero_dividend": "PASS",
+          "TestFloorDiv/smaller_than_divisor": "PASS",
+          "TestFloorMod/positive": "PASS",
+          "TestFloorMod/negative_dividend": "PASS",
+          "TestFloorMod/negative_divisor": "FAIL",
+          "TestFloorMod/both_negative": "FAIL",
+          "TestFloorMod/exact": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "average: 3.5\n",
+    "lockedLines": [
+      6,
+      7
+    ]
+  }
+}

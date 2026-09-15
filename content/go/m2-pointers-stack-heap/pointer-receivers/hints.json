@@ -1,0 +1,4 @@
+[
+  "With a value receiver, each method gets its own copy of the Stack struct, including a copy of the items slice header. Assigning s.items inside the method changes the copy, and the copy is thrown away when the method returns.",
+  "Change Push and Pop to pointer receivers: func (s *Stack) Push(v int). Your calls don't need to change, because Go takes &s automatically when s is addressable. Make Len a pointer receiver too, for consistency."
+]

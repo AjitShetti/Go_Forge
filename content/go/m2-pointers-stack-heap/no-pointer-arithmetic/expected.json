@@ -1,0 +1,153 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:8:2: invalid operation: p++ (non-numeric type *int)\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:8:2: invalid operation: p++ (non-numeric type *int)\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:11:3: invalid operation: p++ (non-numeric type *int)\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:11:3: invalid operation: p++ (non-numeric type *int)\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "sum: 60\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "sum: 60\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "return-local-address": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "5 0\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "5 0\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "stale-element-pointer": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "0 99\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "0 99\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "unsafe-add": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "20 8\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "20 8\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestReverse/empty",
+      "TestReverse/one",
+      "TestReverse/two",
+      "TestReverse/five"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestReverse/empty": "PASS",
+        "TestReverse/one": "PASS",
+        "TestReverse/two": "PASS",
+        "TestReverse/five": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestReverse/empty": "PASS",
+        "TestReverse/one": "PASS",
+        "TestReverse/two": "FAIL",
+        "TestReverse/five": "FAIL"
+      }
+    },
+    "wrong": {
+      "build-new-list.go": {
+        "passed": false,
+        "cases": {
+          "TestReverse/empty": "PASS",
+          "TestReverse/one": "FAIL",
+          "TestReverse/two": "FAIL",
+          "TestReverse/five": "FAIL"
+        }
+      },
+      "overwrite-before-save.go": {
+        "passed": false,
+        "cases": {
+          "TestReverse/empty": "PASS",
+          "TestReverse/one": "PASS",
+          "TestReverse/two": "FAIL",
+          "TestReverse/five": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "sum: 60\n",
+    "lockedLines": [
+      6
+    ]
+  }
+}

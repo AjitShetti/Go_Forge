@@ -1,0 +1,4 @@
+[
+  "Go's / truncates toward zero, so -7 / 2 is -3. Floor division only differs from that when there is a remainder and a and b have opposite signs.",
+  "Compute q := a / b. If a % b != 0 and (a < 0) != (b < 0), subtract 1 from q. Then FloorMod is a - FloorDiv(a, b)*b."
+]

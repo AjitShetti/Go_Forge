@@ -1,0 +1,199 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:8:14: invalid operation: a + b (mismatched types int and int64)\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:8:14: invalid operation: a + b (mismatched types int and int64)\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:6:9: cannot use w * h (value of type int32) as int64 value in return statement\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:6:9: cannot use w * h (value of type int32) as int64 value in return statement\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "area: 10000000000\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "area: 10000000000\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "wraparound": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "-128 0 5 44\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "-128 0 5 44\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "constant-overflow": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:6:15: cannot use 300 (untyped int constant) as byte value in variable declaration (overflows)\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:6:15: cannot use 300 (untyped int constant) as byte value in variable declaration (overflows)\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "int-size": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "64 8 4\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "64 8 4\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "convert-too-late": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1410065408 10000000000\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1410065408 10000000000\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestMulInt32/small",
+      "TestMulInt32/negative",
+      "TestMulInt32/zero_times_min",
+      "TestMulInt32/by_zero",
+      "TestMulInt32/just_fits",
+      "TestMulInt32/just_overflows",
+      "TestMulInt32/exactly_min",
+      "TestMulInt32/one_past_max",
+      "TestMulInt32/max_times_two",
+      "TestMulInt32/min_times_minus_one"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestMulInt32/small": "PASS",
+        "TestMulInt32/negative": "PASS",
+        "TestMulInt32/zero_times_min": "PASS",
+        "TestMulInt32/by_zero": "PASS",
+        "TestMulInt32/just_fits": "PASS",
+        "TestMulInt32/just_overflows": "PASS",
+        "TestMulInt32/exactly_min": "PASS",
+        "TestMulInt32/one_past_max": "PASS",
+        "TestMulInt32/max_times_two": "PASS",
+        "TestMulInt32/min_times_minus_one": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestMulInt32/small": "PASS",
+        "TestMulInt32/negative": "PASS",
+        "TestMulInt32/zero_times_min": "PASS",
+        "TestMulInt32/by_zero": "PASS",
+        "TestMulInt32/just_fits": "PASS",
+        "TestMulInt32/just_overflows": "FAIL",
+        "TestMulInt32/exactly_min": "PASS",
+        "TestMulInt32/one_past_max": "FAIL",
+        "TestMulInt32/max_times_two": "FAIL",
+        "TestMulInt32/min_times_minus_one": "FAIL"
+      }
+    },
+    "wrong": {
+      "convert-too-late.go": {
+        "passed": false,
+        "cases": {
+          "TestMulInt32/small": "PASS",
+          "TestMulInt32/negative": "PASS",
+          "TestMulInt32/zero_times_min": "PASS",
+          "TestMulInt32/by_zero": "PASS",
+          "TestMulInt32/just_fits": "PASS",
+          "TestMulInt32/just_overflows": "FAIL",
+          "TestMulInt32/exactly_min": "PASS",
+          "TestMulInt32/one_past_max": "FAIL",
+          "TestMulInt32/max_times_two": "FAIL",
+          "TestMulInt32/min_times_minus_one": "FAIL"
+        }
+      },
+      "divide-back.go": {
+        "passed": false,
+        "cases": {
+          "TestMulInt32/small": "PASS",
+          "TestMulInt32/negative": "PASS",
+          "TestMulInt32/zero_times_min": "PASS",
+          "TestMulInt32/by_zero": "PASS",
+          "TestMulInt32/just_fits": "PASS",
+          "TestMulInt32/just_overflows": "PASS",
+          "TestMulInt32/exactly_min": "PASS",
+          "TestMulInt32/one_past_max": "PASS",
+          "TestMulInt32/max_times_two": "PASS",
+          "TestMulInt32/min_times_minus_one": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "area: 10000000000\n",
+    "lockedLines": [
+      10
+    ]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "0 0 true\n",
+        "stderr": "panic: assignment to entry in nil map\n\ngoroutine N [running]:\nmain.main()\n\tmain.go:9\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "0 0 true\n",
+        "stderr": "panic: assignment to entry in nil map\n\ngoroutine N [running]:\nmain.main()\n\tmain.go:9\n",
+        "exitCode": 2,
+        "status": "exit"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "panic: assignment to entry in nil map\n\ngoroutine N [running]:\nmain.(*Counter).Add(...)\n\tmain.go:18\nmain.main()\n\tmain.go:11\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "panic: assignment to entry in nil map\n\ngoroutine N [running]:\nmain.(*Counter).Add(...)\n\tmain.go:18\nmain.main()\n\tmain.go:11\n",
+        "exitCode": 2,
+        "status": "exit"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "2 1\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "2 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "nil-slice-vs-nil-map": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[1] 0 false 0 true\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[1] 0 false 0 true\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "map-is-a-pointer": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "map[a:1] 8\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "map[a:1] 8\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestIndex/empty_index",
+      "TestIndex/zero_value_accepts_writes",
+      "TestIndex/keeps_every_word",
+      "TestIndex/missing_word",
+      "TestIndex/as_a_struct_field"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestIndex/empty_index": "PASS",
+        "TestIndex/zero_value_accepts_writes": "PASS",
+        "TestIndex/keeps_every_word": "PASS",
+        "TestIndex/missing_word": "PASS",
+        "TestIndex/as_a_struct_field": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestIndex/empty_index": "PASS",
+        "TestIndex/zero_value_accepts_writes": "FAIL"
+      }
+    },
+    "wrong": {
+      "fresh-map-every-add.go": {
+        "passed": false,
+        "cases": {
+          "TestIndex/empty_index": "PASS",
+          "TestIndex/zero_value_accepts_writes": "PASS",
+          "TestIndex/keeps_every_word": "FAIL",
+          "TestIndex/missing_word": "PASS",
+          "TestIndex/as_a_struct_field": "PASS"
+        }
+      },
+      "value-receiver-init.go": {
+        "passed": false,
+        "cases": {
+          "TestIndex/empty_index": "PASS",
+          "TestIndex/zero_value_accepts_writes": "FAIL",
+          "TestIndex/keeps_every_word": "FAIL",
+          "TestIndex/missing_word": "PASS",
+          "TestIndex/as_a_struct_field": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "2 1\n",
+    "lockedLines": [
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+[
+  "The starter counts every SEMICOLON token. Scan() also returns each token's literal text: compare that literal for a semicolon you typed and for one the scanner inserted.",
+  "Count tokens where tok == token.SEMICOLON && lit == \"\\n\". The scanner uses \"\\n\" as the literal both for a newline and for the end of the file."
+]

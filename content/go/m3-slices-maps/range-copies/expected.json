@@ -1,0 +1,143 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[{ana 10} {bo 20}]\n1 2 3 \n[1 50 3 99]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[{ana 10} {bo 20}]\n1 2 3 \n[1 50 3 99]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[{book 20} {pen 2.5}]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[{book 20} {pen 2.5}]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[{book 18} {pen 2.25}]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[{book 18} {pen 2.25}]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "modify-in-place": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[{ana 30} {bo 50}]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[{ana 30} {bo 50}]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "range-array-vs-slice": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1 2 3 \n1 50 3 \n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1 2 3 \n1 50 3 \n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestPromote/nobody",
+      "TestPromote/not_found",
+      "TestPromote/one_match",
+      "TestPromote/first_element",
+      "TestPromote/everyone_with_the_name"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestPromote/nobody": "PASS",
+        "TestPromote/not_found": "PASS",
+        "TestPromote/one_match": "PASS",
+        "TestPromote/first_element": "PASS",
+        "TestPromote/everyone_with_the_name": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestPromote/nobody": "PASS",
+        "TestPromote/not_found": "PASS",
+        "TestPromote/one_match": "FAIL",
+        "TestPromote/first_element": "FAIL",
+        "TestPromote/everyone_with_the_name": "FAIL"
+      }
+    },
+    "wrong": {
+      "pointer-to-loop-variable.go": {
+        "passed": false,
+        "cases": {
+          "TestPromote/nobody": "PASS",
+          "TestPromote/not_found": "PASS",
+          "TestPromote/one_match": "FAIL",
+          "TestPromote/first_element": "FAIL",
+          "TestPromote/everyone_with_the_name": "FAIL"
+        }
+      },
+      "stops-at-first.go": {
+        "passed": false,
+        "cases": {
+          "TestPromote/nobody": "PASS",
+          "TestPromote/not_found": "PASS",
+          "TestPromote/one_match": "PASS",
+          "TestPromote/first_element": "PASS",
+          "TestPromote/everyone_with_the_name": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "[{book 18} {pen 2.25}]\n",
+    "lockedLines": [
+      11,
+      15
+    ]
+  }
+}

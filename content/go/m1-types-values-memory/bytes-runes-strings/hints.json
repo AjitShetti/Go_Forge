@@ -1,0 +1,4 @@
+[
+  "len(s) counts bytes, and s[:n] cuts bytes. \"é\" is two bytes, and an emoji is four. You need to count characters, and cut at the byte offset where character n+1 starts.",
+  "for i := range s gives you the byte offset i of each rune in turn. Count runes as you go; when the count reaches n, return s[:i] + \"…\". If the loop ends first, the string was short enough: return s."
+]

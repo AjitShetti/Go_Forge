@@ -1,0 +1,4 @@
+[
+  "A [][]int is a slice of slice headers. Copying the outer slice copies the headers, and each header still points at the original row's backing array. You need a new array for every row.",
+  "Make out := make([][]int, len(grid)), then for each row do out[i] = make([]int, len(row)) and copy(out[i], row). Capping capacity with row[:len(row):len(row)] isn't enough: writes still go to the same array."
+]

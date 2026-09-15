@@ -1,0 +1,152 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:6:1: syntax error: unexpected semicolon or newline before {\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:6:1: syntax error: unexpected semicolon or newline before {\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:9:7: syntax error: unexpected newline in composite literal; possibly missing comma or }\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:9:7: syntax error: unexpected newline in composite literal; possibly missing comma or }\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[python javascript go]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[python javascript go]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "scan-tokens": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "func   \"func\"\nIDENT  \"main\"\n(      \"\"\n)      \"\"\n;      \"\\n\"\n{      \"\"\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "func   \"func\"\nIDENT  \"main\"\n(      \"\"\n)      \"\"\n;      \"\\n\"\n{      \"\"\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestInsertedSemicolons/end_of_file_counts",
+      "TestInsertedSemicolons/written_semicolon_does_not_count",
+      "TestInsertedSemicolons/call_at_end_of_line",
+      "TestInsertedSemicolons/brace_on_the_same_line",
+      "TestInsertedSemicolons/return_keyword",
+      "TestInsertedSemicolons/trailing_comma",
+      "TestInsertedSemicolons/increment",
+      "TestInsertedSemicolons/line_comment_after_code",
+      "TestInsertedSemicolons/only_a_comment",
+      "TestInsertedSemicolons/blank_lines"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestInsertedSemicolons/end_of_file_counts": "PASS",
+        "TestInsertedSemicolons/written_semicolon_does_not_count": "PASS",
+        "TestInsertedSemicolons/call_at_end_of_line": "PASS",
+        "TestInsertedSemicolons/brace_on_the_same_line": "PASS",
+        "TestInsertedSemicolons/return_keyword": "PASS",
+        "TestInsertedSemicolons/trailing_comma": "PASS",
+        "TestInsertedSemicolons/increment": "PASS",
+        "TestInsertedSemicolons/line_comment_after_code": "PASS",
+        "TestInsertedSemicolons/only_a_comment": "PASS",
+        "TestInsertedSemicolons/blank_lines": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestInsertedSemicolons/end_of_file_counts": "PASS",
+        "TestInsertedSemicolons/written_semicolon_does_not_count": "FAIL",
+        "TestInsertedSemicolons/call_at_end_of_line": "PASS",
+        "TestInsertedSemicolons/brace_on_the_same_line": "PASS",
+        "TestInsertedSemicolons/return_keyword": "PASS",
+        "TestInsertedSemicolons/trailing_comma": "PASS",
+        "TestInsertedSemicolons/increment": "PASS",
+        "TestInsertedSemicolons/line_comment_after_code": "PASS",
+        "TestInsertedSemicolons/only_a_comment": "PASS",
+        "TestInsertedSemicolons/blank_lines": "PASS"
+      }
+    },
+    "wrong": {
+      "count-lines-ending-in-paren.go": {
+        "passed": false,
+        "cases": {
+          "TestInsertedSemicolons/end_of_file_counts": "FAIL",
+          "TestInsertedSemicolons/written_semicolon_does_not_count": "FAIL",
+          "TestInsertedSemicolons/call_at_end_of_line": "PASS",
+          "TestInsertedSemicolons/brace_on_the_same_line": "FAIL",
+          "TestInsertedSemicolons/return_keyword": "FAIL",
+          "TestInsertedSemicolons/trailing_comma": "FAIL",
+          "TestInsertedSemicolons/increment": "FAIL",
+          "TestInsertedSemicolons/line_comment_after_code": "FAIL",
+          "TestInsertedSemicolons/only_a_comment": "PASS",
+          "TestInsertedSemicolons/blank_lines": "PASS"
+        }
+      },
+      "count-newlines.go": {
+        "passed": false,
+        "cases": {
+          "TestInsertedSemicolons/end_of_file_counts": "FAIL",
+          "TestInsertedSemicolons/written_semicolon_does_not_count": "FAIL",
+          "TestInsertedSemicolons/call_at_end_of_line": "PASS",
+          "TestInsertedSemicolons/brace_on_the_same_line": "FAIL",
+          "TestInsertedSemicolons/return_keyword": "FAIL",
+          "TestInsertedSemicolons/trailing_comma": "FAIL",
+          "TestInsertedSemicolons/increment": "PASS",
+          "TestInsertedSemicolons/line_comment_after_code": "PASS",
+          "TestInsertedSemicolons/only_a_comment": "FAIL",
+          "TestInsertedSemicolons/blank_lines": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "[python javascript go]\n",
+    "lockedLines": [
+      7,
+      8
+    ]
+  }
+}

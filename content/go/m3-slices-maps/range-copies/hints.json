@@ -1,0 +1,4 @@
+[
+  "In for _, e := range team, e is a separate variable that receives a copy of each element. Changing e, or anything reached through &e, never touches the slice.",
+  "Loop over indexes, for i := range team, and write through team[i]: if team[i].Name == name { team[i].Level++ }. Keep looping after a match, because more than one employee can share a name."
+]

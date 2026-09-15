@@ -1,0 +1,4 @@
+[
+  "Walk the list with three pointers: the node before (prev, starting at nil), the current node, and the one after. Point current.Next back at prev, then step forward. The tests check node addresses, so creating new nodes won't pass.",
+  "Inside the loop: next := head.Next; head.Next = prev; prev = head; head = next. Save next first, because after head.Next = prev the rest of the list is unreachable. Return prev."
+]

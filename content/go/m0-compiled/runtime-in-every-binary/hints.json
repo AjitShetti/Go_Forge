@@ -1,0 +1,4 @@
+[
+  "Every xs[i] in Go has a bounds check the compiler inserted, and a failed check stops the whole program. You have to check the range yourself before indexing. Handle negative i first by turning it into a normal index.",
+  "If i < 0, add len(xs) to it. After that, anything with i < 0 || i >= len(xs) is out of range: return 0, false. The last valid index is len(xs)-1."
+]

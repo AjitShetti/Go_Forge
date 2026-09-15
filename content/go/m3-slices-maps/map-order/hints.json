@@ -1,0 +1,4 @@
+[
+  "Collect the names into a slice first, since a map has no order to preserve. Then sort that slice with a comparison that looks at the score first and only uses the name when scores are equal. Every tie has to be broken, or the result can change between calls.",
+  "Use slices.SortFunc(names, func(a, b string) int { ... }): return cmp.Compare(scores[b], scores[a]) if it isn't 0 (b before a gives highest first), otherwise cmp.Compare(a, b). Return names[:min(n, len(names))]."
+]

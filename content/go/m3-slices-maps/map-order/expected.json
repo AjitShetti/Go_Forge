@@ -1,0 +1,148 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "map[a:1 b:2 c:3 d:4 e:5]\nsame order every time: false\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "map[a:1 b:2 c:3 d:4 e:5]\nsame order every time: false\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "ana 30\nbo 50\ncy 40\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "ana 30\nbo 50\ncy 40\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "bo 50\ncy 40\nana 30\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "bo 50\ncy 40\nana 30\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "raw-range": {
+      "mode": "run",
+      "compare": "sorted-lines",
+      "variedAcrossRuns": true,
+      "real": {
+        "stdout": "a 1\nb 2\nc 3\nd 4\ne 5\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "a 1\nb 2\nc 3\nd 4\ne 5\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "sorted-keys": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "ana 1\nbo 2\ncy 3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "ana 1\nbo 2\ncy 3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestTopN/top_one",
+      "TestTopN/tie_broken_by_name",
+      "TestTopN/everyone",
+      "TestTopN/n_larger_than_players",
+      "TestTopN/zero",
+      "TestTopN/nil_map"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestTopN/top_one": "PASS",
+        "TestTopN/tie_broken_by_name": "PASS",
+        "TestTopN/everyone": "PASS",
+        "TestTopN/n_larger_than_players": "PASS",
+        "TestTopN/zero": "PASS",
+        "TestTopN/nil_map": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestTopN/top_one": "FAIL",
+        "TestTopN/tie_broken_by_name": "FAIL",
+        "TestTopN/everyone": "FAIL",
+        "TestTopN/n_larger_than_players": "FAIL",
+        "TestTopN/zero": "PASS",
+        "TestTopN/nil_map": "PASS"
+      }
+    },
+    "wrong": {
+      "ascending-scores.go": {
+        "passed": false,
+        "cases": {
+          "TestTopN/top_one": "FAIL",
+          "TestTopN/tie_broken_by_name": "FAIL",
+          "TestTopN/everyone": "FAIL",
+          "TestTopN/n_larger_than_players": "FAIL",
+          "TestTopN/zero": "PASS",
+          "TestTopN/nil_map": "PASS"
+        }
+      },
+      "ties-reversed.go": {
+        "passed": false,
+        "cases": {
+          "TestTopN/top_one": "PASS",
+          "TestTopN/tie_broken_by_name": "FAIL",
+          "TestTopN/everyone": "FAIL",
+          "TestTopN/n_larger_than_players": "PASS",
+          "TestTopN/zero": "PASS",
+          "TestTopN/nil_map": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "bo 50\ncy 40\nana 30\n",
+    "lockedLines": [
+      9
+    ]
+  }
+}
