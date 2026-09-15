@@ -1,0 +1,124 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "main exits\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "main exits\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[0 0 0]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[0 0 0]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "[2 6 9]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "[2 6 9]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "waitgroup-go": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "goroutines at start: 1\ngoroutines running: 4\nworker 2 done\nworker 1 done\nworker 0 done\nall done\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "goroutines at start: 1\ngoroutines running: 4\nworker 2 done\nworker 1 done\nworker 0 done\nall done\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestTotalSize/no_paths",
+      "TestTotalSize/sums_every_size",
+      "TestTotalSize/waits_for_every_call",
+      "TestTotalSize/calls_run_concurrently"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestTotalSize/no_paths": "PASS",
+        "TestTotalSize/sums_every_size": "PASS",
+        "TestTotalSize/waits_for_every_call": "PASS",
+        "TestTotalSize/calls_run_concurrently": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestTotalSize/no_paths": "PASS",
+        "TestTotalSize/sums_every_size": "PASS",
+        "TestTotalSize/waits_for_every_call": "PASS",
+        "TestTotalSize/calls_run_concurrently": "FAIL"
+      }
+    },
+    "wrong": {
+      "no-wait.go": {
+        "passed": false,
+        "cases": {
+          "TestTotalSize/no_paths": "PASS",
+          "TestTotalSize/sums_every_size": "FAIL",
+          "TestTotalSize/waits_for_every_call": "FAIL",
+          "TestTotalSize/calls_run_concurrently": "PASS"
+        }
+      },
+      "one-at-a-time.go": {
+        "passed": false,
+        "cases": {
+          "TestTotalSize/no_paths": "PASS",
+          "TestTotalSize/sums_every_size": "PASS",
+          "TestTotalSize/waits_for_every_call": "PASS",
+          "TestTotalSize/calls_run_concurrently": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "[2 6 9]\n",
+    "lockedLines": [
+      9,
+      10,
+      11,
+      12
+    ]
+  }
+}

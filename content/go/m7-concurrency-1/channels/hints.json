@@ -1,0 +1,4 @@
+[
+  "Start one goroutine per fn, each sending its result on a channel, and have First receive once. Now think about the goroutines whose results nobody receives. On an unbuffered channel, a send waits for a receiver, and none will ever come.",
+  "Make the channel buffered with room for every result: results := make(chan string, len(fns)). Each goroutine does results <- fn() and exits, and First returns <-results. Don't use a WaitGroup here: waiting for all of them is exactly what First must not do."
+]

@@ -1,0 +1,4 @@
+[
+  "The calls have to overlap, so each size(p) goes in its own goroutine. But `go` returns immediately, and a function that just sums up afterwards reads the results before any goroutine has written them. TotalSize has to block until all of them are done.",
+  "Make sizes := make([]int, len(paths)) and a var wg sync.WaitGroup. In the loop, wg.Go(func() { sizes[i] = size(p) }). After the loop, wg.Wait(), then add up sizes. Each goroutine writes only its own index, so they never share memory."
+]

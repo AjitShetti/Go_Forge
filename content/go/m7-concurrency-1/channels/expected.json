@@ -1,0 +1,129 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan send]:\nmain.main()\n\tmain.go:7\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan send]:\nmain.main()\n\tmain.go:7\n",
+        "exitCode": 2,
+        "status": "deadlock"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "got 10\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan send]:\nmain.main()\n\tmain.go:10\n\ngoroutine N [chan send]:\nmain.worker(...)\n\tmain.go:17\ncreated by main.main in goroutine N\n\tmain.go:8\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "got 10\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan send]:\nmain.main()\n\tmain.go:10\n\ngoroutine N [chan send]:\nmain.worker(...)\n\tmain.go:17\ncreated by main.main in goroutine N\n\tmain.go:8\n",
+        "exitCode": 2,
+        "status": "deadlock"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "got 10\ngot 20\nfinished\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "got 10\ngot 20\nfinished\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "buffered": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "2 2\n1 1\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan send]:\nmain.main()\n\tmain.go:15\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "2 2\n1 1\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan send]:\nmain.main()\n\tmain.go:15\n",
+        "exitCode": 2,
+        "status": "deadlock"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestFirst/one_fn",
+      "TestFirst/fastest_wins",
+      "TestFirst/does_not_wait_for_the_slow_ones",
+      "TestFirst/no_goroutine_is_left_blocked"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestFirst/one_fn": "PASS",
+        "TestFirst/fastest_wins": "PASS",
+        "TestFirst/does_not_wait_for_the_slow_ones": "PASS",
+        "TestFirst/no_goroutine_is_left_blocked": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestFirst/one_fn": "PASS",
+        "TestFirst/fastest_wins": "FAIL",
+        "TestFirst/does_not_wait_for_the_slow_ones": "FAIL",
+        "TestFirst/no_goroutine_is_left_blocked": "FAIL"
+      }
+    },
+    "wrong": {
+      "unbuffered.go": {
+        "passed": false,
+        "cases": {
+          "TestFirst/one_fn": "PASS",
+          "TestFirst/fastest_wins": "PASS",
+          "TestFirst/does_not_wait_for_the_slow_ones": "PASS",
+          "TestFirst/no_goroutine_is_left_blocked": "FAIL"
+        }
+      },
+      "wait-for-all.go": {
+        "passed": false,
+        "cases": {
+          "TestFirst/one_fn": "PASS",
+          "TestFirst/fastest_wins": "PASS",
+          "TestFirst/does_not_wait_for_the_slow_ones": "FAIL",
+          "TestFirst/no_goroutine_is_left_blocked": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "got 10\ngot 20\nfinished\n",
+    "lockedLines": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ]
+  }
+}
