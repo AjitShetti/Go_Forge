@@ -17,11 +17,15 @@ import {
 } from "@xyflow/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { saveDesignVersion } from "@/app/canvas/actions";
-import { NotImplemented } from "@/components/ui";
+import { recordReview } from "@/app/canvas/grade-actions";
 import { EDGE_KINDS, EDGE_SPECS, type EdgeKind, NODE_KINDS, type NodeKind, defaultConfig } from "@/lib/canvas/catalog";
 import { type DesignGraph, LIMITS, canonicalGraph, connectionProblem, exportDesign, importDesign, sameGraph } from "@/lib/canvas/graph";
 import { DesignEdge, EdgeMarkers, EdgeSample } from "./design-edge";
+import { grade } from "@/lib/grader/grade";
+import { SCENARIOS, scenarioBySlug } from "@/lib/grader/scenarios";
+import type { Finding } from "@/lib/grader/types";
 import { DesignNode } from "./design-node";
+import { GradeReportPanel, type RecordState } from "./grade-report";
 import { type DesignFlowEdge, type DesignFlowNode, newId, toFlowEdges, toFlowNodes, toGraph } from "./flow";
 import { EdgeInspector, NodeInspector } from "./inspector";
 import { DRAG_MIME, Palette } from "./palette";
@@ -31,7 +35,8 @@ const edgeTypes: EdgeTypes = { design: DesignEdge };
 
 export type SaveMode = "ok" | "signed-out" | "not-configured";
 export type VersionInfo = { version: number; name: string; createdAt: string };
-export type EditorDesign = { designKey: string; name: string; latestVersion: number; openedVersion: number; graph: DesignGraph };
+export type StoredReviewInfo = { score: number; violations: number; warnings: number; createdAt: string };
+export type EditorDesign = { designKey: string; name: string; latestVersion: number; openedVersion: number; graph: DesignGraph; scenario: string | null; lastReview: StoredReviewInfo | null };
 
 type Status =
   | { kind: "not-saved"; reason: string }
@@ -43,11 +48,13 @@ type Status =
 
 declare global {
   interface Window {
-    __designState?: { designKey: string | null; baseVersion: number | null; name: string; dirty: boolean; status: Status["kind"]; graph: DesignGraph };
+    __designState?: { designKey: string | null; baseVersion: number | null; name: string; dirty: boolean; status: Status["kind"]; graph: DesignGraph; scenario: string | null };
   }
 }
 
-export function DesignEditor(props: { mode: SaveMode; design: EditorDesign | null; versions: VersionInfo[] }) {
+type EditorProps = { mode: SaveMode; design: EditorDesign | null; versions: VersionInfo[]; startScenario?: string | null; startGraph?: DesignGraph | null };
+
+export function DesignEditor(props: EditorProps) {
   return (
     <ReactFlowProvider>
       <EditorInner {...props} />
@@ -55,9 +62,9 @@ export function DesignEditor(props: { mode: SaveMode; design: EditorDesign | nul
   );
 }
 
-function EditorInner({ mode, design, versions: initialVersions }: { mode: SaveMode; design: EditorDesign | null; versions: VersionInfo[] }) {
+function EditorInner({ mode, design, versions: initialVersions, startScenario = null, startGraph = null }: EditorProps) {
   const flow = useReactFlow<DesignFlowNode, DesignFlowEdge>();
-  const initialGraph = design?.graph ?? { schema: "go-forge/design-graph@1" as const, nodes: [], edges: [] };
+  const initialGraph = design?.graph ?? startGraph ?? { schema: "go-forge/design-graph@1" as const, nodes: [], edges: [] };
 
   const [nodes, setNodes, onNodesChange] = useNodesState<DesignFlowNode>(toFlowNodes(initialGraph));
   const [edges, setEdges, onEdgesChange] = useEdgesState<DesignFlowEdge>(toFlowEdges(initialGraph));
@@ -65,7 +72,12 @@ function EditorInner({ mode, design, versions: initialVersions }: { mode: SaveMo
   const [designKey, setDesignKey] = useState<string | null>(design?.designKey ?? null);
   // The version a save builds on: the latest one, even when an older version was opened.
   const [baseVersion, setBaseVersion] = useState<number | null>(design?.latestVersion ?? null);
-  const [saved, setSaved] = useState<{ name: string; graph: DesignGraph } | null>(design ? { name: design.name, graph: design.graph } : null);
+  const [saved, setSaved] = useState<{ name: string; graph: DesignGraph; scenario: string | null; version: number } | null>(
+    design ? { name: design.name, graph: design.graph, scenario: design.scenario, version: design.openedVersion } : null,
+  );
+  const [scenarioSlug, setScenarioSlug] = useState<string | null>(design ? design.scenario : startScenario);
+  const [gradeOpen, setGradeOpen] = useState(false);
+  const [record, setRecord] = useState<RecordState>({ kind: "not-recorded", reason: "not graded yet" });
   const [versions, setVersions] = useState<VersionInfo[]>(initialVersions);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<{ message: string; conflict?: number } | null>(null);
@@ -78,7 +90,13 @@ function EditorInner({ mode, design, versions: initialVersions }: { mode: SaveMo
   const addCount = useRef(0);
 
   const graph = useMemo(() => toGraph(nodes, edges), [nodes, edges]);
-  const dirty = saved === null ? graph.nodes.length > 0 || graph.edges.length > 0 || name !== "Untitled design" : !(saved.name === name.trim() && sameGraph(saved.graph, graph));
+  const dirty =
+    saved === null
+      ? graph.nodes.length > 0 || graph.edges.length > 0 || name !== "Untitled design" || scenarioSlug !== null
+      : !(saved.name === name.trim() && saved.scenario === scenarioSlug && sameGraph(saved.graph, graph));
+  const scenario = scenarioBySlug(scenarioSlug);
+  // Grading is pure and fast, so an open report follows every edit.
+  const report = useMemo(() => (gradeOpen && scenario ? grade(graph, scenario) : null), [gradeOpen, scenario, graph]);
   const nameProblem = name.trim() === "" ? "Give the design a name" : name.trim().length > LIMITS.name ? `At most ${LIMITS.name} characters` : null;
 
   const status: Status =
@@ -95,7 +113,7 @@ function EditorInner({ mode, design, versions: initialVersions }: { mode: SaveMo
               : { kind: "saved" };
 
   useEffect(() => {
-    window.__designState = { designKey, baseVersion, name, dirty, status: status.kind, graph };
+    window.__designState = { designKey, baseVersion, name, dirty, status: status.kind, graph, scenario: scenarioSlug };
   });
 
   // Leaving with unsaved work asks first (browser-level navigation only).
@@ -109,7 +127,8 @@ function EditorInner({ mode, design, versions: initialVersions }: { mode: SaveMo
   // Any real edit clears a stale save error. Keyed on content, not identity:
   // React Flow hands back new arrays for selection and measurement too.
   const graphKey = useMemo(() => JSON.stringify(canonicalGraph(graph)), [graph]);
-  useEffect(() => setSaveError(null), [graphKey, name]);
+  useEffect(() => setSaveError(null), [graphKey, name, scenarioSlug]);
+  useEffect(() => setRecord((r) => (r.kind === "recorded" || r.kind === "error" ? { kind: "not-recorded", reason: "changed since the recorded grade" } : r)), [graphKey, name, scenarioSlug]);
 
   const flash = useCallback((msg: string) => {
     setNotice(msg);
@@ -160,12 +179,12 @@ function EditorInner({ mode, design, versions: initialVersions }: { mode: SaveMo
       setSaving(true);
       setSaveError(null);
       try {
-        const res = await saveDesignVersion({ designKey, baseVersion, name: name.trim(), graph, force });
+        const res = await saveDesignVersion({ designKey, baseVersion, name: name.trim(), graph, scenario: scenarioSlug, force });
         if (!res.ok) {
           setSaveError({ message: res.error, conflict: res.conflict?.latestVersion });
           return;
         }
-        setSaved({ name: res.name, graph });
+        setSaved({ name: res.name, graph, scenario: scenarioSlug, version: res.version });
         setBaseVersion(res.version);
         setVersions((vs) => [{ version: res.version, name: res.name, createdAt: res.createdAt }, ...vs.filter((v) => v.version !== res.version)]);
         flash(`Saved version ${res.version}`);
@@ -179,7 +198,33 @@ function EditorInner({ mode, design, versions: initialVersions }: { mode: SaveMo
         setSaving(false);
       }
     },
-    [baseVersion, designKey, flash, graph, mode, name, nameProblem, saving],
+    [baseVersion, designKey, flash, graph, mode, name, nameProblem, saving, scenarioSlug],
+  );
+
+  const runGrade = useCallback(async () => {
+    if (!scenario) return;
+    setGradeOpen(true);
+    if (mode !== "ok") return setRecord({ kind: "not-recorded", reason: mode === "signed-out" ? "signed out" : "database not configured" });
+    if (!designKey || !saved || dirty) return setRecord({ kind: "not-recorded", reason: "unsaved changes: save, then grade to record" });
+    setRecord({ kind: "recording" });
+    try {
+      const res = await recordReview({ designKey, version: saved.version });
+      setRecord(res.ok ? { kind: "recorded", createdAt: res.createdAt } : { kind: "error", message: res.error });
+    } catch (e) {
+      setRecord({ kind: "error", message: `Could not reach the server: ${(e as Error).message}` });
+    }
+  }, [designKey, dirty, mode, saved, scenario]);
+
+  const focusFinding = useCallback(
+    (f: Finding) => {
+      const ns = new Set(f.nodeIds);
+      const es = new Set(f.edgeIds);
+      setNodes((xs) => xs.map((n) => ({ ...n, selected: ns.has(n.id) })));
+      setEdges((xs) => xs.map((e) => ({ ...e, selected: es.has(e.id) })));
+      window.setTimeout(() => void flow.fitView({ nodes: f.nodeIds.map((id) => ({ id })), padding: 0.4, maxZoom: 1.2, duration: 300 }), 30);
+      wrapper.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    },
+    [flow, setEdges, setNodes],
   );
 
   useEffect(() => {
@@ -274,12 +319,32 @@ function EditorInner({ mode, design, versions: initialVersions }: { mode: SaveMo
               if (f) void doImport(f);
             }}
           />
-          <span className="flex items-center gap-2">
-            <button type="button" className="btn px-3 py-1.5 text-[0.78rem]" disabled title="The deterministic grader arrives in P6">
-              Grade
-            </button>
-            <NotImplemented milestone="P6" />
-          </span>
+          <label className="flex items-center gap-2">
+            <span className="label shrink-0 text-[0.64rem]">Scenario</span>
+            <select data-testid="design-scenario" value={scenarioSlug ?? ""} onChange={(e) => setScenarioSlug(e.target.value || null)} className="field py-1.5 text-[0.78rem]">
+              <option value="">None</option>
+              {SCENARIOS.map((sc) => (
+                <option key={sc.slug} value={sc.slug}>
+                  {sc.title}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            data-testid="grade-design"
+            className="btn btn-solid px-3 py-1.5 text-[0.78rem]"
+            disabled={!scenario || record.kind === "recording"}
+            title={scenario ? "Run the deterministic grader against the scenario" : "Pick a scenario to grade against"}
+            onClick={() => void runGrade()}
+          >
+            Grade
+          </button>
+          {design?.lastReview && saved?.version === design.openedVersion && !gradeOpen && (
+            <span data-testid="last-review" className="font-mono text-[0.7rem] text-ink-3">
+              last grade of v{design.openedVersion}: {design.lastReview.score} · {design.lastReview.violations} violation{design.lastReview.violations === 1 ? "" : "s"}
+            </span>
+          )}
         </div>
       </div>
 
@@ -323,6 +388,8 @@ function EditorInner({ mode, design, versions: initialVersions }: { mode: SaveMo
           {importErrors.length > 10 && <p className="mt-1">…and {importErrors.length - 10} more</p>}
         </div>
       )}
+
+      {report && scenario && <GradeReportPanel report={report} scenario={scenario} record={record} onFocus={focusFinding} onClose={() => setGradeOpen(false)} />}
 
       {historyOpen && designKey && (
         <HistoryPanel designKey={designKey} versions={versions} current={saved && !dirty ? baseVersion : null} dirty={dirty} />

@@ -2,7 +2,7 @@
 
 `/canvas` lists your saved designs. `/canvas/new` opens an empty canvas. `/canvas/<key>` opens the latest version, and `?v=N` opens an older one. `/canvas/<key>/diff?from=A&to=B` compares two versions.
 
-Grading, scenarios and the LLM critique come later (P6, P8). The Grade button is disabled and has a NOT IMPLEMENTED · P6 badge next to it.
+Scenarios and grading shipped in P6; see [grading.md](grading.md). The LLM critique comes in P8.
 
 ## Building a design
 

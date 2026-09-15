@@ -37,3 +37,7 @@ The suites touch different lessons, concepts and tables, so one reset covers all
 
 - **Answers are in the page source.** The lesson page sends the whole lesson to the browser: Decode text, the trap's verified output, hints and the reference solution. They are hidden from the DOM until each gate opens, but anyone reading the page source can find them. This was accepted for the hidden tests, and the same reasoning applies here. The review cards are different: they are graded on the server and never ship the answer.
 - **Code isn't restored on reload.** Reloading resumes the lesson state (step, attempts, hints), but the rebuild and challenge editors go back to the starter code. Every submitted attempt's code is stored in `challenge_attempts`.
+
+## P6
+
+`npm run verify:p6`: 27 checks for scenarios, grading and recorded reviews, signed out and signed in. It deletes the design it creates, so no reset is needed. Details are in [grading.md](grading.md).

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Caption, NotImplemented, Page, PixelHeading } from "@/components/ui";
+import { Caption, Page, PixelHeading } from "@/components/ui";
 import { designAccess, listDesigns } from "@/lib/canvas/designs.server";
 import { DeleteDesignButton } from "./delete-button";
 
@@ -23,10 +23,9 @@ export default async function CanvasPage() {
     <Page>
       <div className="flex flex-wrap items-center justify-between gap-4 pt-10">
         <Caption>FIG_030 · System design canvas</Caption>
-        <span className="flex flex-wrap items-center gap-2">
-          <span className="label">Scenarios + grading</span>
-          <NotImplemented milestone="P6" />
-        </span>
+        <Link href="/scenarios" className="label text-blue hover:underline">
+          Scenarios + grading →
+        </Link>
       </div>
       <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Canvas</PixelHeading>
       <p className="prose-serif mt-6 max-w-2xl text-ink-2">
