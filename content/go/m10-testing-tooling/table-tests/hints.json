@@ -1,0 +1,4 @@
+[
+  "Three separate details decide the message. How you compare: reflect.DeepEqual says a nil slice and an empty one differ, and slices.Equal says they don't. How you print: %v makes \"b \" look like \"b\". Where you stop: the first mismatch is the useful one, so return as soon as you find it.",
+  "If slices.Equal(got, want), return \"\". If the lengths differ, return fmt.Sprintf(\"got %d elements, want %d: %q vs %q\", len(got), len(want), got, want). Otherwise loop over the indexes, and at the first got[i] != want[i], return fmt.Sprintf(\"element %d: got %q, want %q\", i, got[i], want[i])."
+]

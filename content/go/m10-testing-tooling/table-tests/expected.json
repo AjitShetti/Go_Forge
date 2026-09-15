@@ -1,0 +1,166 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "ok   fields(\"a,b\")\nFAIL fields(\"\") = [], want []\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "ok   fields(\"a,b\")\nFAIL fields(\"\") = [], want []\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "ok   fields(\"a,b\")\nFAIL fields(\"\") = [], want []\nok   fields(\"x\")\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "ok   fields(\"a,b\")\nFAIL fields(\"\") = [], want []\nok   fields(\"x\")\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "ok   fields(\"a,b\")\nok   fields(\"\")\nok   fields(\"x\")\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "ok   fields(\"a,b\")\nok   fields(\"\")\nok   fields(\"x\")\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "nil-vs-empty": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "false true\n[] []\n[]string(nil) []string{}\n[\"b \"] [\"b\"]\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "false true\n[] []\n[]string(nil) []string{}\n[\"b \"] [\"b\"]\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestExplain/equal",
+      "TestExplain/nil_and_empty_match",
+      "TestExplain/both_nil",
+      "TestExplain/trailing_space",
+      "TestExplain/empty_string_element",
+      "TestExplain/first_of_several_differences",
+      "TestExplain/too_short",
+      "TestExplain/nil_against_one_element"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestExplain/equal": "PASS",
+        "TestExplain/nil_and_empty_match": "PASS",
+        "TestExplain/both_nil": "PASS",
+        "TestExplain/trailing_space": "PASS",
+        "TestExplain/empty_string_element": "PASS",
+        "TestExplain/first_of_several_differences": "PASS",
+        "TestExplain/too_short": "PASS",
+        "TestExplain/nil_against_one_element": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestExplain/equal": "PASS",
+        "TestExplain/nil_and_empty_match": "PASS",
+        "TestExplain/both_nil": "PASS",
+        "TestExplain/trailing_space": "FAIL",
+        "TestExplain/empty_string_element": "FAIL",
+        "TestExplain/first_of_several_differences": "FAIL",
+        "TestExplain/too_short": "FAIL",
+        "TestExplain/nil_against_one_element": "FAIL"
+      }
+    },
+    "wrong": {
+      "deep-equal.go": {
+        "passed": false,
+        "cases": {
+          "TestExplain/equal": "PASS",
+          "TestExplain/nil_and_empty_match": "FAIL",
+          "TestExplain/both_nil": "PASS",
+          "TestExplain/trailing_space": "PASS",
+          "TestExplain/empty_string_element": "PASS",
+          "TestExplain/first_of_several_differences": "PASS",
+          "TestExplain/too_short": "PASS",
+          "TestExplain/nil_against_one_element": "PASS"
+        }
+      },
+      "last-difference.go": {
+        "passed": false,
+        "cases": {
+          "TestExplain/equal": "PASS",
+          "TestExplain/nil_and_empty_match": "PASS",
+          "TestExplain/both_nil": "PASS",
+          "TestExplain/trailing_space": "PASS",
+          "TestExplain/empty_string_element": "PASS",
+          "TestExplain/first_of_several_differences": "FAIL",
+          "TestExplain/too_short": "PASS",
+          "TestExplain/nil_against_one_element": "PASS"
+        }
+      },
+      "percent-v.go": {
+        "passed": false,
+        "cases": {
+          "TestExplain/equal": "PASS",
+          "TestExplain/nil_and_empty_match": "PASS",
+          "TestExplain/both_nil": "PASS",
+          "TestExplain/trailing_space": "FAIL",
+          "TestExplain/empty_string_element": "FAIL",
+          "TestExplain/first_of_several_differences": "FAIL",
+          "TestExplain/too_short": "PASS",
+          "TestExplain/nil_against_one_element": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "ok   fields(\"a,b\")\nok   fields(\"\")\nok   fields(\"x\")\n",
+    "lockedLines": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ]
+  }
+}
