@@ -1,0 +1,4 @@
+[
+  "\"Every day at 09:00 in loc\" is a calendar rule, not a duration. Find today's date as seen in loc (now.In(loc)), build 09:00 on that date with time.Date in loc, and if that isn't strictly after now, use the next calendar day. Truncate and Add(24*time.Hour) work in absolute time, so they ignore both the location and daylight saving changes.",
+  "local := now.In(loc); y, m, d := local.Date(); next := time.Date(y, m, d, hour, minute, 0, 0, loc). If !next.After(now), set next = time.Date(y, m, d+1, hour, minute, 0, 0, loc). time.Date normalizes day 32 into the next month and picks the right offset for that day."
+]

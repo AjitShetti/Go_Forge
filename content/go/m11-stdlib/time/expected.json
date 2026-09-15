@@ -1,0 +1,151 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "false true\n2026-09-15T15:30:00+05:30\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "false true\n2026-09-15T15:30:00+05:30\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "YYYY-MM-DD hh:mm\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "YYYY-MM-DD hh:mm\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "2026-03-07 09:05\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "2026-03-07 09:05\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "calendar-vs-duration": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "<nil>\nMar 8 10:00 EDT\nMar 8 09:00 EDT\n01:30 EST\n2026-03-03\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "<nil>\nMar 8 10:00 EDT\nMar 8 09:00 EDT\n01:30 EST\n2026-03-03\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestNextRun/later_today",
+      "TestNextRun/already_passed_today",
+      "TestNextRun/exactly_the_run_time_is_not_after",
+      "TestNextRun/end_of_year",
+      "TestNextRun/server_in_UTC,_job_in_Kolkata",
+      "TestNextRun/spring_forward_keeps_the_wall_clock",
+      "TestNextRun/fall_back_keeps_the_wall_clock"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestNextRun/later_today": "PASS",
+        "TestNextRun/already_passed_today": "PASS",
+        "TestNextRun/exactly_the_run_time_is_not_after": "PASS",
+        "TestNextRun/end_of_year": "PASS",
+        "TestNextRun/server_in_UTC,_job_in_Kolkata": "PASS",
+        "TestNextRun/spring_forward_keeps_the_wall_clock": "PASS",
+        "TestNextRun/fall_back_keeps_the_wall_clock": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestNextRun/later_today": "PASS",
+        "TestNextRun/already_passed_today": "PASS",
+        "TestNextRun/exactly_the_run_time_is_not_after": "FAIL",
+        "TestNextRun/end_of_year": "PASS",
+        "TestNextRun/server_in_UTC,_job_in_Kolkata": "FAIL",
+        "TestNextRun/spring_forward_keeps_the_wall_clock": "FAIL",
+        "TestNextRun/fall_back_keeps_the_wall_clock": "FAIL"
+      }
+    },
+    "wrong": {
+      "add-24-hours.go": {
+        "passed": false,
+        "cases": {
+          "TestNextRun/later_today": "PASS",
+          "TestNextRun/already_passed_today": "PASS",
+          "TestNextRun/exactly_the_run_time_is_not_after": "PASS",
+          "TestNextRun/end_of_year": "PASS",
+          "TestNextRun/server_in_UTC,_job_in_Kolkata": "PASS",
+          "TestNextRun/spring_forward_keeps_the_wall_clock": "FAIL",
+          "TestNextRun/fall_back_keeps_the_wall_clock": "FAIL"
+        }
+      },
+      "equal-is-not-after.go": {
+        "passed": false,
+        "cases": {
+          "TestNextRun/later_today": "PASS",
+          "TestNextRun/already_passed_today": "PASS",
+          "TestNextRun/exactly_the_run_time_is_not_after": "FAIL",
+          "TestNextRun/end_of_year": "PASS",
+          "TestNextRun/server_in_UTC,_job_in_Kolkata": "PASS",
+          "TestNextRun/spring_forward_keeps_the_wall_clock": "PASS",
+          "TestNextRun/fall_back_keeps_the_wall_clock": "PASS"
+        }
+      },
+      "uses-nows-location.go": {
+        "passed": false,
+        "cases": {
+          "TestNextRun/later_today": "PASS",
+          "TestNextRun/already_passed_today": "PASS",
+          "TestNextRun/exactly_the_run_time_is_not_after": "PASS",
+          "TestNextRun/end_of_year": "PASS",
+          "TestNextRun/server_in_UTC,_job_in_Kolkata": "FAIL",
+          "TestNextRun/spring_forward_keeps_the_wall_clock": "PASS",
+          "TestNextRun/fall_back_keeps_the_wall_clock": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "2026-03-07 09:05\n",
+    "lockedLines": [
+      8,
+      9,
+      10,
+      11
+    ]
+  }
+}
