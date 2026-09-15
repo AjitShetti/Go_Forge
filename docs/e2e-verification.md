@@ -41,3 +41,14 @@ The suites touch different lessons, concepts and tables, so one reset covers all
 ## P6
 
 `npm run verify:p6`: 27 checks for scenarios, grading and recorded reviews, signed out and signed in. It deletes the design it creates, so no reset is needed. Details are in [grading.md](grading.md).
+
+## P7 lessons (`verify:p7`)
+
+```
+node scripts/verify-content.mjs          # all 43 lessons with real Go and the engine
+npm run build && npm run verify:p7       # the 27 P7 lessons in Edge, signed out
+```
+
+`verify:p7` touches no database, so it needs no reset. For every M4–M12 lesson it picks the verified trap answer and checks the engine agrees, checks that run-locally and shell blocks are labelled, runs the reference rebuild and challenge solution in the browser engine, and completes the lesson. It also checks that the PARTLY RUN LOCALLY badge and banner appear on exactly data-races, benchmarks-fuzzing and kv-store.
+
+In a git worktree whose `node_modules` is a junction, Turbopack refuses to build ("Symlink node_modules is invalid"). Build there with `node scripts/copy-monaco.mjs && npx next build --webpack`.

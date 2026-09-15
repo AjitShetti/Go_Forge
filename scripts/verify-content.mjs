@@ -351,7 +351,13 @@ function canonical(v) {
 function diffPaths(a, b, path = "", out = []) {
   if (JSON.stringify(canonical(a)) === JSON.stringify(canonical(b))) return out;
   if (a && b && typeof a === "object" && typeof b === "object" && !Array.isArray(a)) {
-    for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) diffPaths(a[k], b[k], `${path}.${k}`, out);
+    for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) {
+      // Informational only: whether the order happened to change in this
+      // run's 5 samples. A small map can repeat its order by chance, so it
+      // isn't something a later run can be held to.
+      if (k === "variedAcrossRuns") continue;
+      diffPaths(a[k], b[k], `${path}.${k}`, out);
+    }
   } else out.push(`${path || "."}: committed ${JSON.stringify(a)?.slice(0, 200)} | actual ${JSON.stringify(b)?.slice(0, 200)}`);
   return out;
 }

@@ -37,12 +37,20 @@ Every `go` fence has to be one of these:
   - `mode=build` compiles without running and records compiler diagnostics (e.g. `gcflags=-m`).
   - `gcflags=-m,-l` passes compiler flags (comma-separated).
   - `lang=go1.21` sets the go.mod `go` directive.
-  - `nondeterministic=sorted-lines` is for output whose line *order* varies (map iteration). The program runs 5 times and must print the same set of lines each time. `variedAcrossRuns` records whether the order actually changed.
-  - `mode=local reason=<why>` runs with real Go only, for things the browser can't do (option c).
+  - `nondeterministic=sorted-lines` is for output whose line *order* varies (map iteration). The program runs 5 times and must print the same set of lines each time. `variedAcrossRuns` records whether the order actually changed in that run. It is informational and is not compared on later runs, because a small map can repeat its order by chance.
+  - `mode=local reason=<why>` runs with real Go only, for things the browser can't do (option c). The lesson player labels it "run locally · real Go output recorded" and shows the command. `reason` is one word, such as `listens-on-a-port`.
+  - `mode=local cmd=test args=-run=^$,-bench=.,-benchmem` runs the fence as `main_test.go` with `go test -count=1` plus those arguments (comma-separated). Without `args` it's `go test -v`.
+  - `compare=shape` (only with `mode=local`) is for output whose numbers change between runs: benchmark iterations and ns/op, test durations, fuzz progress lines, the CPU name. Only those parts are replaced with `N`, and whitespace inside benchmark lines is collapsed. Everything else must match exactly, and the block runs twice to prove the shape is stable. Allocation counts (`B/op`, `allocs/op`) and fuzz failures are kept.
   - `diverges` is required when the engine's output differs from real Go. The lesson must then contain a paragraph starting `**Engine note:**`.
 - `` ```go excerpt=<file> `` — a fragment quoted from a verified file. Every line must appear in that file verbatim.
 
-A plain `` ``` `` fence (no language) is for pseudo-code and ASCII diagrams, and isn't run.
+A plain `` ``` `` fence (no language) is for pseudo-code and ASCII diagrams, and isn't run. A `` ```shell `` fence is a command for the learner to run on their machine; it isn't run, and the player labels it "run locally · output not shown".
+
+## Lessons that need a native machine
+
+A lesson's `requires` lists engine features. `src/lib/engine/features.ts` says which ones the browser engine has. When a lesson requires a feature it lacks (`raceDetector`, `fuzzing`, `benchmarkTiming`, `netListen`, `parallelism`), the track page shows a PARTLY RUN LOCALLY badge and the lesson shows a banner naming the feature and the local command. The trap, rebuild and challenge of such a lesson must still run in the browser: design them so the bug is visible without the missing feature (M8 data-races uses sleeps between check and act instead of the race detector).
+
+Race-detector output is never shown. This machine has no C compiler for `-race`, and the owner decided (2026-09-15) not to add one, so `-race` appears only as a `shell` fence, and the capstone says plainly that race-freedom isn't verified.
 
 ## What fails a lesson
 
