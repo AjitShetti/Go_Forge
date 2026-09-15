@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DesignEditor } from "@/components/canvas/editor";
 import { Caption, Page } from "@/components/ui";
-import { UUID, designAccess, listVersions, loadVersion, parseVersionParam } from "@/lib/canvas/designs.server";
+import { UUID, designAccess, latestReview, listVersions, loadVersion, parseVersionParam } from "@/lib/canvas/designs.server";
 
 export const metadata: Metadata = { title: "Design" };
 export const dynamic = "force-dynamic";
@@ -56,6 +56,7 @@ export default async function DesignPage({ params, searchParams }: { params: Pro
   }
 
   const d = loaded.value;
+  const lastReview = await latestReview(access.supabase, d.id).catch(() => null);
   return (
     <main className="mx-auto w-full max-w-[1500px] px-4 pb-24 sm:px-8">
       <div className="flex flex-wrap items-center gap-4 pt-6 pb-4">
@@ -69,7 +70,7 @@ export default async function DesignPage({ params, searchParams }: { params: Pro
       <DesignEditor
         key={`${key}:${version ?? "latest"}`}
         mode="ok"
-        design={{ designKey: key, name: d.name, latestVersion: versions[0]?.version ?? d.version, openedVersion: d.version, graph: d.graph }}
+        design={{ designKey: key, name: d.name, latestVersion: versions[0]?.version ?? d.version, openedVersion: d.version, graph: d.graph, scenario: d.scenarioSlug, lastReview }}
         versions={versions}
       />
     </main>

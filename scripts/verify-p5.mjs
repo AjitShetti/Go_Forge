@@ -118,7 +118,8 @@ try {
   console.log("\n== P5 signed out ==");
   await page.goto(BASE + "/canvas");
   check("/canvas says saving needs sign-in", (await page.getByTestId("designs-gate").getAttribute("data-kind")) === "signed-out");
-  check("grading is visibly NOT IMPLEMENTED (P6)", (await page.getByTestId("not-implemented").first().innerText()).includes("P6"));
+  // P6 shipped grading; its own checks live in verify-p6.mjs.
+  check("no NOT IMPLEMENTED badge remains on /canvas (P6 shipped)", (await page.getByTestId("not-implemented").count()) === 0);
   await page.getByTestId("new-design").click();
   await page.waitForURL(BASE + "/canvas/new");
   await page.getByTestId("canvas").waitFor();

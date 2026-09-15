@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { designAccess, loadVersion, UUID } from "@/lib/canvas/designs.server";
 import { canonicalGraph, parseGraph, parseName, sameGraph } from "@/lib/canvas/graph";
+import { scenarioBySlug } from "@/lib/grader/scenarios";
 
 export type SaveResult =
   | { ok: true; designKey: string; version: number; name: string; createdAt: string }
@@ -22,7 +23,7 @@ const signedOutError = (kind: "not-configured" | "signed-out") =>
  * remount it, dropping selection, viewport and open panels. Every canvas
  * page is dynamic, so the next visit reads fresh rows anyway.
  */
-export async function saveDesignVersion(input: { designKey: string | null; baseVersion: number | null; name: unknown; graph: unknown; force?: boolean }): Promise<SaveResult> {
+export async function saveDesignVersion(input: { designKey: string | null; baseVersion: number | null; name: unknown; graph: unknown; scenario?: string | null; force?: boolean }): Promise<SaveResult> {
   const access = await designAccess();
   if (access.kind !== "ok") return { ok: false, error: signedOutError(access.kind) };
   const name = parseName(input.name);
@@ -30,7 +31,15 @@ export async function saveDesignVersion(input: { designKey: string | null; baseV
   const graph = parseGraph(input.graph);
   if (!graph.ok) return { ok: false, error: `The design is not valid: ${graph.errors.slice(0, 5).join("; ")}${graph.errors.length > 5 ? ` (+${graph.errors.length - 5} more)` : ""}` };
   const { supabase } = access;
-  const row = { name: name.value, graph: canonicalGraph(graph.value) };
+  const scenarioSlug = input.scenario ?? null;
+  if (scenarioSlug !== null && !scenarioBySlug(scenarioSlug)) return { ok: false, error: `Unknown scenario "${String(scenarioSlug)}".` };
+  let scenario_id: string | null = null;
+  if (scenarioSlug !== null) {
+    const { data, error } = await supabase.from("scenarios").select("id").eq("slug", scenarioSlug).maybeSingle();
+    if (error || !data) return { ok: false, error: `Scenario "${scenarioSlug}" is not in the database: ${error?.message ?? "apply migration 20260915000500_scenarios.sql"}` };
+    scenario_id = data.id;
+  }
+  const row = { name: name.value, graph: canonicalGraph(graph.value), scenario_id };
 
   if (input.designKey === null) {
     const { data, error } = await supabase.from("designs").insert({ ...row, version: 1 }).select("design_key, version, name, created_at").single();
@@ -46,7 +55,7 @@ export async function saveDesignVersion(input: { designKey: string | null; baseV
   if (latestVersion !== input.baseVersion && !input.force) {
     return { ok: false, error: `Version ${latestVersion} was saved after the version you are editing (${input.baseVersion ?? "none"}).`, conflict: { latestVersion } };
   }
-  if (latest.kind === "ok" && latest.value.version === input.baseVersion && latest.value.name === name.value && sameGraph(latest.value.graph, graph.value)) {
+  if (latest.kind === "ok" && latest.value.version === input.baseVersion && latest.value.name === name.value && latest.value.scenarioSlug === scenarioSlug && sameGraph(latest.value.graph, graph.value)) {
     return { ok: false, error: `No changes since version ${latestVersion}.` };
   }
 

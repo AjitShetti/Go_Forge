@@ -7,7 +7,7 @@ import { type DesignGraph, parseGraph } from "./graph";
 
 export type DesignSummary = { designKey: string; name: string; latestVersion: number; versions: number; updatedAt: string; createdAt: string };
 export type VersionMeta = { version: number; name: string; createdAt: string };
-export type LoadedVersion = VersionMeta & { designKey: string; graph: DesignGraph };
+export type LoadedVersion = VersionMeta & { id: string; designKey: string; graph: DesignGraph; scenarioSlug: string | null };
 
 export type Access = { kind: "not-configured" } | { kind: "signed-out" } | { kind: "ok"; supabase: NonNullable<Awaited<ReturnType<typeof createSupabaseServer>>> };
 
@@ -48,18 +48,30 @@ export type VersionResult = { kind: "ok"; value: LoadedVersion } | { kind: "miss
 
 /** One version, or the latest when `version` is null. */
 export async function loadVersion(supabase: Supabase, designKey: string, version: number | null): Promise<VersionResult> {
-  let q = supabase.from("designs").select("version, name, created_at, graph").eq("design_key", designKey);
+  let q = supabase.from("designs").select("id, version, name, created_at, graph, scenarios(slug)").eq("design_key", designKey);
   q = version === null ? q.order("version", { ascending: false }).limit(1) : q.eq("version", version).limit(1);
   const { data, error } = await q.maybeSingle();
   if (error) throw new Error(error.message);
   if (!data) return { kind: "missing" };
   const g = parseGraph(data.graph);
   if (!g.ok) return { kind: "invalid", errors: g.errors };
-  return { kind: "ok", value: { designKey, version: data.version, name: data.name, createdAt: data.created_at, graph: g.value } };
+  const scenario = data.scenarios as { slug: string } | { slug: string }[] | null;
+  const scenarioSlug = Array.isArray(scenario) ? (scenario[0]?.slug ?? null) : (scenario?.slug ?? null);
+  return { kind: "ok", value: { id: data.id, designKey, version: data.version, name: data.name, createdAt: data.created_at, graph: g.value, scenarioSlug } };
 }
 
 export function parseVersionParam(v: string | string[] | undefined): number | null | "bad" {
   if (v === undefined) return null;
   if (typeof v !== "string" || !/^[1-9][0-9]{0,6}$/.test(v)) return "bad";
   return Number(v);
+}
+
+export type StoredReview = { score: number; violations: number; warnings: number; createdAt: string };
+
+/** The most recent recorded grade of one design version, if any. */
+export async function latestReview(supabase: Supabase, designId: string): Promise<StoredReview | null> {
+  const { data, error } = await supabase.from("design_reviews").select("score, violations, warnings, created_at").eq("design_id", designId).order("created_at", { ascending: false }).limit(1).maybeSingle();
+  if (error) throw new Error(error.message);
+  if (!data) return null;
+  return { score: data.score, violations: Array.isArray(data.violations) ? data.violations.length : 0, warnings: Array.isArray(data.warnings) ? data.warnings.filter((f: { severity?: string }) => f?.severity === "warning").length : 0, createdAt: data.created_at };
 }
