@@ -64,10 +64,13 @@ if (only.includes("p1")) {
   check("track lists 13 modules", (await page.locator("[data-testid^=module-M]").count()) === 13);
   await page.screenshot({ path: join(shots, "p1-track.png"), fullPage: true });
 
-  for (const href of ["/review", "/canvas", "/notebook"]) {
+  for (const href of ["/canvas", "/notebook"]) {
     await page.goto(BASE + href);
     check(`${href} shows NOT IMPLEMENTED badge`, await page.getByTestId("not-implemented").first().isVisible());
   }
+  // P4 replaced the /review placeholder; signed out it gates instead of showing data.
+  await page.goto(BASE + "/review");
+  check("/review (signed out) shows the sign-in gate", (await page.getByTestId("learner-gate").getAttribute("data-kind")) === (configured ? "signed-out" : "not-configured"));
 
   await page.goto(BASE + "/login");
   if (configured) {

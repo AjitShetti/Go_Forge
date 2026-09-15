@@ -27,6 +27,7 @@ export function RebuildStep({ bundle, state, dispatch, engineReady }: StepProps 
     const goalMet = r.exitCode === 0 && r.status === "ok" && normalizeForCompare(r.stdout) === normalizeForCompare(bundle.expected.rebuild.expectedStdout);
     setResult({ ...r, goalMet });
     setRunning(false);
+    if (r.status === "engine_error") return; // an engine failure is not a run of the learner's code
     dispatch({ type: "REBUILD_RUN", goalMet, at: Date.now() }, { code, stdout: r.stdout, stderr: r.stderr, exitCode: r.exitCode, status: r.status, ms: r.totalMs });
   }
 
@@ -68,7 +69,7 @@ export function RebuildStep({ bundle, state, dispatch, engineReady }: StepProps 
           <OutputPanel
             label={`Output · ${result.status}${result.exitCode > 0 ? ` · exit ${result.exitCode}` : ""}`}
             stdout={result.stdout}
-            stderr={result.stderr}
+            stderr={result.status === "engine_error" ? `The engine could not run this (${result.engineError ?? "unknown error"}). Try again.` : result.stderr}
             testId="rebuild-output"
             tone={result.goalMet ? "ok" : undefined}
           />

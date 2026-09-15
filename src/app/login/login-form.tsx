@@ -12,11 +12,16 @@ export function LoginForm() {
     const supabase = getSupabaseBrowser();
     if (!supabase) return;
     setState({ kind: "sending" });
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
-    });
-    setState(error ? { kind: "error", message: error.message } : { kind: "sent" });
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email: email.trim(),
+        options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      });
+      setState(error ? { kind: "error", message: error.message } : { kind: "sent" });
+    } catch (err) {
+      // Offline or Supabase unreachable: without this the button stays on "Sending…" forever.
+      setState({ kind: "error", message: `Could not reach the sign-in service: ${(err as Error).message}` });
+    }
   }
 
   if (state.kind === "sent") {
@@ -36,7 +41,11 @@ export function LoginForm() {
       <button className="btn btn-primary" disabled={state.kind === "sending"}>
         {state.kind === "sending" ? "Sending…" : "Email me a magic link"}
       </button>
-      {state.kind === "error" && <p className="font-mono text-sm text-bad">{state.message}</p>}
+      {state.kind === "error" && (
+        <p className="font-mono text-sm text-bad" data-testid="login-error">
+          {state.message}
+        </p>
+      )}
     </form>
   );
 }

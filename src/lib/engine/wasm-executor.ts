@@ -68,8 +68,15 @@ export class WasmExecutor implements GoExecutor {
       };
       this.worker.onerror = (e) => {
         const error = `engine worker error: ${e.message}`;
+        const wasReady = this.readyInfo !== null;
         reject(new Error(error));
-        for (const p of this.pending.values()) p.finish({ status: "engine_error", exitCode: -1, engineError: error });
+        for (const p of [...this.pending.values()]) p.finish({ status: "engine_error", exitCode: -1, engineError: error });
+        // A worker that crashed after starting is replaced, so the next Run works.
+        // One that never started (e.g. binaries missing) is not, to avoid a respawn loop.
+        if (wasReady) {
+          this.worker.terminate();
+          this.spawn();
+        }
       };
     });
     this.readyPromise.catch(() => {});
@@ -127,10 +134,16 @@ export class WasmExecutor implements GoExecutor {
     };
   }
 
+  /** Never throws: an engine that can't start comes back as status "engine_error". */
   async run(files: GoFile[], opts: RunOptions): Promise<ExecResult> {
-    await this.readyPromise;
-    const id = this.nextId++;
     const started = performance.now();
+    try {
+      await this.readyPromise;
+    } catch (e) {
+      const engineError = `the engine failed to start: ${(e as Error).message}`;
+      return { status: "engine_error", exitCode: -1, stdout: "", stderr: "", compileOutput: "", compileMs: null, linkMs: null, runMs: null, totalMs: Math.round(performance.now() - started), engineError };
+    }
+    const id = this.nextId++;
     const stdout: string[] = [];
     const stderr: string[] = [];
 

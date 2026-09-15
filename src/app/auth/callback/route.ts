@@ -1,5 +1,6 @@
 import type { EmailOtpType } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
+import { safeNext } from "@/lib/auth/safe-next";
 import { createSupabaseServer } from "@/lib/supabase/server";
 
 /**
@@ -8,7 +9,7 @@ import { createSupabaseServer } from "@/lib/supabase/server";
  */
 export async function GET(request: NextRequest) {
   const url = request.nextUrl;
-  const next = url.searchParams.get("next")?.startsWith("/") ? url.searchParams.get("next")! : "/track";
+  const next = safeNext(url.searchParams.get("next"));
   const fail = (message: string) => NextResponse.redirect(new URL(`/login?error=${encodeURIComponent(message)}`, url.origin));
 
   const supabase = await createSupabaseServer();

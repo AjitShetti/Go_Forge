@@ -38,7 +38,8 @@ export default async function ConceptReviewPage({ params }: { params: Promise<Pa
       ) : (
         (() => {
           const state = view.states.find((s) => s.concept === concept)!;
-          const card = pickCard(view.content.cards, concept, answeredCards(view.history));
+          const answered = answeredCards(view.history);
+          const card = pickCard(view.content.cards, concept, answered);
           return (
             <>
               <div className="mt-6 flex flex-wrap items-center gap-3" data-testid="concept-state">
@@ -57,10 +58,12 @@ export default async function ConceptReviewPage({ params }: { params: Promise<Pa
               )}
               {card ? (
                 <ReviewCardView
-                  key={card.id}
+                  // Keyed by when it was last answered too: when a concept has one card,
+                  // "Next question" picks the same card again and must still get a fresh form.
+                  key={`${card.id}@${answered.get(card.id) ?? 0}`}
                   concept={concept}
                   goVersion={view.content.goVersion}
-                  seenBefore={answeredCards(view.history).has(card.id)}
+                  seenBefore={answered.has(card.id)}
                   card={{
                     id: card.id,
                     lessonTitle: card.lessonTitle,

@@ -32,6 +32,8 @@ export function ChallengeStep({ bundle, state, dispatch, engineReady }: StepProp
     const report = parseTestOutput(exec.stdout, exec.exitCode);
     setLast({ exec, report });
     setRunning(false);
+    // The engine itself failed (not the learner's code): not an attempt, so no hint unlocks and nothing is recorded.
+    if (exec.status === "engine_error") return;
     const failedCases = exec.status === "compile_error" ? ["(compile error)"] : report.incomplete && report.failedCases.length === 0 ? [`(${exec.status})`] : report.failedCases;
     dispatch(
       { type: "CHALLENGE_RESULT", passed: report.passed, failedCases, at: Date.now() },
@@ -141,6 +143,13 @@ export function ChallengeStep({ bundle, state, dispatch, engineReady }: StepProp
 }
 
 function TestResults({ exec, report }: { exec: ExecResult; report: TestReport }) {
+  if (exec.status === "engine_error") {
+    return (
+      <p className="mt-4 border border-warn px-3 py-2 font-mono text-sm text-warn" data-testid="test-results" data-passed="false" data-engine-error="true">
+        The engine could not run the tests ({exec.engineError ?? "unknown error"}). This did not count as an attempt. Try again.
+      </p>
+    );
+  }
   if (exec.status === "compile_error") {
     return (
       <div className="panel mt-4 border-bad" data-testid="test-results" data-passed="false">
@@ -167,6 +176,11 @@ function TestResults({ exec, report }: { exec: ExecResult; report: TestReport })
           </li>
         ))}
       </ul>
+      {exec.status === "timeout" && (
+        <p className="border-t border-rule px-4 py-3 font-mono text-sm text-bad" data-testid="timeout-note">
+          Stopped after 10 seconds. Look for a loop that never ends or a solution that is far too slow.
+        </p>
+      )}
       {report.incomplete && exec.stderr && <pre className="code-block border-t border-rule p-4 text-bad">{exec.stderr}</pre>}
     </div>
   );

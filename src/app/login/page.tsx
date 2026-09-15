@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Caption, NotImplemented, Page, PixelHeading } from "@/components/ui";
+import { redirect } from "next/navigation";
 import { getSupabaseConfig } from "@/lib/supabase/config";
+import { getCurrentUser } from "@/lib/supabase/server";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = { title: "Sign in" };
@@ -8,6 +10,8 @@ export const metadata: Metadata = { title: "Sign in" };
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const { error } = await searchParams;
   const configured = getSupabaseConfig() !== null;
+  // Already signed in: there is nothing to do here.
+  if (configured && (await getCurrentUser())) redirect("/track");
   return (
     <Page className="max-w-xl">
       <Caption className="pt-10">FIG_050 · Auth · email magic link</Caption>
