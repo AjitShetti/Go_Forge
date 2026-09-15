@@ -1,0 +1,137 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "3 <nil> abc\ndef <nil>\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "3 <nil> abc\ndef <nil>\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "hello, gopher\nbye\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "hello, gopher\nbye\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "HELLO, GOPHER\nBYE\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "HELLO, GOPHER\nBYE\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "data-with-eof": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "2 EOF\nhello\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "2 EOF\nhello\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestCopyWithCRC/empty_input",
+      "TestCopyWithCRC/plain_reader",
+      "TestCopyWithCRC/data_arrives_together_with_EOF",
+      "TestCopyWithCRC/one_byte_per_Read",
+      "TestCopyWithCRC/read_error_is_returned",
+      "TestCopyWithCRC/write_error_is_returned"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestCopyWithCRC/empty_input": "PASS",
+        "TestCopyWithCRC/plain_reader": "PASS",
+        "TestCopyWithCRC/data_arrives_together_with_EOF": "PASS",
+        "TestCopyWithCRC/one_byte_per_Read": "PASS",
+        "TestCopyWithCRC/read_error_is_returned": "PASS",
+        "TestCopyWithCRC/write_error_is_returned": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestCopyWithCRC/empty_input": "PASS",
+        "TestCopyWithCRC/plain_reader": "FAIL",
+        "TestCopyWithCRC/data_arrives_together_with_EOF": "FAIL",
+        "TestCopyWithCRC/one_byte_per_Read": "FAIL",
+        "TestCopyWithCRC/read_error_is_returned": "FAIL",
+        "TestCopyWithCRC/write_error_is_returned": "FAIL"
+      }
+    },
+    "wrong": {
+      "drops-last-chunk.go": {
+        "passed": false,
+        "cases": {
+          "TestCopyWithCRC/empty_input": "PASS",
+          "TestCopyWithCRC/plain_reader": "PASS",
+          "TestCopyWithCRC/data_arrives_together_with_EOF": "FAIL",
+          "TestCopyWithCRC/one_byte_per_Read": "PASS",
+          "TestCopyWithCRC/read_error_is_returned": "PASS",
+          "TestCopyWithCRC/write_error_is_returned": "PASS"
+        }
+      },
+      "ignores-write-errors.go": {
+        "passed": false,
+        "cases": {
+          "TestCopyWithCRC/empty_input": "PASS",
+          "TestCopyWithCRC/plain_reader": "PASS",
+          "TestCopyWithCRC/data_arrives_together_with_EOF": "PASS",
+          "TestCopyWithCRC/one_byte_per_Read": "PASS",
+          "TestCopyWithCRC/read_error_is_returned": "PASS",
+          "TestCopyWithCRC/write_error_is_returned": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "HELLO, GOPHER\nBYE\n",
+    "lockedLines": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+[
+  "The shapes are defined in the hidden tests, so Summary can't switch on their concrete types. It can ask each Shape value at runtime whether its dynamic type also has a Perimeter() float64 method. That question is a type assertion to an interface.",
+  "Declare type perimeterer interface { Perimeter() float64 }. In the loop, build \"area %.2f\", then: if p, ok := s.(perimeterer); ok { append \", perimeter %.2f\" with p.Perimeter() }. Join the lines with \"\n\"."
+]

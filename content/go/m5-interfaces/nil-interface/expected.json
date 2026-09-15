@@ -1,0 +1,150 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "failed: <nil>\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "failed: <nil>\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "30 error: <nil>\n-1 error: invalid age\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "30 error: <nil>\n-1 error: invalid age\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "30 ok\n-1 error: invalid age\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "30 ok\n-1 error: invalid age\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "two-words": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "false true 16\n*main.NotFoundError\ntrue\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "false true 16\n*main.NotFoundError\ntrue\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "nil-receiver-panic": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "calling Error\n",
+        "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n\ngoroutine N [running]:\nmain.(*NotFoundError).Error(...)\n\tmain.go:10\nmain.main()\n\tmain.go:17\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "calling Error\n",
+        "stderr": "panic: runtime error: invalid memory address or nil pointer dereference\n\ngoroutine N [running]:\nmain.(*NotFoundError).Error(...)\n\tmain.go:10\nmain.main()\n\tmain.go:17\n",
+        "exitCode": 2,
+        "status": "exit"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestValidate/valid_user_is_a_nil_error",
+      "TestValidate/boundary_ages_are_valid",
+      "TestValidate/one_problem",
+      "TestValidate/every_problem,_in_field_order",
+      "TestValidate/valid_after_invalid"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestValidate/valid_user_is_a_nil_error": "PASS",
+        "TestValidate/boundary_ages_are_valid": "PASS",
+        "TestValidate/one_problem": "PASS",
+        "TestValidate/every_problem,_in_field_order": "PASS",
+        "TestValidate/valid_after_invalid": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestValidate/valid_user_is_a_nil_error": "FAIL",
+        "TestValidate/boundary_ages_are_valid": "FAIL",
+        "TestValidate/one_problem": "PASS",
+        "TestValidate/every_problem,_in_field_order": "PASS",
+        "TestValidate/valid_after_invalid": "FAIL"
+      }
+    },
+    "wrong": {
+      "first-problem-only.go": {
+        "passed": false,
+        "cases": {
+          "TestValidate/valid_user_is_a_nil_error": "PASS",
+          "TestValidate/boundary_ages_are_valid": "PASS",
+          "TestValidate/one_problem": "PASS",
+          "TestValidate/every_problem,_in_field_order": "FAIL",
+          "TestValidate/valid_after_invalid": "PASS"
+        }
+      },
+      "pointer-typed-nil.go": {
+        "passed": false,
+        "cases": {
+          "TestValidate/valid_user_is_a_nil_error": "FAIL",
+          "TestValidate/boundary_ages_are_valid": "FAIL",
+          "TestValidate/one_problem": "FAIL",
+          "TestValidate/every_problem,_in_field_order": "PASS",
+          "TestValidate/valid_after_invalid": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "30 ok\n-1 error: invalid age\n",
+    "lockedLines": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+[
+  "Two Read rules trip people up: a Read can return fewer bytes than the buffer holds, and it can return n > 0 together with io.EOF. Handle n before err, and treat io.EOF as done. On top of that, dst.Write can fail, and the error has to come back to the caller.",
+  "You don't need a loop. A crc32.NewIEEE() hash is an io.Writer, so io.MultiWriter(dst, h) writes each chunk to both. io.Copy(that, src) already follows the Read rules and stops at the first write error. Return its count and error, plus h.Sum32()."
+]

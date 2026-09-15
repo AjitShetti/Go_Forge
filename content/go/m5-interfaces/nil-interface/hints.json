@@ -1,0 +1,4 @@
+[
+  "When nothing fails, errs is a nil ValidationErrors slice. `return errs` converts it to error, and that interface value holds the type ValidationErrors plus a nil slice. An interface is nil only when both halves are empty, so the caller's err != nil is true.",
+  "Keep collecting into errs, then finish with: if len(errs) == 0 { return nil }; return errs. Returning the literal nil gives the caller an interface with no type and no value."
+]

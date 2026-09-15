@@ -1,0 +1,136 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "request failed with 404\n404\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "request failed with 404\n404\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:10:14: cannot use &c (value of type *LineCounter) as io.Writer value in argument to fmt.Fprintf: *LineCounter does not implement io.Writer (wrong type for method Write)\n\t\thave Write(string) int\n\t\twant Write([]byte) (int, error)\n./main.go:11:15: cannot use &c (value of type *LineCounter) as io.Writer value in argument to fmt.Fprintln: *LineCounter does not implement io.Writer (wrong type for method Write)\n\t\thave Write(string) int\n\t\twant Write([]byte) (int, error)\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:10:14: cannot use &c (value of type *LineCounter) as io.Writer value in argument to fmt.Fprintf: *LineCounter does not implement io.Writer (wrong type for method Write)\n\t\thave Write(string) int\n\t\twant Write([]byte) (int, error)\n./main.go:11:15: cannot use &c (value of type *LineCounter) as io.Writer value in argument to fmt.Fprintln: *LineCounter does not implement io.Writer (wrong type for method Write)\n\t\thave Write(string) int\n\t\twant Write([]byte) (int, error)\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "3\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "optional-capabilities": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "true true\nfalse\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "true true\nfalse\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestSummary/no_shapes",
+      "TestSummary/square_has_a_perimeter",
+      "TestSummary/blob_has_none",
+      "TestSummary/pointer_receiver_methods",
+      "TestSummary/wrong_signature_is_not_a_perimeter",
+      "TestSummary/mixed,_one_per_line"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestSummary/no_shapes": "PASS",
+        "TestSummary/square_has_a_perimeter": "PASS",
+        "TestSummary/blob_has_none": "PASS",
+        "TestSummary/pointer_receiver_methods": "PASS",
+        "TestSummary/wrong_signature_is_not_a_perimeter": "PASS",
+        "TestSummary/mixed,_one_per_line": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestSummary/no_shapes": "PASS",
+        "TestSummary/square_has_a_perimeter": "FAIL",
+        "TestSummary/blob_has_none": "FAIL",
+        "TestSummary/pointer_receiver_methods": "FAIL",
+        "TestSummary/wrong_signature_is_not_a_perimeter": "FAIL",
+        "TestSummary/mixed,_one_per_line": "FAIL"
+      }
+    },
+    "wrong": {
+      "wrong-signature.go": {
+        "passed": false,
+        "cases": {
+          "TestSummary/no_shapes": "PASS",
+          "TestSummary/square_has_a_perimeter": "FAIL",
+          "TestSummary/blob_has_none": "PASS",
+          "TestSummary/pointer_receiver_methods": "FAIL",
+          "TestSummary/wrong_signature_is_not_a_perimeter": "PASS",
+          "TestSummary/mixed,_one_per_line": "FAIL"
+        }
+      },
+      "zero-perimeter.go": {
+        "passed": false,
+        "cases": {
+          "TestSummary/no_shapes": "PASS",
+          "TestSummary/square_has_a_perimeter": "PASS",
+          "TestSummary/blob_has_none": "FAIL",
+          "TestSummary/pointer_receiver_methods": "PASS",
+          "TestSummary/wrong_signature_is_not_a_perimeter": "FAIL",
+          "TestSummary/mixed,_one_per_line": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "3\n",
+    "lockedLines": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ]
+  }
+}
