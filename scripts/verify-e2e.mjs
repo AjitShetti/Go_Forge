@@ -16,7 +16,7 @@
 //
 // Needs E2E_EMAIL / E2E_PASSWORD in .env.local and a reset e2e user (supabase/e2e-reset.sql).
 import { spawn } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { createClient } from "@supabase/supabase-js";
@@ -391,7 +391,12 @@ try {
   check("RE-MASTERED once the latest answer is right again", (await conceptStatus()) === "mastered");
 
   await page.goto(BASE + "/dashboard");
-  check("dashboard: 1 lesson completed", (await page.getByTestId("fact-lessons-completed").innerText()).includes("1 of 16"), await page.getByTestId("fact-lessons-completed").innerText());
+  {
+    // Derived from the content on disk, so adding lessons doesn't break this check.
+    const trackJson = JSON.parse(readFileSync(join(root, "content", "go", "track.json"), "utf8"));
+    const authoredCount = trackJson.modules.flatMap((m) => m.lessons.map((l) => join(root, "content", "go", m.slug, l.slug, "lesson.md"))).filter((p) => existsSync(p)).length;
+    check(`dashboard: 1 lesson completed of ${authoredCount} authored`, (await page.getByTestId("fact-lessons-completed").innerText()).includes(`1 of ${authoredCount}`), await page.getByTestId("fact-lessons-completed").innerText());
+  }
   check("dashboard: 1 clean challenge pass", (await page.getByTestId("fact-clean-passes").innerText()).trim().endsWith("1"));
   check("dashboard: integer-division chip mastered", (await page.getByTestId("concept-integer-division").locator("[data-status]").getAttribute("data-status")) === "mastered");
   check("dashboard: lesson row says completed", (await page.getByTestId("lesson-integer-division").getAttribute("data-status")) === "completed");
