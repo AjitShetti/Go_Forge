@@ -1,0 +1,112 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan send]:\nmain.main()\n\tmain.go:16\n\ngoroutine N [chan send]:\nmain.main.func1()\n\tmain.go:11\ncreated by main.main in goroutine N\n\tmain.go:9\n\ngoroutine N [chan send]:\nmain.main.func1()\n\tmain.go:11\ncreated by main.main in goroutine N\n\tmain.go:9\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan send]:\nmain.main()\n\tmain.go:16\n\ngoroutine N [chan send]:\nmain.main.func1()\n\tmain.go:11\ncreated by main.main in goroutine N\n\tmain.go:9\n\ngoroutine N [chan send]:\nmain.main.func1()\n\tmain.go:11\ncreated by main.main in goroutine N\n\tmain.go:9\n",
+        "exitCode": 2,
+        "status": "deadlock"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [sync.WaitGroup.Wait]:\nsync.runtime_SemacquireWaitGroup(...)\n\truntime/sema.go:114\nsync.(*WaitGroup).Wait(...)\n\tsync/waitgroup.go:206\nmain.sumSquares(...)\n\tmain.go:31\nmain.main()\n\tmain.go:9\n\ngoroutine N [chan send]:\nmain.sumSquares.func1()\n\tmain.go:20\nsync.(*WaitGroup).Go.func1()\n\tsync/waitgroup.go:258\ncreated by sync.(*WaitGroup).Go in goroutine N\n\tsync/waitgroup.go:238\n\ngoroutine N [chan send]:\nmain.sumSquares.func1()\n\tmain.go:20\nsync.(*WaitGroup).Go.func1()\n\tsync/waitgroup.go:258\ncreated by sync.(*WaitGroup).Go in goroutine N\n\tsync/waitgroup.go:238\n\ngoroutine N [chan send]:\nmain.sumSquares.func2()\n\tmain.go:26\ncreated by main.sumSquares in goroutine N\n\tmain.go:24\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [sync.WaitGroup.Wait]:\nsync.runtime_SemacquireWaitGroup(...)\n\truntime/sema.go:114\nsync.(*WaitGroup).Wait(...)\n\tsync/waitgroup.go:206\nmain.sumSquares(...)\n\tmain.go:31\nmain.main()\n\tmain.go:9\n\ngoroutine N [chan send]:\nmain.sumSquares.func1()\n\tmain.go:20\nsync.(*WaitGroup).Go.func1()\n\tsync/waitgroup.go:258\ncreated by sync.(*WaitGroup).Go in goroutine N\n\tsync/waitgroup.go:238\n\ngoroutine N [chan send]:\nmain.sumSquares.func1()\n\tmain.go:20\nsync.(*WaitGroup).Go.func1()\n\tsync/waitgroup.go:258\ncreated by sync.(*WaitGroup).Go in goroutine N\n\tsync/waitgroup.go:238\n\ngoroutine N [chan send]:\nmain.sumSquares.func2()\n\tmain.go:26\ncreated by main.sumSquares in goroutine N\n\tmain.go:24\n",
+        "exitCode": 2,
+        "status": "deadlock"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "30\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "30\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestProcessAll/no_items",
+      "TestProcessAll/results_in_input_order",
+      "TestProcessAll/never_more_than_limit_at_once",
+      "TestProcessAll/uses_the_limit",
+      "TestProcessAll/limit_larger_than_the_work"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestProcessAll/no_items": "PASS",
+        "TestProcessAll/results_in_input_order": "PASS",
+        "TestProcessAll/never_more_than_limit_at_once": "PASS",
+        "TestProcessAll/uses_the_limit": "PASS",
+        "TestProcessAll/limit_larger_than_the_work": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestProcessAll/no_items": "PASS",
+        "TestProcessAll/results_in_input_order": "PASS",
+        "TestProcessAll/never_more_than_limit_at_once": "PASS",
+        "TestProcessAll/uses_the_limit": "FAIL",
+        "TestProcessAll/limit_larger_than_the_work": "PASS"
+      }
+    },
+    "wrong": {
+      "completion-order.go": {
+        "passed": false,
+        "cases": {
+          "TestProcessAll/no_items": "PASS",
+          "TestProcessAll/results_in_input_order": "FAIL",
+          "TestProcessAll/never_more_than_limit_at_once": "PASS",
+          "TestProcessAll/uses_the_limit": "PASS",
+          "TestProcessAll/limit_larger_than_the_work": "FAIL"
+        }
+      },
+      "goroutine-per-item.go": {
+        "passed": false,
+        "cases": {
+          "TestProcessAll/no_items": "PASS",
+          "TestProcessAll/results_in_input_order": "PASS",
+          "TestProcessAll/never_more_than_limit_at_once": "FAIL",
+          "TestProcessAll/uses_the_limit": "PASS",
+          "TestProcessAll/limit_larger_than_the_work": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "30\n",
+    "lockedLines": [
+      8,
+      9,
+      10
+    ]
+  }
+}

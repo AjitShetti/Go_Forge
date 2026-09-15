@@ -1,0 +1,4 @@
+[
+  "Concurrency is bounded by how many goroutines can call work, not by how many items there are. Start exactly limit workers that pull from a shared jobs channel. Order is a separate problem: workers finish in any order, so a result can't just be appended when it arrives. Each one needs to know where it goes.",
+  "Send jobs as struct{ i int; item string } on an unbuffered channel. Start limit workers with wg.Go, each doing: for j := range jobs { out[j.i] = work(j.item) }. Send every job, close(jobs), then wg.Wait() and return out, which was made with len(items) up front."
+]
