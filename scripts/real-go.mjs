@@ -46,6 +46,28 @@ export function runRealGo(source, opts = {}) {
 }
 
 /**
+ * `go test -v -count=1` over the given files (package main) in a temp module.
+ * @param {{name: string, content: string}[]} files
+ */
+export function runRealGoTest(files, opts = {}) {
+  const dir = mkdtempSync(join(tmpdir(), "goforge-"));
+  try {
+    const directive = (opts.lang ?? goVersion().split(".").slice(0, 2).join(".")).replace(/^go/, "");
+    writeFileSync(join(dir, "go.mod"), `module prog\n\ngo ${directive}\n`);
+    for (const f of files) writeFileSync(join(dir, f.name), f.content);
+    const res = spawnSync("go", ["test", "-v", "-count=1", "."], {
+      cwd: dir,
+      encoding: "utf8",
+      timeout: opts.timeoutMs ?? 120000,
+      env: { ...process.env, GOFLAGS: "-mod=mod", GOTOOLCHAIN: "local" },
+    });
+    return { stdout: res.stdout ?? "", stderr: res.stderr ?? "", exitCode: res.status ?? -1 };
+  } finally {
+    rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+  }
+}
+
+/**
  * Normalizes output so real-Go and engine results can be compared without
  * hiding real differences. Only things that legitimately differ by platform or
  * build location are rewritten:

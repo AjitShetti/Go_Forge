@@ -1,0 +1,144 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "42 42\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "42 42\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      },
+      "diverges": false
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "42 42\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "42 42\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      },
+      "diverges": false
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "99 42\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "99 42\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      },
+      "diverges": false
+    },
+    "same-array": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "true true\n3 4 4 4\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "true true\n3 4 4 4\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      },
+      "diverges": false
+    },
+    "full-slice-expression": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "99 42 false\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "engine": {
+        "stdout": "99 42 false\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      },
+      "diverges": false
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestAppendCopy/nil_slice",
+      "TestAppendCopy/empty_with_spare_capacity",
+      "TestAppendCopy/full_slice",
+      "TestAppendCopy/spare_capacity",
+      "TestAppendCopyTwiceDoesNotCollide"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestAppendCopy/nil_slice": "PASS",
+        "TestAppendCopy/empty_with_spare_capacity": "PASS",
+        "TestAppendCopy/full_slice": "PASS",
+        "TestAppendCopy/spare_capacity": "PASS",
+        "TestAppendCopyTwiceDoesNotCollide": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestAppendCopy/nil_slice": "PASS",
+        "TestAppendCopy/empty_with_spare_capacity": "FAIL",
+        "TestAppendCopy/full_slice": "PASS",
+        "TestAppendCopy/spare_capacity": "FAIL",
+        "TestAppendCopyTwiceDoesNotCollide": "FAIL"
+      }
+    },
+    "wrong": {
+      "copy_into_s.go": {
+        "passed": false,
+        "cases": {
+          "TestAppendCopy/nil_slice": "PASS",
+          "TestAppendCopy/empty_with_spare_capacity": "FAIL",
+          "TestAppendCopy/full_slice": "PASS",
+          "TestAppendCopy/spare_capacity": "FAIL",
+          "TestAppendCopyTwiceDoesNotCollide": "PASS"
+        }
+      },
+      "reslice.go": {
+        "passed": false,
+        "cases": {
+          "TestAppendCopy/nil_slice": "PASS",
+          "TestAppendCopy/empty_with_spare_capacity": "FAIL",
+          "TestAppendCopy/full_slice": "PASS",
+          "TestAppendCopy/spare_capacity": "FAIL",
+          "TestAppendCopyTwiceDoesNotCollide": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "99 42\n",
+    "lockedLines": [
+      7,
+      8,
+      9
+    ]
+  }
+}

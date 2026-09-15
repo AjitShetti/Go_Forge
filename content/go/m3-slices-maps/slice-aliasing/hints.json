@@ -1,0 +1,4 @@
+[
+  "append(s, v) writes into s's backing array whenever len(s) < cap(s). To be safe, the slice you append to must have no spare capacity that belongs to s.",
+  "Allocate a new slice with make([]int, len(s), len(s)+1), copy s into it with copy(dst, src), then append v to the new slice."
+]
