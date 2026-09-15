@@ -1,0 +1,4 @@
+[
+  "The tests call GroupBy with strings, structs and ints, keyed by ints, named strings and bools, and SortedKeys with int, named-string and float keys. One non-generic function can't take all of those. Each function needs type parameters, and each parameter needs the weakest constraint that still allows what the body does: a map key only needs ==, and sorting needs <.",
+  "func GroupBy[T any, K comparable](xs []T, key func(T) K) map[K][]T, with the same body using T and K. func SortedKeys[K cmp.Ordered, V any](m map[K]V) []K: collect the keys, then slices.Sort(keys). cmp.Ordered's ~string is what lets CustomerID in."
+]

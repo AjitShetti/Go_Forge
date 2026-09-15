@@ -1,0 +1,4 @@
+[
+  "The starter doesn't compile: Go methods can't have type parameters, and the tests call Register(r, handler) as a plain function anyway. Inside, one Router holds handlers for many event types in a single map, so the map itself can't be generic. Its key has to identify an exact type at runtime.",
+  "Store map[reflect.Type]func(any) string. Write func Register[E any](r *Router, h func(E) string) that sets r.handlers[reflect.TypeFor[E]()] to func(e any) string { return h(e.(E)) }. Dispatch looks up reflect.TypeOf(e); when there's no entry, it returns fmt.Sprintf(\"unhandled %T\", e). reflect.TypeOf(nil) is nil, which is never registered."
+]

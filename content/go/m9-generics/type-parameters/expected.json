@@ -1,0 +1,130 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:18:17: Celsius does not satisfy int | float64 (possibly missing ~ for float64 in int | float64)\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:18:17: Celsius does not satisfy int | float64 (possibly missing ~ for float64 in int | float64)\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:19:5: invalid operation: a > b (type parameter T cannot use operator >)\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:19:5: invalid operation: a > b (type parameter T cannot use operator >)\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "7 rust 10\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "7 rust 10\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "type-sets": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "63.5\n3\nmain.Celsius\nstatus-404 (405)\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "63.5\n3\nmain.Celsius\nstatus-404 (405)\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestGroupBy/strings_by_length",
+      "TestGroupBy/structs_by_a_named_string_key",
+      "TestGroupBy/ints_by_a_bool_key",
+      "TestGroupBy/empty_input",
+      "TestSortedKeys/int_keys",
+      "TestSortedKeys/named_string_keys",
+      "TestSortedKeys/float_keys"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestGroupBy/strings_by_length": "PASS",
+        "TestGroupBy/structs_by_a_named_string_key": "PASS",
+        "TestGroupBy/ints_by_a_bool_key": "PASS",
+        "TestGroupBy/empty_input": "PASS",
+        "TestSortedKeys/int_keys": "PASS",
+        "TestSortedKeys/named_string_keys": "PASS",
+        "TestSortedKeys/float_keys": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {}
+    },
+    "wrong": {
+      "groups-reversed.go": {
+        "passed": false,
+        "cases": {
+          "TestGroupBy/strings_by_length": "FAIL",
+          "TestGroupBy/structs_by_a_named_string_key": "FAIL",
+          "TestGroupBy/ints_by_a_bool_key": "FAIL",
+          "TestGroupBy/empty_input": "PASS",
+          "TestSortedKeys/int_keys": "PASS",
+          "TestSortedKeys/named_string_keys": "PASS",
+          "TestSortedKeys/float_keys": "PASS"
+        }
+      },
+      "unsorted-keys.go": {
+        "passed": false,
+        "cases": {
+          "TestGroupBy/strings_by_length": "PASS",
+          "TestGroupBy/structs_by_a_named_string_key": "PASS",
+          "TestGroupBy/ints_by_a_bool_key": "PASS",
+          "TestGroupBy/empty_input": "PASS",
+          "TestSortedKeys/int_keys": "FAIL",
+          "TestSortedKeys/named_string_keys": "FAIL",
+          "TestSortedKeys/float_keys": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "7 rust 10\n",
+    "lockedLines": [
+      8,
+      9,
+      10
+    ]
+  }
+}

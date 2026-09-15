@@ -1,0 +1,107 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1\n1\n",
+        "stderr": "panic: runtime error: comparing uncomparable type []string\n\ngoroutine N [running]:\nmain.Index[...](...)\n\tmain.go:7\nmain.main()\n\tmain.go:18\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1\n1\n",
+        "stderr": "panic: runtime error: comparing uncomparable type []string\n\ngoroutine N [running]:\nmain.Index[...](...)\n\tmain.go:7\nmain.main()\n\tmain.go:18\n",
+        "exitCode": 2,
+        "status": "exit"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "",
+        "stderr": "./main.go:10:20: Person does not satisfy cmp.Ordered (Person missing in ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr | ~float32 | ~float64 | ~string)\n",
+        "exitCode": 1
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "",
+        "stderr": "./main.go:10:20: Person does not satisfy cmp.Ordered (Person missing in ~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr | ~float32 | ~float64 | ~string)\n",
+        "exitCode": 1,
+        "status": "compile_error"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "Bo\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "Bo\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestRouter/routes_by_type",
+      "TestRouter/unhandled_events",
+      "TestRouter/a_pointer_is_a_different_type",
+      "TestRouter/registering_again_replaces",
+      "TestRouter/no_handlers"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestRouter/routes_by_type": "PASS",
+        "TestRouter/unhandled_events": "PASS",
+        "TestRouter/a_pointer_is_a_different_type": "PASS",
+        "TestRouter/registering_again_replaces": "PASS",
+        "TestRouter/no_handlers": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {}
+    },
+    "wrong": {
+      "keeps-first-handler.go": {
+        "passed": false,
+        "cases": {
+          "TestRouter/routes_by_type": "PASS",
+          "TestRouter/unhandled_events": "PASS",
+          "TestRouter/a_pointer_is_a_different_type": "PASS",
+          "TestRouter/registering_again_replaces": "FAIL",
+          "TestRouter/no_handlers": "PASS"
+        }
+      },
+      "keyed-by-kind.go": {
+        "passed": false,
+        "cases": {
+          "TestRouter/routes_by_type": "FAIL",
+          "TestRouter/unhandled_events": "FAIL",
+          "TestRouter/a_pointer_is_a_different_type": "PASS",
+          "TestRouter/registering_again_replaces": "PASS",
+          "TestRouter/no_handlers": "PASS"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "Bo\n",
+    "lockedLines": [
+      8,
+      9,
+      10,
+      11
+    ]
+  }
+}
