@@ -1,0 +1,133 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1 true\n2 true\n0 false\n0 false\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1 true\n2 true\n0 false\n0 false\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1\n4\n9\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan receive]:\nmain.main()\n\tmain.go:8\n",
+        "exitCode": 2
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1\n4\n9\n",
+        "stderr": "fatal error: all goroutines are asleep - deadlock!\n\ngoroutine N [chan receive]:\nmain.main()\n\tmain.go:8\n",
+        "exitCode": 2,
+        "status": "deadlock"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "1\n4\n9\ndone\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "1\n4\n9\ndone\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "nil-and-closed": {
+      "mode": "run",
+      "compare": "exact",
+      "real": {
+        "stdout": "closed channel 0 false\nrecovered: close of closed channel\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "closed channel 0 false\nrecovered: close of closed channel\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestMerge/both_already_closed",
+      "TestMerge/values_in_arrival_order",
+      "TestMerge/keeps_reading_after_one_side_closes",
+      "TestMerge/returns_when_both_close,_not_at_the_timeout",
+      "TestMerge/timeout_counts_from_the_start"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestMerge/both_already_closed": "PASS",
+        "TestMerge/values_in_arrival_order": "PASS",
+        "TestMerge/keeps_reading_after_one_side_closes": "PASS",
+        "TestMerge/returns_when_both_close,_not_at_the_timeout": "PASS",
+        "TestMerge/timeout_counts_from_the_start": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestMerge/both_already_closed": "PASS",
+        "TestMerge/values_in_arrival_order": "FAIL",
+        "TestMerge/keeps_reading_after_one_side_closes": "FAIL",
+        "TestMerge/returns_when_both_close,_not_at_the_timeout": "PASS",
+        "TestMerge/timeout_counts_from_the_start": "FAIL"
+      }
+    },
+    "wrong": {
+      "stops-at-first-close.go": {
+        "passed": false,
+        "cases": {
+          "TestMerge/both_already_closed": "PASS",
+          "TestMerge/values_in_arrival_order": "FAIL",
+          "TestMerge/keeps_reading_after_one_side_closes": "FAIL",
+          "TestMerge/returns_when_both_close,_not_at_the_timeout": "PASS",
+          "TestMerge/timeout_counts_from_the_start": "FAIL"
+        }
+      },
+      "timer-per-iteration.go": {
+        "passed": false,
+        "cases": {
+          "TestMerge/both_already_closed": "PASS",
+          "TestMerge/values_in_arrival_order": "PASS",
+          "TestMerge/keeps_reading_after_one_side_closes": "PASS",
+          "TestMerge/returns_when_both_close,_not_at_the_timeout": "PASS",
+          "TestMerge/timeout_counts_from_the_start": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "1\n4\n9\ndone\n",
+    "lockedLines": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ]
+  }
+}

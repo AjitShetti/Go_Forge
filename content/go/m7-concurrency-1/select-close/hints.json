@@ -1,0 +1,4 @@
+[
+  "Reading a first to the end, then b, loses the arrival order, and it never returns if a doesn't close. You need select, to wait on a, b and a timer at the same time. Two traps inside that select: a closed channel is always ready (it yields zero values forever), and time.After inside the loop makes a new timer on every pass.",
+  "Create deadline := time.After(timeout) once, before the loop. Loop while a != nil || b != nil. In each receive case use v, ok := <-a: if !ok, set a = nil (a nil channel is never ready, so select stops choosing it); otherwise append. In the deadline case, return out."
+]

@@ -1,0 +1,4 @@
+[
+  "Under go 1.21, the loop declares i and label once, and every iteration overwrites them. Each closure captures those two variables, not their values at that moment, so by the time a handler runs, it sees what the loop left behind: the last index and the last label.",
+  "Inside the loop, before building the closure, write i, label := i, label. That declares new variables for this iteration, and the closure captures those. Don't read labels[i] inside the handler: the caller may have changed the slice by then."
+]

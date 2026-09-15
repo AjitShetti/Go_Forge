@@ -1,0 +1,147 @@
+{
+  "goVersion": "go1.27.1",
+  "blocks": {
+    "trap": {
+      "mode": "run",
+      "compare": "exact",
+      "lang": "go1.21",
+      "real": {
+        "stdout": "3 3 3 \n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "3 3 3 \n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild": {
+      "mode": "run",
+      "compare": "exact",
+      "lang": "go1.21",
+      "real": {
+        "stdout": "handling gamma\nhandling gamma\nhandling gamma\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "handling gamma\nhandling gamma\nhandling gamma\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "rebuild-solution": {
+      "mode": "run",
+      "compare": "exact",
+      "lang": "go1.21",
+      "real": {
+        "stdout": "handling alpha\nhandling beta\nhandling gamma\n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "handling alpha\nhandling beta\nhandling gamma\n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "go122": {
+      "mode": "run",
+      "compare": "exact",
+      "lang": "go1.22",
+      "real": {
+        "stdout": "0 1 2 \n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "0 1 2 \n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    },
+    "file-version": {
+      "mode": "run",
+      "compare": "exact",
+      "lang": "go1.21",
+      "real": {
+        "stdout": "0 1 2 \n",
+        "stderr": "",
+        "exitCode": 0
+      },
+      "diverges": false,
+      "engine": {
+        "stdout": "0 1 2 \n",
+        "stderr": "",
+        "exitCode": 0,
+        "status": "ok"
+      }
+    }
+  },
+  "challenge": {
+    "tests": [
+      "TestHandlers/no_labels",
+      "TestHandlers/one_handler_per_label,_called_later",
+      "TestHandlers/called_in_any_order",
+      "TestHandlers/caller_changes_labels_afterwards"
+    ],
+    "solution": {
+      "passed": true,
+      "cases": {
+        "TestHandlers/no_labels": "PASS",
+        "TestHandlers/one_handler_per_label,_called_later": "PASS",
+        "TestHandlers/called_in_any_order": "PASS",
+        "TestHandlers/caller_changes_labels_afterwards": "PASS"
+      }
+    },
+    "starter": {
+      "passed": false,
+      "cases": {
+        "TestHandlers/no_labels": "PASS",
+        "TestHandlers/one_handler_per_label,_called_later": "FAIL",
+        "TestHandlers/called_in_any_order": "FAIL",
+        "TestHandlers/caller_changes_labels_afterwards": "FAIL"
+      }
+    },
+    "wrong": {
+      "copies-only-label.go": {
+        "passed": false,
+        "cases": {
+          "TestHandlers/no_labels": "PASS",
+          "TestHandlers/one_handler_per_label,_called_later": "FAIL",
+          "TestHandlers/called_in_any_order": "FAIL",
+          "TestHandlers/caller_changes_labels_afterwards": "FAIL"
+        }
+      },
+      "reads-slice-later.go": {
+        "passed": false,
+        "cases": {
+          "TestHandlers/no_labels": "PASS",
+          "TestHandlers/one_handler_per_label,_called_later": "PASS",
+          "TestHandlers/called_in_any_order": "PASS",
+          "TestHandlers/caller_changes_labels_afterwards": "FAIL"
+        }
+      }
+    }
+  },
+  "rebuild": {
+    "expectedStdout": "handling alpha\nhandling beta\nhandling gamma\n",
+    "lockedLines": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  }
+}
