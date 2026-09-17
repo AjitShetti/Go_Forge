@@ -20,7 +20,7 @@ export default async function NewDesignPage({ searchParams }: { searchParams: Pr
         <Link href="/canvas" className="label hover:text-blue">
           ← Designs
         </Link>
-        <Caption>FIG_031 · New design</Caption>
+        <Caption>New design</Caption>
       </div>
       <DesignEditor mode={access.kind} design={null} versions={[]} startScenario={scenario?.slug ?? null} startGraph={startGraph} />
     </main>

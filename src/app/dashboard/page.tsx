@@ -13,7 +13,7 @@ export default async function DashboardPage() {
   const view = await loadLearner();
   return (
     <Page>
-      <Caption className="pt-10">FIG_030 · Progress</Caption>
+      <Caption className="pt-10">Progress</Caption>
       <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Progress</PixelHeading>
       {view.kind === "ok" ? <DashboardBody view={view} /> : <LearnerGate view={view} what="your progress" />}
     </Page>

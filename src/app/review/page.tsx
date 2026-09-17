@@ -13,7 +13,7 @@ export default async function ReviewPage() {
 
   return (
     <Page>
-      <Caption className="pt-10">FIG_020 · Mistake ledger · review queue</Caption>
+      <Caption className="pt-10">Mistake ledger · review queue</Caption>
       <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Review</PixelHeading>
       <p className="prose-serif mt-4 max-w-2xl text-ink-2">
         Concepts come back here when you predict them wrong, and on a spaced schedule after that. Every question is a program the content pipeline actually ran, so the answer is what real Go printed.

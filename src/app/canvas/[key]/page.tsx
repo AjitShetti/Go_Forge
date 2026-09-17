@@ -17,7 +17,7 @@ export default async function DesignPage({ params, searchParams }: { params: Pro
   if (access.kind !== "ok") {
     return (
       <Page>
-        <Caption className="pt-10">FIG_031 · Design</Caption>
+        <Caption className="pt-10">Design</Caption>
         <div className="panel mt-8 max-w-2xl p-5" data-testid="designs-gate" data-kind={access.kind}>
           <p className="prose-serif text-ink-2">
             Saved designs belong to an account.{" "}
@@ -41,7 +41,7 @@ export default async function DesignPage({ params, searchParams }: { params: Pro
   if (loaded.kind === "invalid") {
     return (
       <Page>
-        <Caption className="pt-10">FIG_031 · Design</Caption>
+        <Caption className="pt-10">Design</Caption>
         <div className="panel mt-8 max-w-2xl p-5" data-testid="design-invalid">
           <p className="font-mono text-[0.75rem] tracking-[0.14em] text-bad uppercase">This version can&apos;t be opened</p>
           <p className="prose-serif mt-2 text-ink-2">The stored graph doesn&apos;t match the design format, so it isn&apos;t drawn half-broken. Problems:</p>
@@ -64,7 +64,7 @@ export default async function DesignPage({ params, searchParams }: { params: Pro
           ← Designs
         </Link>
         <Caption>
-          FIG_031 · {d.name} · v{d.version}
+          {d.name} · v{d.version}
         </Caption>
       </div>
       <DesignEditor

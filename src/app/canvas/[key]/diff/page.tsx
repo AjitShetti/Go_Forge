@@ -19,7 +19,7 @@ export default async function DesignDiffPage({ params, searchParams }: { params:
   if (access.kind !== "ok") {
     return (
       <Page>
-        <Caption className="pt-10">FIG_032 · Design diff</Caption>
+        <Caption className="pt-10">Design diff</Caption>
         <div className="panel mt-8 max-w-2xl p-5" data-testid="designs-gate" data-kind={access.kind}>
           <p className="prose-serif text-ink-2">
             {access.kind === "signed-out" ? (
@@ -52,7 +52,7 @@ export default async function DesignDiffPage({ params, searchParams }: { params:
           ← {name}
         </Link>
         <Caption>
-          FIG_032 · Diff v{from} → v{to}
+          Diff v{from} → v{to}
         </Caption>
       </div>
 

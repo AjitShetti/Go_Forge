@@ -17,6 +17,36 @@ test("landing → track → a lesson, with an honest NOT SAVED badge", async ({ 
   expect(errors).toEqual([]);
 });
 
+test("home page walks a design from a failing sketch to a pass, with the grader's real scores", async ({ page, errors }) => {
+  await page.goto("/");
+  await expect(page.getByTestId("how-it-works")).toBeVisible();
+  const demo = page.getByTestId("canvas-demo");
+  await page.getByTestId("demo-step-scenario").click(); // a click stops autoplay
+  await expect(demo).toHaveAttribute("data-step", "scenario");
+  await expect(page.getByTestId("demo-grade")).toHaveCount(0);
+  for (const [step, score] of [["grade", "50"], ["scale", "80"], ["cache", "85"], ["replicate", "100"]]) {
+    await page.getByTestId("demo-next").click();
+    if (step === "grade") await page.getByTestId("demo-next").click(); // past the ungraded sketch
+    await expect(demo).toHaveAttribute("data-step", step);
+    await expect(page.getByTestId("demo-grade")).toHaveAttribute("data-score", score);
+  }
+  await expect(demo.locator("[data-testid^=node-]")).toHaveCount(6);
+  await page.getByTestId("demo-try").click();
+  await expect(page).toHaveURL(/\/canvas\/new\?scenario=url-shortener&start=naive$/);
+  await expect(page.getByTestId("count-nodes")).toHaveText("3");
+  expect(errors).toEqual([]);
+});
+
+test("pages don't show repository file paths", async ({ page }) => {
+  for (const path of ["/", "/engine", "/scenarios/url-shortener", "/track/m8-concurrency-2/data-races"]) {
+    await page.goto(path);
+    await expect(page.locator("main"), path).not.toContainText(/docs\/|supabase\/|scripts\/|\.sql\b|\.mjs\b/);
+  }
+  await page.goto("/engine");
+  await page.getByTestId("engine-differences").locator("summary").click();
+  await expect(page.getByTestId("engine-differences")).toContainText("the race detector");
+});
+
 test("every main nav link opens its page", async ({ page, errors }) => {
   const nav = [
     ["Track", "/track"],

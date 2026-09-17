@@ -38,7 +38,7 @@ export default async function NotebookPage({ searchParams }: { searchParams: Pro
 
   return (
     <Page>
-      <Caption className="pt-10">FIG_040 · Notebook · stretch answers and notes</Caption>
+      <Caption className="pt-10">Notebook · stretch answers and notes</Caption>
       <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Notebook</PixelHeading>
       <p className="prose-serif mt-6 max-w-2xl text-ink-2">
         Every stretch answer you submit in a lesson lands here, next to your own notes. Nothing here is graded.

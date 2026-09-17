@@ -23,7 +23,7 @@ export default async function CanvasPage() {
   return (
     <Page>
       <div className="flex flex-wrap items-center justify-between gap-4 pt-10">
-        <Caption>FIG_030 · System design canvas</Caption>
+        <Caption>System design canvas</Caption>
         <Link href="/scenarios" className="label text-blue hover:underline">
           Scenarios + grading →
         </Link>

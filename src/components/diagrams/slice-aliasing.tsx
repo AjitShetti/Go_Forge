@@ -13,7 +13,7 @@ export function SliceAliasingDiagram() {
   ];
   const cells = ["0", "0", "0", "42"];
   return (
-    <Plate caption="FIG_301 · Slice headers share one backing array" aside="after both appends" className="not-prose">
+    <Plate caption="Slice headers share one backing array" aside="after both appends" className="not-prose">
       <div className="overflow-x-auto">
         <svg viewBox="0 0 600 300" className="w-full min-w-[520px]" role="img" aria-label="Slices a, b and c are three headers whose pointers all point at the same four-element array; slot 3 holds 42.">
           <defs>

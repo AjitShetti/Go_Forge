@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Scenarios" };
 export default function ScenariosPage() {
   return (
     <Page>
-      <Caption className="pt-10">FIG_040 · Design scenarios</Caption>
+      <Caption className="pt-10">Design scenarios</Caption>
       <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Scenarios</PixelHeading>
       <p className="prose-serif mt-6 max-w-2xl text-ink-2">
         Each scenario states what the system must do, the numbers it must survive, and a few hard constraints. You design on the canvas; Grade runs a fixed set of rules and shows the arithmetic behind every finding.

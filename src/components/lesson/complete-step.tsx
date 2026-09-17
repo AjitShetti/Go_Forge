@@ -15,7 +15,7 @@ export function CompleteStep({ state, persistent, next }: { state: LessonState; 
   ];
   return (
     <section data-testid="step-complete">
-      <Plate caption="FIG_END · Lesson summary" aside={v.completed ? "complete" : "marked for review"}>
+      <Plate caption="Lesson summary" aside={v.completed ? "complete" : "marked for review"}>
         <p className={`font-pixel text-3xl font-bold uppercase ${v.completed ? "text-blue" : "text-warn"}`} data-testid="completion" data-completed={v.completed}>
           {v.completed ? "Lesson complete" : "Marked for review"}
         </p>

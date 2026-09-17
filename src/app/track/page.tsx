@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Track" };
 export default function TrackPage() {
   return (
     <Page>
-      <Caption className="pt-10">FIG_010 · Track · {track.slug}</Caption>
+      <Caption className="pt-10">Track · every module in order</Caption>
       <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">{track.title}</PixelHeading>
 
       <div className="mt-10 grid gap-6">

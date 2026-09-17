@@ -27,7 +27,7 @@ export default async function ConceptReviewPage({ params }: { params: Promise<Pa
     <Page>
       <Caption className="pt-10">
         <Link href="/review" className="hover:text-blue">
-          FIG_020 · Review
+          Review
         </Link>{" "}
         · {info.moduleCode} · {info.slug}
       </Caption>

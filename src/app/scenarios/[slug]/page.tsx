@@ -41,7 +41,7 @@ export default async function ScenarioPage({ params }: { params: Promise<{ slug:
         <Link href="/scenarios" className="label hover:text-blue">
           ← Scenarios
         </Link>
-        <Caption>FIG_041 · {s.slug}</Caption>
+        <Caption>Design scenario</Caption>
       </div>
       <PixelHeading className="mt-6 text-[clamp(1.8rem,5vw,3.4rem)]">{s.title}</PixelHeading>
       <p className="prose-serif mt-6 max-w-3xl text-ink-2" data-testid="scenario-summary">
@@ -101,7 +101,7 @@ export default async function ScenarioPage({ params }: { params: Promise<{ slug:
           ))}
         </ol>
         <p className="mt-4 font-mono text-[0.7rem] text-ink-3">
-          Scoring: 100 − 15 per violation − 5 per warning, floor 0. Tradeoffs cost nothing. Pass = zero violations. p99 budget {s.params.p99BudgetMs} ms · read-heavy at ≥ {s.params.readHeavyRatio}:1. How load is modelled: docs/grading.md.
+          Scoring: 100 − 15 per violation − 5 per warning, floor 0. Tradeoffs cost nothing. Pass = zero violations. p99 budget {s.params.p99BudgetMs} ms · read-heavy at ≥ {s.params.readHeavyRatio}:1. Load model: peak QPS leaves the clients split over their connections; load balancers and gateways pass it through; every other node sends its QPS out down each connection. Capacity = replicas × QPS in.
         </p>
       </section>
     </Page>

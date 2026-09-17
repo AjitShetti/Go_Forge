@@ -69,7 +69,7 @@ What it can and can't do:
 - It costs roughly 5–10× memory and 2–20× CPU, so it's for tests and staging, not production.
 - It can't see race *conditions*. The Rebuild's program is clean under `-race`.
 
-**Engine note:** the browser engine has no race detector, and it runs every goroutine on one thread, so a racy `count++` from many goroutines gives the exact total there while native Go loses increments (docs/execution-engine.md, probe 47). That's why this lesson's programs make the bug **visible in the output** with sleeps between check and act, instead of relying on lost updates. Run the commands above on your machine for the detector. Its output isn't shown here, because this lesson's content couldn't be verified with `-race`.
+**Engine note:** the browser engine has no race detector, and it runs every goroutine on one thread, so a racy `count++` from many goroutines gives the exact total there while native Go loses increments. That's why this lesson's programs make the bug **visible in the output** with sleeps between check and act, instead of relying on lost updates. Run the commands above on your machine for the detector. Its output isn't shown here, because this lesson's content couldn't be verified with `-race`.
 
 ## Python/JS contrast
 

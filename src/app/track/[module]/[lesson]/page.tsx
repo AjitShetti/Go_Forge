@@ -46,6 +46,6 @@ async function resolvePersistence(ref: string, trapConcept: string): Promise<Per
     supabase.from("lessons").select("id").eq("content_ref", ref).maybeSingle(),
     supabase.from("concepts").select("id").eq("slug", trapConcept).maybeSingle(),
   ]);
-  if (lessonErr || !lessonRow) return { kind: "off", reason: `Lesson ${ref} is not seeded in the database (run supabase/seed.sql)` };
+  if (lessonErr || !lessonRow) return { kind: "off", reason: `Lesson ${ref} is not in the database yet` };
   return { kind: "on", userId: user.id, lessonId: lessonRow.id, trapConceptId: conceptRow?.id ?? null };
 }

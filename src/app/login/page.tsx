@@ -14,7 +14,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   if (configured && (await getCurrentUser())) redirect("/track");
   return (
     <Page className="max-w-xl">
-      <Caption className="pt-10">FIG_050 · Auth · email magic link</Caption>
+      <Caption className="pt-10">Sign in · email magic link</Caption>
       <PixelHeading className="mt-6 text-5xl">Sign in</PixelHeading>
       {error && (
         <p data-testid="auth-error" className="mt-6 border border-bad px-3 py-2 font-mono text-sm text-bad">

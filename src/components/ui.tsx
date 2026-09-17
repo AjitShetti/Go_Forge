@@ -13,7 +13,7 @@ export function NotImplemented({ what, milestone }: { what?: string; milestone?:
   );
 }
 
-/** "FIG_000 · SOMETHING" style caption. */
+/** Small mono uppercase label above a heading. */
 export function Caption({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <p className={`label ${className}`}>{children}</p>;
 }
