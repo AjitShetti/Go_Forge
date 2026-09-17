@@ -1,16 +1,21 @@
 // Builds the in-browser Go engine into public/engine/gen/:
-//   compile.<hash>.wasm, link.<hash>.wasm   cmd/compile + cmd/link for js/wasm
-//   std-<chunk>.<hash>.pack                 precompiled js/wasm stdlib archives
+//   compile.<hash>.wasm.gz, link.<hash>.wasm.gz   cmd/compile + cmd/link for js/wasm
+//   std-<chunk>.<hash>.pack.gz                    precompiled js/wasm stdlib archives
 //   wasm_exec.js                            glue from the SAME toolchain
 //   manifest.json                           versions, chunk map, sizes
 //
 // wasm_exec.js moved from misc/wasm (<= go1.23) to lib/wasm (>= go1.24), so it
 // is resolved from `go env GOROOT` at build time, never hardcoded.
+//
+// The binaries are stored gzipped (about 200 MB raw, a fifth of that gzipped)
+// and the engine inflates them itself, so the download stays small on any
+// static host, whether or not it compresses responses, and no file comes near
+// a host's per-file size limit.
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { gzipSync } from "node:zlib";
+import { constants, gzipSync } from "node:zlib";
 
 const root = resolve(import.meta.dirname, "..");
 const outDir = join(root, "public", "engine", "gen");
@@ -18,6 +23,12 @@ const wasmEnv = { ...process.env, GOOS: "js", GOARCH: "wasm", CGO_ENABLED: "0", 
 const go = (args, env = process.env) => execFileSync("go", args, { encoding: "utf8", env, maxBuffer: 1 << 28 }).trim();
 const mb = (n) => (n / 1048576).toFixed(1) + " MB";
 const hash = (buf) => createHash("sha256").update(buf).digest("hex").slice(0, 10);
+/** Writes `name`.gz and returns its name and gzipped size. The hash in `name` is of the raw bytes. */
+const writeGz = (name, bytes) => {
+  const gz = gzipSync(bytes, { level: constants.Z_BEST_COMPRESSION });
+  writeFileSync(join(outDir, `${name}.gz`), gz);
+  return { file: `${name}.gz`, gzSize: gz.length };
+};
 
 // Stdlib chunks. Each chunk holds the transitive deps of its roots that are not
 // already in an earlier chunk. "core" is fetched at startup; the rest only when
@@ -56,11 +67,10 @@ for (const tool of ["compile", "link"]) {
   const t0 = Date.now();
   execFileSync("go", ["build", "-ldflags=-s -w", "-o", tmp, `cmd/${tool}`], { env: wasmEnv, stdio: "inherit" });
   const bytes = readFileSync(tmp);
-  const file = `${tool}.${hash(bytes)}.wasm`;
-  writeFileSync(join(outDir, file), bytes);
+  const { file, gzSize } = writeGz(`${tool}.${hash(bytes)}.wasm`, bytes);
   rmSync(tmp);
-  manifest.tools[tool] = { file, size: bytes.length };
-  report.push(`${tool.padEnd(8)} ${mb(bytes.length).padStart(9)} raw ${mb(gzipSync(bytes).length).padStart(9)} gzip  (${((Date.now() - t0) / 1000).toFixed(1)} s)`);
+  manifest.tools[tool] = { file, size: bytes.length, gzSize };
+  report.push(`${tool.padEnd(8)} ${mb(bytes.length).padStart(9)} raw ${mb(gzSize).padStart(9)} gzip  (${((Date.now() - t0) / 1000).toFixed(1)} s)`);
 }
 
 // One `go list` gives every package's export archive and transitive deps.
@@ -110,10 +120,9 @@ for (const chunk of Object.keys(CHUNK_ROOTS)) {
   const lenBuf = Buffer.alloc(4);
   lenBuf.writeUInt32LE(header.length);
   const pack = Buffer.concat([Buffer.from("GFPK"), lenBuf, header, ...blobs]);
-  const file = `std-${chunk}.${hash(pack)}.pack`;
-  writeFileSync(join(outDir, file), pack);
-  manifest.chunks[chunk] = { file, size: pack.length, requires: [...requires].sort(), packageCount: files.length };
-  report.push(`std-${chunk.padEnd(4)} ${mb(pack.length).padStart(9)} raw ${mb(gzipSync(pack).length).padStart(9)} gzip  ${files.length} pkgs, requires [${[...requires]}]`);
+  const { file, gzSize } = writeGz(`std-${chunk}.${hash(pack)}.pack`, pack);
+  manifest.chunks[chunk] = { file, size: pack.length, gzSize, requires: [...requires].sort(), packageCount: files.length };
+  report.push(`std-${chunk.padEnd(4)} ${mb(pack.length).padStart(9)} raw ${mb(gzSize).padStart(9)} gzip  ${files.length} pkgs, requires [${[...requires]}]`);
 }
 
 writeFileSync(join(outDir, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");

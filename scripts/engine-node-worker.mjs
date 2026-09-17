@@ -1,6 +1,7 @@
 // worker_threads entry: loads the browser engine scripts unchanged and speaks
 // the same protocol as public/engine/worker.js.
 import { readFileSync } from "node:fs";
+import { gunzipSync } from "node:zlib";
 import { join, resolve } from "node:path";
 import vm from "node:vm";
 import { parentPort } from "node:worker_threads";
@@ -18,7 +19,7 @@ load(join(engineDir, "session.js"));
 const onMessage = globalThis.GoForgeSession.createSession({
   post: (m) => parentPort.postMessage(m),
   fetchFile: async (file) => {
-    const b = readFileSync(join(gen, file));
+    const b = file.endsWith(".gz") ? gunzipSync(readFileSync(join(gen, file))) : readFileSync(join(gen, file));
     return b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
   },
   loadManifest: async () => JSON.parse(readFileSync(join(gen, "manifest.json"), "utf8")),

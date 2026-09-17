@@ -18,7 +18,12 @@ const onMessage = GoForgeSession.createSession({
   fetchFile: async (file) => {
     const res = await fetch(new URL(file, gen));
     if (!res.ok) throw new Error(`engine: fetching ${file}: HTTP ${res.status}`);
-    return res.arrayBuffer();
+    const buf = await res.arrayBuffer();
+    // Files are stored gzipped. A host that serves them with Content-Encoding
+    // has already inflated them, so check the gzip magic instead of trusting the name.
+    const b = new Uint8Array(buf, 0, Math.min(2, buf.byteLength));
+    if (!file.endsWith(".gz") || b[0] !== 0x1f || b[1] !== 0x8b) return buf;
+    return new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
   },
   loadManifest: async () => {
     const res = await fetch(new URL("manifest.json", gen), { cache: params.get("nocache") ? "reload" : "no-cache" });

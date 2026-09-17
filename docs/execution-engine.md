@@ -68,7 +68,7 @@ WasmExecutor.run(files, opts) ──►   session.js
   stdout/stderr streamed                  deadlock watchdog
 ```
 
-- **Files** (`public/engine/`): `executor.js` (main thread, implements `GoExecutor`), `worker.js`, `session.js`, `toolchain.js`, `memfs.js`. Generated artifacts live in `gen/` (gitignored), built by `scripts/build-engine.mjs`.
+- **Files** (`public/engine/`): `executor.js` (main thread, implements `GoExecutor`), `worker.js`, `session.js`, `toolchain.js`, `memfs.js`. Generated artifacts live in `gen/` (gitignored), built by `scripts/build-engine.mjs`. Binaries and stdlib packs are stored gzipped (`*.gz`, about 46 MB in all) and inflated by the worker, so no host compression or large-file support is needed. On Vercel, `scripts/vercel-build.mjs` installs the pinned Go release and builds them during the deploy.
 - **Node uses identical code.** `scripts/engine-node.mjs` loads the same `session.js`/`toolchain.js`/`memfs.js` in a `worker_threads` Worker. Content verification (§8 of the spec) therefore tests exactly what the browser runs.
 - **`wasm_exec.js`** is resolved at build time from `go env GOROOT`, trying `lib/wasm/` (≥ go1.24) and then `misc/wasm/` (older). No path is hardcoded.
 - **Language version** per program: `-lang=go1.21` gives the pre-1.22 loop variable semantics, and the default is the toolchain's version. A lesson can show both behaviors, and both are verified (probe S1, browser check).
