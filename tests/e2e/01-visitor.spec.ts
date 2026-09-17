@@ -37,6 +37,22 @@ test("home page walks a design from a failing sketch to a pass, with the grader'
   expect(errors).toEqual([]);
 });
 
+test("every page links to GitHub for bug reports, and lessons prefill which lesson", async ({ page }) => {
+  for (const path of ["/", "/engine", "/nope"]) {
+    await page.goto(path);
+    await expect(page.getByTestId("footer-report-bug"), path).toHaveAttribute("href", "https://github.com/AjitShetti/Go_Forge/issues/new?template=bug_report.yml");
+    await expect(page.getByTestId("footer-github")).toHaveAttribute("href", "https://github.com/AjitShetti/Go_Forge");
+  }
+  await page.goto("/track/m5-interfaces/nil-interface");
+  const href = new URL((await page.getByTestId("report-lesson").getAttribute("href"))!);
+  expect([href.pathname, href.searchParams.get("template"), href.searchParams.get("lesson"), href.searchParams.get("step")]).toEqual([
+    "/AjitShetti/Go_Forge/issues/new",
+    "lesson_problem.yml",
+    "m5-interfaces/nil-interface",
+    "provoke",
+  ]);
+});
+
 test("pages don't show repository file paths", async ({ page }) => {
   for (const path of ["/", "/engine", "/scenarios/url-shortener", "/track/m8-concurrency-2/data-races"]) {
     await page.goto(path);

@@ -16,6 +16,7 @@ import { LOCAL_ONLY, localOnlyFeatures } from "@/lib/engine/features";
 import { getExecutor } from "@/lib/engine/wasm-executor";
 import { initialState, replay, transition, view, type LessonEvent, type LessonState } from "@/lib/lesson/machine";
 import { NullRecorder, SupabaseRecorder, type LessonRecorder, type SaveStatus } from "@/lib/lesson/recorder";
+import { issueUrl } from "@/lib/site";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
 
 export type PersistenceContext = { kind: "off"; reason: string } | { kind: "on"; userId: string; lessonId: string; trapConceptId: string | null };
@@ -121,7 +122,18 @@ export function LessonPlayer({
           </Link>{" "}
           · {moduleCode} {moduleTitle} · Lesson {String(lessonNumber).padStart(2, "0")}
         </Caption>
-        <SaveBadge status={saveStatus} />
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href={issueUrl("lesson_problem.yml", { lesson: `${bundle.moduleSlug}/${bundle.lessonSlug}`, step: state.step, title: `Lesson: ${fm.title}` })}
+            target="_blank"
+            rel="noreferrer"
+            data-testid="report-lesson"
+            className="font-mono text-[0.7rem] text-ink-3 underline underline-offset-2 hover:text-blue"
+          >
+            Report a problem with this lesson ↗
+          </a>
+          <SaveBadge status={saveStatus} />
+        </div>
       </div>
       <PixelHeading className="mt-6 text-[clamp(2rem,5.5vw,3.6rem)]">{fm.title}</PixelHeading>
       <div className="mt-4 flex flex-wrap gap-2">

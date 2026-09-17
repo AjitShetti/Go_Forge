@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Newsreader, Silkscreen } from "next/font/google";
 import type { ReactNode } from "react";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
@@ -16,9 +17,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${silkscreen.variable} ${jetbrains.variable} ${newsreader.variable}`}>
-      <body className="min-h-screen">
+      <body className="flex min-h-screen flex-col">
         <SiteHeader />
-        {children}
+        <div className="flex-1">{children}</div>
+        <SiteFooter />
       </body>
     </html>
   );

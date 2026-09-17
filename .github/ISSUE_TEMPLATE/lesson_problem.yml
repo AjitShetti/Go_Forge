@@ -1,0 +1,36 @@
+name: Problem with a lesson
+description: Wrong explanation, confusing wording, a test that rejects a correct answer, or output that doesn't match Go
+labels: ["content"]
+body:
+  - type: input
+    id: lesson
+    attributes:
+      label: Lesson
+      description: Filled in when you use the link on the lesson page (module/lesson)
+      placeholder: m3-slices-maps/two-appends
+    validations:
+      required: true
+  - type: input
+    id: step
+    attributes:
+      label: Step
+      description: provoke, collide, decode, rebuild, challenge or stretch
+      placeholder: challenge
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong
+      description: Quote the text or code involved, and say what you think it should be.
+    validations:
+      required: true
+  - type: textarea
+    id: code
+    attributes:
+      label: Your code and its output (if relevant)
+      description: For a challenge the tests rejected, paste your solution and the failing case.
+      render: go
+  - type: input
+    id: native
+    attributes:
+      label: Output of `go version`, if you compared with Go on your machine
+      placeholder: go version go1.27.1 linux/amd64

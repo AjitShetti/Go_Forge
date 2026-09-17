@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Caption, Page, PixelHeading } from "@/components/ui";
+import { issueUrl } from "@/lib/site";
 
 // Shown when a page throws while rendering (for example the database is unreachable).
 export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+  const [path, setPath] = useState("");
+  useEffect(() => setPath(window.location.pathname), []);
   return (
     <Page className="max-w-2xl">
       <Caption className="pt-10">Something broke</Caption>
@@ -20,6 +24,15 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
         <Link href="/" className="btn">
           Home
         </Link>
+        <a
+          href={issueUrl("bug_report.yml", { page: path, what: `The page showed "This page failed to load."${error.digest ? ` Digest: ${error.digest}` : ""}` })}
+          target="_blank"
+          rel="noreferrer"
+          className="btn"
+          data-testid="error-report"
+        >
+          Report it ↗
+        </a>
       </div>
     </Page>
   );

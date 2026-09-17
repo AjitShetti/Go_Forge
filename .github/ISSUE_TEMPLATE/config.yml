@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Go Forge (live site)
+    url: https://go-forge.vercel.app
+    about: Try the lessons, the engine and the design canvas.
