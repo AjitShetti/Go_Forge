@@ -60,9 +60,9 @@ export function NodeInspector({ node, onChange, onDelete }: { node: DesignFlowNo
 
   return (
     <div data-testid="node-inspector" data-node={node.id}>
-      <div className="flex items-center gap-2 text-blue">
+      <div className="flex items-center gap-2 text-accent">
         <NodeIcon kind={kind} />
-        <span className="label text-blue">{NODE_SPECS[kind].title}</span>
+        <span className="label text-accent">{NODE_SPECS[kind].title}</span>
       </div>
       <p className="mt-1 font-serif text-[0.95rem] text-ink-2 italic">{NODE_SPECS[kind].blurb}.</p>
 
@@ -103,7 +103,7 @@ export function NodeInspector({ node, onChange, onDelete }: { node: DesignFlowNo
             case "boolean":
               return (
                 <label key={key} className="flex items-center gap-2 font-mono text-[0.8rem]">
-                  <input data-testid={fieldId(key)} type="checkbox" checked={config.persistence === true} onChange={(e) => set("persistence", e.target.checked)} className="h-4 w-4 accent-blue" />
+                  <input data-testid={fieldId(key)} type="checkbox" checked={config.persistence === true} onChange={(e) => set("persistence", e.target.checked)} className="h-4 w-4 accent-accent" />
                   {f.label}
                   <span className="text-ink-3">(survives restart)</span>
                 </label>
@@ -147,16 +147,16 @@ export function EdgeInspector({
   useEffect(() => setLabel(edge.data?.label ?? ""), [edge.data?.label, edge.id]);
   return (
     <div data-testid="edge-inspector" data-edge={edge.id}>
-      <p className="label text-blue">Connection</p>
+      <p className="label text-accent">Connection</p>
       <p className="mt-1 font-mono text-[0.8rem]">
         {sourceLabel} <span className="text-ink-3">→</span> {targetLabel}
       </p>
       <fieldset className="mt-4">
         <legend className="label text-[0.64rem]">Kind</legend>
-        <div className="mt-1 grid gap-px border border-ink bg-rule">
+        <div className="mt-1 grid gap-px border border-line bg-rule">
           {EDGE_KINDS.map((k) => (
-            <label key={k} className={`flex cursor-pointer items-center gap-2 px-2 py-1.5 font-mono text-[0.74rem] ${k === kind ? "bg-blue-soft" : "bg-paper hover:bg-paper-2"}`}>
-              <input type="radio" name="edge-kind" data-testid={`edge-kind-${k}`} checked={k === kind} onChange={() => onChange(k, label)} className="accent-blue" />
+            <label key={k} className={`flex cursor-pointer items-center gap-2 px-2 py-1.5 font-mono text-[0.74rem] ${k === kind ? "bg-accent-soft" : "bg-paper hover:bg-paper-2"}`}>
+              <input type="radio" name="edge-kind" data-testid={`edge-kind-${k}`} checked={k === kind} onChange={() => onChange(k, label)} className="accent-accent" />
               <EdgeSample kind={k} />
               {EDGE_SPECS[k].title}
             </label>

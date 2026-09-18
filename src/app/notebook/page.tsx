@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { utcStamp } from "@/lib/format";
 import Link from "next/link";
-import { Caption, Page, PixelHeading } from "@/components/ui";
+import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { designAccess } from "@/lib/canvas/designs.server";
 import { track } from "@/lib/content/track";
 import { DeleteEntryButton, NoteForm } from "./notebook-client";
@@ -39,21 +39,21 @@ export default async function NotebookPage({ searchParams }: { searchParams: Pro
   return (
     <Page>
       <Caption className="pt-10">Notebook · stretch answers and notes</Caption>
-      <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Notebook</PixelHeading>
+      <DisplayHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Notebook</DisplayHeading>
       <p className="prose-serif mt-6 max-w-2xl text-ink-2">
         Every stretch answer you submit in a lesson lands here, next to your own notes. Nothing here is graded.
       </p>
 
       {access.kind === "not-configured" && (
         <div className="panel mt-8 max-w-2xl p-5" data-testid="notebook-gate" data-kind="not-configured">
-          <p className="font-mono text-[0.75rem] tracking-[0.14em] text-bad uppercase">DB not connected</p>
+          <p className="font-mono text-[0.75rem] text-bad">DB not connected</p>
           <p className="prose-serif mt-2 text-ink-2">Supabase isn&apos;t configured, so there is nowhere to keep notes.</p>
         </div>
       )}
       {access.kind === "signed-out" && (
         <div className="panel mt-8 max-w-2xl p-5" data-testid="notebook-gate" data-kind="signed-out">
           <p className="prose-serif text-ink-2">
-            <Link href="/login" className="text-blue underline underline-offset-2">
+            <Link href="/login" className="text-accent underline underline-offset-2">
               Sign in
             </Link>{" "}
             to see your stretch answers and keep notes.
@@ -62,7 +62,7 @@ export default async function NotebookPage({ searchParams }: { searchParams: Pro
       )}
       {loadError && (
         <div className="panel mt-8 max-w-2xl p-5" data-testid="notebook-gate" data-kind="error">
-          <p className="font-mono text-[0.75rem] tracking-[0.14em] text-bad uppercase">Could not load your notebook</p>
+          <p className="font-mono text-[0.75rem] text-bad">Could not load your notebook</p>
           <p className="mt-2 font-mono text-sm text-ink-2">{loadError}</p>
         </div>
       )}
@@ -74,13 +74,13 @@ export default async function NotebookPage({ searchParams }: { searchParams: Pro
           <div className="panel mt-8" data-testid="notebook-list">
             <div className="panel-head flex-wrap gap-3">
               <span className="label">Entries</span>
-              <nav aria-label="Filter entries" className="flex gap-4 font-mono text-[0.72rem] tracking-[0.1em] uppercase">
+              <nav aria-label="Filter entries" className="flex gap-4 font-mono text-[0.72rem]">
                 {[
                   [null, `All ${entries.length}`],
                   ["stretch", `Stretch ${count("stretch")}`],
                   ["note", `Notes ${count("note")}`],
                 ].map(([k, label]) => (
-                  <Link key={label} href={k ? `/notebook?kind=${k}` : "/notebook"} aria-current={filter === k ? "page" : undefined} className={filter === k ? "text-blue underline underline-offset-4" : "text-ink-2 hover:text-blue"}>
+                  <Link key={label} href={k ? `/notebook?kind=${k}` : "/notebook"} aria-current={filter === k ? "page" : undefined} className={filter === k ? "text-accent underline underline-offset-4" : "text-ink-2 hover:text-accent"}>
                     {label}
                   </Link>
                 ))}
@@ -97,9 +97,9 @@ export default async function NotebookPage({ searchParams }: { searchParams: Pro
                   return (
                     <li key={e.id} className="px-4 py-4" data-testid="notebook-entry" data-kind={e.kind}>
                       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                        <span className={`border px-1.5 py-0.5 font-mono text-[0.66rem] tracking-[0.12em] uppercase ${e.kind === "stretch" ? "border-blue text-blue" : "border-rule text-ink-2"}`}>{e.kind}</span>
+                        <span className={`border px-1.5 py-0.5 font-mono text-[0.66rem] ${e.kind === "stretch" ? "border-accent text-accent" : "border-rule text-ink-2"}`}>{e.kind}</span>
                         {lesson ? (
-                          <Link href={lesson.href} className="prose-serif min-w-0 flex-1 text-blue underline-offset-2 hover:underline">
+                          <Link href={lesson.href} className="prose-serif min-w-0 flex-1 text-accent underline-offset-2 hover:underline">
                             {lesson.label}
                           </Link>
                         ) : (

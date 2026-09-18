@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Caption, Page, PixelHeading } from "@/components/ui";
+import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { track } from "@/lib/content/track";
 import { firstTries } from "@/lib/review/mastery";
 import { type LearnerView, loadLearner, relativeDays } from "../review/learner";
@@ -14,7 +14,7 @@ export default async function DashboardPage() {
   return (
     <Page>
       <Caption className="pt-10">Progress</Caption>
-      <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Progress</PixelHeading>
+      <DisplayHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Progress</DisplayHeading>
       {view.kind === "ok" ? <DashboardBody view={view} /> : <LearnerGate view={view} what="your progress" />}
     </Page>
   );
@@ -65,8 +65,8 @@ function DashboardBody({ view }: { view: Extract<LearnerView, { kind: "ok" }> })
           return (
             <section key={m.slug} className="panel" data-testid={`progress-${m.code}`}>
               <div className="panel-head">
-                <h2 className="font-mono text-sm tracking-[0.12em] uppercase">
-                  <span className="text-blue">{m.code}</span> · {m.title}
+                <h2 className="font-mono text-sm">
+                  <span className="text-accent">{m.code}</span> · {m.title}
                 </h2>
                 <span className="label">
                   {moduleLessons.filter((l) => progressOf(l.ref)?.completed).length} / {moduleLessons.length} done
@@ -79,13 +79,13 @@ function DashboardBody({ view }: { view: Extract<LearnerView, { kind: "ok" }> })
                   return (
                     <li key={l.ref} className="flex flex-wrap items-center justify-between gap-3 px-4 py-2" data-testid={`lesson-${l.lessonSlug}`} data-status={status}>
                       {l.authored ? (
-                        <Link href={`/track/${l.moduleSlug}/${l.lessonSlug}`} className="prose-serif hover:text-blue">
+                        <Link href={`/track/${l.moduleSlug}/${l.lessonSlug}`} className="prose-serif hover:text-accent">
                           {l.title}
                         </Link>
                       ) : (
                         <span className="prose-serif text-ink-3">{l.title}</span>
                       )}
-                      <span className={`font-mono text-[0.72rem] tracking-[0.08em] uppercase ${p?.completed ? "text-ok" : p?.markedForReview ? "text-bad" : "text-ink-3"}`}>{status}</span>
+                      <span className={`font-mono text-[0.72rem] ${p?.completed ? "text-ok" : p?.markedForReview ? "text-bad" : "text-ink-3"}`}>{status}</span>
                     </li>
                   );
                 })}

@@ -1,89 +1,128 @@
 @import "tailwindcss";
 
-/* Visual language: paper ground with a faint dot grid, one saturated blue,
-   pixel display type, mono uppercase labels, serif prose, 1px square borders. */
+/* Visual language ("compiler at night"): warm off-black ground, bone text, Go's own
+   cyan as the single colour (used in solid fields and big numerals, not sprinkled),
+   Archivo Expanded display type, Archivo body, IBM Plex Mono for code and data.
+   Square corners and hairline rules: a Swiss grid, not a card template. */
 @theme {
-  --color-paper: #f7f6f0;
-  --color-paper-2: #efece3;
-  --color-ink: #121212;
-  --color-ink-2: #55534d;
-  --color-ink-3: #8a877f;
-  --color-rule: #d9d6cc;
-  --color-blue: #3d4df0;
-  --color-blue-soft: #dfe2fd;
-  --color-ok: #177a3b;
-  --color-bad: #b42318;
-  --color-warn: #9a6700;
+  --color-ground: #0c0d0a;
+  --color-paper: #121310;
+  --color-paper-2: #1a1b17;
+  --color-ink: #edeae0;
+  --color-ink-2: #b3afa2;
+  --color-ink-3: #7d7a6f;
+  --color-rule: #262822;
+  --color-line: #3a3d35;
+  --color-accent: #00add8;
+  --color-accent-strong: #4fcbeb;
+  --color-accent-soft: #0b2a31;
+  --color-on-accent: #0c0d0a;
+  --color-ok: #5fcb8a;
+  --color-bad: #ff6a55;
+  --color-warn: #e6b450;
 
-  --font-pixel: var(--font-silkscreen), ui-monospace, monospace;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Consolas, monospace;
-  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Consolas, monospace;
+  --font-serif: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
   html {
-    color-scheme: light;
+    color-scheme: dark;
+    scroll-behavior: smooth;
   }
   body {
-    background-color: var(--color-paper);
-    background-image: radial-gradient(color-mix(in srgb, var(--color-ink) 9%, transparent) 1px, transparent 1px);
-    background-size: 22px 22px;
+    background-color: var(--color-ground);
     color: var(--color-ink);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01";
     -webkit-font-smoothing: antialiased;
   }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
   ::selection {
-    background: var(--color-blue-soft);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
   }
   :focus-visible {
-    outline: 2px solid var(--color-blue);
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Archivo's width axis: 125 is the expanded cut used for display type. */
+  .font-display {
+    font-stretch: 125%;
+    font-variation-settings: "wdth" 125;
+  }
+  .wide-caps {
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-variation-settings: "wdth" 125;
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 }
 
 @layer components {
   .label {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-ink-2);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-ink-3);
   }
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    border: 1px solid var(--color-ink);
-    background: var(--color-paper);
-    padding: 0.7rem 1.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    letter-spacing: 0.06em;
-    transition: background-color 120ms;
+    gap: 0.6rem;
+    min-height: 2.9rem;
+    border: 1px solid var(--color-line);
+    background: transparent;
+    padding: 0.6rem 1.35rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    transition:
+      background-color 160ms,
+      border-color 160ms,
+      color 160ms;
     cursor: pointer;
   }
   .btn:hover:not(:disabled) {
-    background: var(--color-paper-2);
+    border-color: var(--color-ink);
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
   }
   .btn:disabled {
-    opacity: 0.4;
+    opacity: 0.35;
     cursor: not-allowed;
   }
-  .btn-primary {
-    border-color: var(--color-blue);
-    color: var(--color-blue);
-  }
+  .btn-primary,
   .btn-solid {
-    border-color: var(--color-blue);
-    background: var(--color-blue);
-    color: var(--color-paper);
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
   }
+  .btn-primary:hover:not(:disabled),
   .btn-solid:hover:not(:disabled) {
-    background: #2f3ed8;
+    border-color: var(--color-accent-strong);
+    background: var(--color-accent-strong);
   }
   .panel {
-    border: 1px solid var(--color-ink);
+    border: 1px solid var(--color-rule);
     background: var(--color-paper);
   }
   .panel-head {
@@ -91,58 +130,70 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    border-bottom: 1px solid var(--color-ink);
+    border-bottom: 1px solid var(--color-rule);
     background: var(--color-paper-2);
-    padding: 0.55rem 1rem;
+    padding: 0.6rem 1rem;
   }
   .prose-serif {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    line-height: 1.65;
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
   }
   .prose-serif p + p {
     margin-top: 0.9em;
   }
   .prose-serif code {
     font-family: var(--font-mono);
-    font-size: 0.86em;
+    font-size: 0.88em;
+    color: var(--color-accent-strong);
     background: var(--color-paper-2);
     padding: 0.05em 0.3em;
   }
   .field {
-    border: 1px solid var(--color-ink);
-    background: #fff;
+    border: 1px solid var(--color-line);
+    background: var(--color-ground);
+    color: var(--color-ink);
     padding: 0.65rem 0.8rem;
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
     width: 100%;
+    transition: border-color 150ms;
+  }
+  .field::placeholder {
+    color: var(--color-ink-3);
   }
   .field:focus {
-    outline: 2px solid var(--color-blue);
-    outline-offset: -1px;
+    outline: none;
+    border-color: var(--color-accent);
   }
   .gf-locked-line {
-    background: repeating-linear-gradient(135deg, rgba(61, 77, 240, 0.07) 0 6px, transparent 6px 12px);
+    background: repeating-linear-gradient(135deg, rgba(0, 173, 216, 0.1) 0 6px, transparent 6px 12px);
   }
   .gf-locked-glyph::before {
     content: "■";
-    color: var(--color-blue);
+    color: var(--color-accent);
     font-size: 9px;
     margin-left: 6px;
   }
-  /* Design canvas: React Flow restyled to the paper/ink/blue language. */
+  /* Design canvas: React Flow restyled to the site tokens. */
   .gf-canvas .react-flow {
     --xy-background-color: transparent;
     --xy-edge-stroke: var(--color-ink);
+    --xy-node-color-default: var(--color-ink);
+    --xy-controls-button-color: var(--color-ink);
+    --xy-controls-button-color-hover: var(--color-accent);
     --xy-controls-button-background-color: var(--color-paper);
     --xy-controls-button-background-color-hover: var(--color-paper-2);
-    --xy-controls-button-border-color: var(--color-ink);
+    --xy-controls-button-border-color: var(--color-rule);
     --xy-controls-box-shadow: none;
     --xy-attribution-background-color: transparent;
     font-family: var(--font-mono);
   }
   .react-flow__controls {
-    border: 1px solid var(--color-ink);
+    border: 1px solid var(--color-line);
+  }
+  .react-flow__controls-button svg {
+    fill: var(--color-ink);
   }
   .react-flow__node-design {
     border-radius: 0;
@@ -151,7 +202,7 @@
     width: 9px;
     height: 9px;
     border-radius: 0;
-    border: 1px solid var(--color-blue);
+    border: 1px solid var(--color-accent);
     background: var(--color-paper);
     opacity: 0;
     transition: opacity 100ms;
@@ -165,7 +216,7 @@
   }
   .gf-handle.react-flow__handle:hover,
   .gf-handle.react-flow__handle.connectingto {
-    background: var(--color-blue);
+    background: var(--color-accent);
   }
   @media (hover: none) {
     .gf-handle.react-flow__handle {

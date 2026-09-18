@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Caption, Page, PixelHeading } from "@/components/ui";
+import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { issueUrl } from "@/lib/site";
 
 // Shown when a page throws while rendering (for example the database is unreachable).
@@ -12,7 +12,7 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
   return (
     <Page className="max-w-2xl">
       <Caption className="pt-10">Something broke</Caption>
-      <PixelHeading className="mt-6 text-[clamp(2.4rem,8vw,5rem)]">Error</PixelHeading>
+      <DisplayHeading className="mt-6 text-[clamp(2.4rem,8vw,5rem)]">Error</DisplayHeading>
       <p className="prose-serif mt-6 text-lg text-ink-2" data-testid="error-page">
         This page failed to load. Your saved progress is not affected. Try again; if it keeps happening, the database or the network is probably down.
       </p>

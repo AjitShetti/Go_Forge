@@ -63,7 +63,7 @@ export function ProvokeStep({ bundle, state, dispatch, engineReady }: StepProps 
                     aria-checked={selected}
                     data-testid={`choice-${i}`}
                     onClick={() => setChoice(i)}
-                    className={`border px-4 py-3 text-left font-mono text-sm transition-colors ${selected ? "border-blue bg-blue-soft text-blue" : "border-ink bg-paper hover:bg-paper-2"} disabled:cursor-not-allowed`}
+                    className={`border px-4 py-3 text-left font-mono text-sm transition-colors ${selected ? "border-accent bg-accent-soft text-accent" : "border-line bg-paper hover:bg-paper-2"} disabled:cursor-not-allowed`}
                   >
                     {c}
                   </button>
@@ -99,7 +99,7 @@ export function ProvokeStep({ bundle, state, dispatch, engineReady }: StepProps 
 
       {v.showCollide && state.trap && (
         <StepSection id="collide" n={2} title="Collide" done={v.showDecode}>
-          <div className={`mb-5 border px-4 py-3 font-mono text-sm tracking-[0.1em] uppercase ${state.trap.correct ? "border-ok text-ok" : "border-bad text-bad"}`} data-testid="verdict" data-correct={state.trap.correct}>
+          <div className={`mb-5 border px-4 py-3 font-mono text-sm ${state.trap.correct ? "border-ok text-ok" : "border-bad text-bad"}`} data-testid="verdict" data-correct={state.trap.correct}>
             {state.trap.correct ? "Match: your prediction was right." : "Mismatch: that is not what Go printed."}
           </div>
           <div className="grid gap-4 md:grid-cols-2">

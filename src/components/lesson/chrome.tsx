@@ -16,7 +16,7 @@ const LABELS: Record<string, string> = {
 export function Stepper({ state }: { state: LessonState }) {
   const current = STEPS.indexOf(state.step);
   return (
-    <ol className="mt-8 grid grid-cols-3 gap-px border border-ink bg-ink sm:grid-cols-6" data-testid="stepper">
+    <ol className="mt-10 grid grid-cols-3 border-t border-l border-rule sm:grid-cols-6" data-testid="stepper">
       {STEPS.filter((s) => s !== "complete").map((s, i) => {
         const done = i < current;
         const active = i === current;
@@ -25,9 +25,10 @@ export function Stepper({ state }: { state: LessonState }) {
             key={s}
             data-step={s}
             data-status={done ? "done" : active ? "active" : "locked"}
-            className={`px-3 py-2.5 font-mono text-[0.72rem] tracking-[0.12em] uppercase ${active ? "bg-blue text-paper" : done ? "bg-paper text-ink" : "bg-paper-2 text-ink-3"}`}
+            className={`relative border-r border-b border-rule px-3 py-3 text-[0.88rem] font-semibold ${active ? "bg-accent text-on-accent" : done ? "bg-paper text-ink" : "text-ink-3"}`}
           >
-            <span className={active ? "text-paper/70" : "text-ink-3"}>0{i + 1}</span> {LABELS[s]} {done && "✓"}
+            <span className={`block font-mono text-[0.72rem] font-normal ${active ? "text-on-accent/70" : done ? "text-accent" : "text-ink-3"}`}>0{i + 1}{done && " ✓"}</span>
+            {LABELS[s]}
           </li>
         );
       })}
@@ -36,7 +37,7 @@ export function Stepper({ state }: { state: LessonState }) {
 }
 
 export function SaveBadge({ status }: { status: SaveStatus }) {
-  const base = "border px-2 py-1 font-mono text-[0.7rem] tracking-[0.14em] uppercase";
+  const base = "border px-2 py-1 font-mono text-[0.7rem]";
   switch (status.kind) {
     case "not-saved":
       return (
@@ -67,10 +68,10 @@ export function SaveBadge({ status }: { status: SaveStatus }) {
 
 export function StepSection({ id, n, title, children, done }: { id: string; n: number; title: string; children: ReactNode; done?: boolean }) {
   return (
-    <section id={id} data-testid={`step-${id}`} className="scroll-mt-8">
-      <div className="mb-5 flex items-baseline gap-4 border-b border-ink pb-2">
-        <span className="font-pixel text-2xl font-bold text-blue">0{n}</span>
-        <h2 className="font-mono text-sm tracking-[0.16em] uppercase">{title}</h2>
+    <section id={id} data-testid={`step-${id}`} className="scroll-mt-24">
+      <div className="mb-6 flex items-baseline gap-4 border-b border-line pb-3">
+        <span className="font-mono text-[0.9rem] text-accent">0{n}</span>
+        <h2 className="font-display text-[1.6rem] leading-none font-extrabold">{title}</h2>
         {done && <span className="label ml-auto text-ok">done</span>}
       </div>
       {children}
@@ -95,9 +96,9 @@ export function OutputPanel({ label, stdout, stderr, testId, tone }: { label: st
 export function CodeView({ code, highlight = [] }: { code: string; highlight?: number[] }) {
   const lines = code.replace(/\n$/, "").split("\n");
   return (
-    <pre className="code-block overflow-x-auto bg-[#fdfcf8] py-3">
+    <pre className="code-block overflow-x-auto bg-paper py-3">
       {lines.map((l, i) => (
-        <div key={i} className={`flex ${highlight.includes(i + 1) ? "bg-blue-soft/60" : ""}`}>
+        <div key={i} className={`flex ${highlight.includes(i + 1) ? "bg-accent-soft/60" : ""}`}>
           <span className="w-10 shrink-0 pr-3 text-right text-ink-3 select-none">{i + 1}</span>
           <span className="pr-4">{l || " "}</span>
         </div>

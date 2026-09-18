@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Caption, Page, PixelHeading } from "@/components/ui";
+import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { LOCAL_ONLY } from "@/lib/engine/features";
 import { EngineLab } from "./engine-lab";
 
@@ -9,7 +9,7 @@ export default function EnginePage() {
   return (
     <Page>
       <Caption className="pt-10">Execution engine · gc toolchain in WebAssembly</Caption>
-      <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Engine</PixelHeading>
+      <DisplayHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Engine</DisplayHeading>
       <p className="prose-serif mt-4 max-w-3xl text-ink-2">
         The real <code>cmd/compile</code> and <code>cmd/link</code>, compiled to WebAssembly, run in a worker in this tab. No server runs your code.
       </p>

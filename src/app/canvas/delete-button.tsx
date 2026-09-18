@@ -14,7 +14,7 @@ export function DeleteDesignButton({ designKey, name, versions }: { designKey: s
         type="button"
         data-testid="delete-design"
         disabled={busy}
-        className="border border-bad px-2 py-0.5 font-mono text-[0.7rem] tracking-[0.12em] text-bad uppercase hover:bg-paper-2 disabled:opacity-40"
+        className="border border-bad px-2 py-0.5 font-mono text-[0.7rem] text-bad hover:bg-paper-2 disabled:opacity-40"
         onClick={async () => {
           if (!window.confirm(`Delete "${name}" and all ${versions} version${versions === 1 ? "" : "s"}? This can't be undone.`)) return;
           setBusy(true);

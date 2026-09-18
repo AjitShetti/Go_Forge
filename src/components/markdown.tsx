@@ -85,7 +85,7 @@ export function renderInline(text: string): ReactNode[] {
       const [, label, href] = tok.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/)!;
       const external = /^https?:/.test(href);
       out.push(
-        <a key={key++} href={href} className="text-blue underline underline-offset-2" {...(external ? { target: "_blank", rel: "noreferrer" } : {})}>
+        <a key={key++} href={href} className="text-accent underline underline-offset-2" {...(external ? { target: "_blank", rel: "noreferrer" } : {})}>
           {renderInline(label)}
         </a>,
       );
@@ -111,7 +111,7 @@ export function Markdown({ source, verified = {}, goVersion }: MarkdownProps) {
             );
           case "quote":
             return (
-              <blockquote key={i} className="border-l-2 border-blue pl-4 text-ink-2">
+              <blockquote key={i} className="border-l-2 border-accent pl-4 text-ink-2">
                 {renderInline(b.text)}
               </blockquote>
             );

@@ -18,7 +18,7 @@ export function SliceAliasingDiagram() {
         <svg viewBox="0 0 600 300" className="w-full min-w-[520px]" role="img" aria-label="Slices a, b and c are three headers whose pointers all point at the same four-element array; slot 3 holds 42.">
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M0,0 L10,5 L0,10 z" fill="var(--color-blue)" />
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--color-accent)" />
             </marker>
           </defs>
           {headers.map((h) => (
@@ -36,18 +36,18 @@ export function SliceAliasingDiagram() {
                   <text x={36 + i * 52 + 26} y={h.y + 14} textAnchor="middle" fontSize="9" fill="var(--color-ink-3)">
                     {k}
                   </text>
-                  <text x={36 + i * 52 + 26} y={h.y + 29} textAnchor="middle" fill={k === "ptr" ? "var(--color-blue)" : "var(--color-ink)"}>
+                  <text x={36 + i * 52 + 26} y={h.y + 29} textAnchor="middle" fill={k === "ptr" ? "var(--color-accent)" : "var(--color-ink)"}>
                     {v}
                   </text>
                 </g>
               ))}
-              <path d={`M62 ${h.y + 22} C 160 ${h.y + 22}, 200 ${arrY - 30}, ${arrX + 8} ${arrY - 4}`} fill="none" stroke="var(--color-blue)" strokeWidth="1.2" markerEnd="url(#arrow)" opacity="0.8" />
+              <path d={`M62 ${h.y + 22} C 160 ${h.y + 22}, 200 ${arrY - 30}, ${arrX + 8} ${arrY - 4}`} fill="none" stroke="var(--color-accent)" strokeWidth="1.2" markerEnd="url(#arrow)" opacity="0.8" />
             </g>
           ))}
           <g fontFamily="var(--font-mono)" fontSize="14">
             {cells.map((v, i) => (
               <g key={i}>
-                <rect x={arrX + i * cellW} y={arrY} width={cellW} height="44" fill={i === 3 ? "var(--color-blue-soft)" : "var(--color-paper)"} stroke="var(--color-ink)" />
+                <rect x={arrX + i * cellW} y={arrY} width={cellW} height="44" fill={i === 3 ? "var(--color-accent-soft)" : "var(--color-paper)"} stroke="var(--color-ink)" />
                 <text x={arrX + i * cellW + cellW / 2} y={arrY + 28} textAnchor="middle" fill="var(--color-ink)">
                   {v}
                 </text>
@@ -56,7 +56,7 @@ export function SliceAliasingDiagram() {
                 </text>
               </g>
             ))}
-            <text x={arrX + 3 * cellW + cellW / 2} y={arrY - 12} textAnchor="middle" fontSize="10" fill="var(--color-blue)">
+            <text x={arrX + 3 * cellW + cellW / 2} y={arrY - 12} textAnchor="middle" fontSize="10" fill="var(--color-accent)">
               b[3] and c[3]
             </text>
             <text x={arrX} y={arrY + 90} fontSize="11" fill="var(--color-ink-2)">

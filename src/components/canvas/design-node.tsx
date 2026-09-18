@@ -28,18 +28,18 @@ function DesignNodeView({ id, data, selected }: NodeProps<DesignFlowNode>) {
       data-testid={`node-${id}`}
       data-kind={data.kind}
       data-diff={data.diff ?? ""}
-      className={`relative w-[188px] border bg-paper px-3 py-2.5 ${diff ? diff.box : selected ? "border-blue" : "border-ink"} ${selected ? "outline-2 outline-offset-2 outline-blue" : ""}`}
+      className={`relative w-[188px] border bg-paper px-3 py-2.5 ${diff ? diff.box : selected ? "border-accent" : "border-line"} ${selected ? "outline-2 outline-offset-2 outline-accent" : ""}`}
     >
-      {diff && <span className={`absolute -top-2.5 right-2 px-1.5 font-mono text-[0.6rem] tracking-[0.12em] uppercase ${diff.badge}`}>{diff.text}</span>}
+      {diff && <span className={`absolute -top-2.5 right-2 px-1.5 font-mono text-[0.6rem] ${diff.badge}`}>{diff.text}</span>}
       <div className="flex items-start gap-2.5">
-        <span className="mt-0.5 text-blue">
+        <span className="mt-0.5 text-accent">
           <NodeIcon kind={data.kind} />
         </span>
         <div className="min-w-0">
           <p className="truncate font-mono text-[0.82rem] leading-tight font-medium" title={data.config.label}>
             {data.config.label}
           </p>
-          <p className="mt-0.5 font-mono text-[0.6rem] tracking-[0.14em] text-ink-3 uppercase">{spec.title}</p>
+          <p className="mt-0.5 font-mono text-[0.6rem] text-ink-3">{spec.title}</p>
         </div>
       </div>
       {summary.length > 0 && <p className="mt-2 border-t border-rule pt-1.5 font-mono text-[0.66rem] leading-snug text-ink-2">{summary.join(" · ")}</p>}

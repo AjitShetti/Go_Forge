@@ -34,7 +34,7 @@ export function ReviewCardView({ card, concept, goVersion, seenBefore }: { card:
         <div className="panel-head">
           <span className="label">
             main.go · from{" "}
-            <Link href={card.lessonHref} className="text-blue hover:underline">
+            <Link href={card.lessonHref} className="text-accent hover:underline">
               {card.lessonTitle}
             </Link>
           </span>
@@ -56,7 +56,7 @@ export function ReviewCardView({ card, concept, goVersion, seenBefore }: { card:
                 data-testid={`choice-${i}`}
                 disabled={locked || pending}
                 onClick={() => setAnswer(c)}
-                className={`border px-4 py-2.5 text-left font-mono text-sm whitespace-pre-wrap ${answer === c ? "border-blue bg-blue-soft" : "border-rule bg-paper hover:border-ink"}`}
+                className={`border px-4 py-2.5 text-left font-mono text-sm whitespace-pre-wrap ${answer === c ? "border-accent bg-accent-soft" : "border-rule bg-paper hover:border-line"}`}
               >
                 {c}
               </button>
@@ -77,7 +77,7 @@ export function ReviewCardView({ card, concept, goVersion, seenBefore }: { card:
             <button type="button" className="btn btn-solid" data-testid="submit-answer" disabled={answer.trim() === "" || pending} onClick={submit}>
               {pending ? "Checking…" : "Lock in answer"}
             </button>
-            <span className="label normal-case tracking-[0.06em]">The real output stays hidden until you commit.</span>
+            <span className="label normal-case">The real output stays hidden until you commit.</span>
           </div>
         )}
         {result?.ok === false && (
@@ -90,7 +90,7 @@ export function ReviewCardView({ card, concept, goVersion, seenBefore }: { card:
       {result?.ok && (
         <section className="panel" data-testid="review-result" data-correct={result.correct}>
           <div className="panel-head">
-            <span className={`font-mono text-sm tracking-[0.12em] uppercase ${result.correct ? "text-ok" : "text-bad"}`}>{result.correct ? "Match" : "Mismatch"}</span>
+            <span className={`font-mono text-sm ${result.correct ? "text-ok" : "text-bad"}`}>{result.correct ? "Match" : "Mismatch"}</span>
             <span className="label">real output{goVersion ? ` · ${goVersion}` : ""}</span>
           </div>
           <div className="grid gap-px bg-rule md:grid-cols-2">
@@ -116,7 +116,7 @@ export function ReviewCardView({ card, concept, goVersion, seenBefore }: { card:
             <button type="button" className="btn btn-primary px-3 py-1.5 text-[0.8rem]" data-testid="next-card" onClick={() => router.refresh()}>
               Next question →
             </button>
-            <Link href="/review" className="label hover:text-blue">
+            <Link href="/review" className="label hover:text-accent">
               back to queue
             </Link>
           </div>

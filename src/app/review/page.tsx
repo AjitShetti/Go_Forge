@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Caption, Page, PixelHeading } from "@/components/ui";
+import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { firstTries } from "@/lib/review/mastery";
 import { type LearnerView, loadLearner, relativeDays } from "./learner";
 import { LearnerGate, StatusChip } from "./status";
@@ -14,7 +14,7 @@ export default async function ReviewPage() {
   return (
     <Page>
       <Caption className="pt-10">Mistake ledger · review queue</Caption>
-      <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Review</PixelHeading>
+      <DisplayHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Review</DisplayHeading>
       <p className="prose-serif mt-4 max-w-2xl text-ink-2">
         Concepts come back here when you predict them wrong, and on a spaced schedule after that. Every question is a program the content pipeline actually ran, so the answer is what real Go printed.
       </p>
@@ -42,7 +42,7 @@ function ReviewBody({ view }: { view: Extract<LearnerView, { kind: "ok" }> }) {
 
       <section className="panel mt-6" data-testid="due-now">
         <div className="panel-head">
-          <h2 className="font-mono text-sm tracking-[0.12em] uppercase">Due now</h2>
+          <h2 className="font-mono text-sm">Due now</h2>
           <span className="label">heaviest mistakes first</span>
         </div>
         {queue.due.length === 0 ? (
@@ -74,7 +74,7 @@ function ReviewBody({ view }: { view: Extract<LearnerView, { kind: "ok" }> }) {
       {queue.upcoming.length > 0 && (
         <section className="panel mt-6" data-testid="upcoming">
           <div className="panel-head">
-            <h2 className="font-mono text-sm tracking-[0.12em] uppercase">Scheduled</h2>
+            <h2 className="font-mono text-sm">Scheduled</h2>
             <span className="label">spaced repetition</span>
           </div>
           <ul className="divide-y divide-rule">
@@ -86,7 +86,7 @@ function ReviewBody({ view }: { view: Extract<LearnerView, { kind: "ok" }> }) {
                 </span>
                 <span className="font-mono text-[0.75rem] text-ink-2">
                   next review {relativeDays(s.nextReview, now)} · interval {s.intervalDays} {s.intervalDays === 1 ? "day" : "days"} ·{" "}
-                  <Link href={`/review/${s.concept}`} className="text-blue underline underline-offset-2">
+                  <Link href={`/review/${s.concept}`} className="text-accent underline underline-offset-2">
                     review early
                   </Link>
                 </span>
@@ -98,7 +98,7 @@ function ReviewBody({ view }: { view: Extract<LearnerView, { kind: "ok" }> }) {
 
       <section className="panel mt-6" data-testid="mistake-ledger">
         <div className="panel-head">
-          <h2 className="font-mono text-sm tracking-[0.12em] uppercase">Mistake ledger</h2>
+          <h2 className="font-mono text-sm">Mistake ledger</h2>
           <span className="label">
             {mistakes.length} wrong first {mistakes.length === 1 ? "try" : "tries"}
           </span>
@@ -117,7 +117,7 @@ function ReviewBody({ view }: { view: Extract<LearnerView, { kind: "ok" }> }) {
                       {m.concept && <span className="border border-rule px-1.5 py-0.5 font-mono text-[0.68rem] text-ink-2">{m.concept}</span>}
                       <span className="font-mono text-[0.72rem] text-ink-3">{m.source === "trap" ? "lesson trap" : "review question"}</span>
                       {lesson && (
-                        <Link href={`/track/${lesson.moduleSlug}/${lesson.lessonSlug}`} className="prose-serif text-blue underline underline-offset-2">
+                        <Link href={`/track/${lesson.moduleSlug}/${lesson.lessonSlug}`} className="prose-serif text-accent underline underline-offset-2">
                           {lesson.title}
                         </Link>
                       )}

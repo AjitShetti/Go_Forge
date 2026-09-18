@@ -21,21 +21,23 @@ function defineTheme(monaco: Monaco) {
   if (themeDefined) return;
   themeDefined = true;
   monaco.editor.defineTheme("goforge", {
-    base: "vs",
+    base: "vs-dark",
     inherit: true,
     rules: [
-      { token: "keyword", foreground: "3d4df0", fontStyle: "bold" },
-      { token: "type", foreground: "3d4df0" },
-      { token: "string", foreground: "177a3b" },
-      { token: "number", foreground: "9a6700" },
-      { token: "comment", foreground: "8a877f", fontStyle: "italic" },
+      { token: "keyword", foreground: "00add8", fontStyle: "bold" },
+      { token: "type", foreground: "4fcbeb" },
+      { token: "string", foreground: "a8d890" },
+      { token: "number", foreground: "e6b450" },
+      { token: "comment", foreground: "7d7a6f", fontStyle: "italic" },
     ],
     colors: {
-      "editor.background": "#fdfcf8",
-      "editorLineNumber.foreground": "#b3b0a6",
-      "editorLineNumber.activeForeground": "#3d4df0",
-      "editor.lineHighlightBackground": "#f1efe7",
-      "editorCursor.foreground": "#3d4df0",
+      "editor.background": "#121310",
+      "editorLineNumber.foreground": "#4a4c44",
+      "editorLineNumber.activeForeground": "#00add8",
+      "editor.lineHighlightBackground": "#1a1b17",
+      "editorCursor.foreground": "#00add8",
+      "editor.selectionBackground": "#0b3a45",
+      "editorGutter.background": "#121310",
     },
   });
 }
@@ -72,7 +74,7 @@ export function CodeEditor({
   };
 
   return (
-    <div className="border border-ink" data-testid={`editor-${id}`}>
+    <div className="border border-line" data-testid={`editor-${id}`}>
       <Editor
         height={height}
         language="go"

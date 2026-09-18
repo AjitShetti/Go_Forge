@@ -17,7 +17,7 @@ export default async function NewDesignPage({ searchParams }: { searchParams: Pr
   return (
     <main className="mx-auto w-full max-w-[1500px] px-4 pb-24 sm:px-8">
       <div className="flex flex-wrap items-center gap-4 pt-6 pb-4">
-        <Link href="/canvas" className="label hover:text-blue">
+        <Link href="/canvas" className="label hover:text-accent">
           ← Designs
         </Link>
         <Caption>New design</Caption>

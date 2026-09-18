@@ -13,7 +13,7 @@ export type RecordState =
 const SECTION: Record<Severity, { title: string; empty: string; cls: string }> = {
   violation: { title: "Violations", empty: "None. Every hard constraint holds under this model.", cls: "text-bad border-bad" },
   warning: { title: "Warnings", empty: "None.", cls: "text-warn border-warn" },
-  tradeoff: { title: "Tradeoffs you didn't declare", empty: "None found.", cls: "text-blue border-blue" },
+  tradeoff: { title: "Tradeoffs you didn't declare", empty: "None found.", cls: "text-accent border-accent" },
 };
 
 export function GradeReportPanel({
@@ -40,10 +40,10 @@ export function GradeReportPanel({
       </div>
       <div className="grid gap-6 p-4 lg:grid-cols-[220px_minmax(0,1fr)]">
         <div>
-          <p data-testid="grade-score" className={`font-pixel text-6xl font-bold ${report.passed ? "text-ok" : "text-bad"}`}>
+          <p data-testid="grade-score" className={`font-display text-6xl font-bold ${report.passed ? "text-ok" : "text-bad"}`}>
             {report.score}
           </p>
-          <p data-testid="grade-verdict" className={`mt-1 font-mono text-[0.74rem] tracking-[0.14em] uppercase ${report.passed ? "text-ok" : "text-bad"}`}>
+          <p data-testid="grade-verdict" className={`mt-1 font-mono text-[0.74rem] ${report.passed ? "text-ok" : "text-bad"}`}>
             {report.passed ? "Passed · no violations" : `Failed · ${report.violations.length} violation${report.violations.length === 1 ? "" : "s"}`}
           </p>
           <table className="mt-4 w-full font-mono text-[0.72rem]" data-testid="score-math">
@@ -61,7 +61,7 @@ export function GradeReportPanel({
             </tbody>
           </table>
           <p className="mt-3 font-mono text-[0.68rem] leading-relaxed text-ink-3">Deterministic rule engine: the same design always gets the same grade. Tradeoffs cost nothing; they are things to say out loud.</p>
-          <Link href={`/scenarios/${scenario.slug}`} className="mt-3 inline-block font-mono text-[0.72rem] text-blue underline underline-offset-2" target="_blank">
+          <Link href={`/scenarios/${scenario.slug}`} className="mt-3 inline-block font-mono text-[0.72rem] text-accent underline underline-offset-2" target="_blank">
             Scenario brief ↗
           </Link>
         </div>
@@ -83,7 +83,7 @@ export function GradeReportPanel({
                           <span className="font-mono text-[0.78rem] font-bold">{f.title}</span>
                           <span className="font-mono text-[0.66rem] text-ink-3">{f.rule}</span>
                           {f.nodeIds.length > 0 && (
-                            <button type="button" className="ml-auto font-mono text-[0.7rem] text-blue underline" onClick={() => onFocus(f)}>
+                            <button type="button" className="ml-auto font-mono text-[0.7rem] text-accent underline" onClick={() => onFocus(f)}>
                               show on canvas
                             </button>
                           )}
@@ -118,7 +118,7 @@ export function GradeReportPanel({
 }
 
 function RecordChip({ record }: { record: RecordState }) {
-  const base = "border px-2 py-0.5 font-mono text-[0.68rem] tracking-[0.1em] uppercase";
+  const base = "border px-2 py-0.5 font-mono text-[0.68rem]";
   switch (record.kind) {
     case "recording":
       return <span data-testid="grade-record" data-kind="recording" className={`${base} border-ink-3 text-ink-3`}>Recording…</span>;

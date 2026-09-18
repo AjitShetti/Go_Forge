@@ -23,7 +23,7 @@ export default async function DesignDiffPage({ params, searchParams }: { params:
         <div className="panel mt-8 max-w-2xl p-5" data-testid="designs-gate" data-kind={access.kind}>
           <p className="prose-serif text-ink-2">
             {access.kind === "signed-out" ? (
-              <Link href="/login" className="text-blue underline underline-offset-2">
+              <Link href="/login" className="text-accent underline underline-offset-2">
                 Sign in
               </Link>
             ) : (
@@ -48,7 +48,7 @@ export default async function DesignDiffPage({ params, searchParams }: { params:
   return (
     <main className="mx-auto w-full max-w-[1500px] px-4 pb-24 sm:px-8">
       <div className="flex flex-wrap items-center gap-4 pt-6 pb-4">
-        <Link href={`/canvas/${key}`} className="label hover:text-blue">
+        <Link href={`/canvas/${key}`} className="label hover:text-accent">
           ← {name}
         </Link>
         <Caption>

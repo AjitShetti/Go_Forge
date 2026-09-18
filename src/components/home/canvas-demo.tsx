@@ -122,7 +122,7 @@ function DemoInner() {
         </div>
       </div>
 
-      <ol className="grid grid-cols-2 gap-px border-b border-ink bg-ink sm:grid-cols-3 lg:grid-cols-6">
+      <ol className="grid grid-cols-2 gap-px border-b border-line bg-line sm:grid-cols-3 lg:grid-cols-6">
         {DEMO_STEPS.map((s, i) => (
           <li key={s.key} className="relative">
             <button
@@ -130,7 +130,7 @@ function DemoInner() {
               data-testid={`demo-step-${s.key}`}
               aria-current={i === index ? "step" : undefined}
               onClick={() => go(i)}
-              className={`h-full w-full px-3 py-2 text-left font-mono text-[0.68rem] tracking-[0.1em] uppercase ${i === index ? "bg-blue text-paper" : i < index ? "bg-paper text-ink hover:bg-paper-2" : "bg-paper-2 text-ink-3 hover:text-ink"}`}
+              className={`h-full w-full px-3 py-2 text-left font-mono text-[0.68rem] ${i === index ? "bg-accent text-paper" : i < index ? "bg-paper text-ink hover:bg-paper-2" : "bg-paper-2 text-ink-3 hover:text-ink"}`}
             >
               <span className={i === index ? "text-paper/70" : "text-ink-3"}>0{i + 1}</span> {s.title}
             </button>
@@ -140,7 +140,7 @@ function DemoInner() {
       </ol>
 
       <div className="grid lg:h-[500px] lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="gf-canvas relative h-[340px] border-b border-ink sm:h-[420px] lg:h-full lg:border-r lg:border-b-0">
+        <div className="gf-canvas relative h-[340px] border-b border-line sm:h-[420px] lg:h-full lg:border-r lg:border-b-0">
           <ReactFlow<DesignFlowNode, DesignFlowEdge>
             nodes={nodes}
             edges={edges}
@@ -158,7 +158,7 @@ function DemoInner() {
             fitViewOptions={{ padding: 0.18, maxZoom: 1 }}
             minZoom={0.2}
           >
-            <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#cfccc2" />
+            <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#2e302a" />
             {nodes.length > 0 && <Controls showInteractive={false} position="bottom-left" />}
           </ReactFlow>
           {nodes.length === 0 && <ScenarioCard />}
@@ -166,7 +166,7 @@ function DemoInner() {
 
         <div className="grid content-start gap-4 p-4 lg:overflow-y-auto">
           <div>
-            <p className="label text-blue">You do</p>
+            <p className="label text-accent">You do</p>
             <ol className="mt-2 grid gap-1.5 font-mono text-[0.76rem] leading-snug">
               {step.actions.map((a, i) => (
                 <li key={a} className="flex gap-2">
@@ -176,7 +176,7 @@ function DemoInner() {
               ))}
             </ol>
             {step.math && (
-              <pre className="mt-3 border-l-2 border-blue bg-paper-2 px-3 py-2 font-mono text-[0.74rem] leading-relaxed" data-testid="demo-math">
+              <pre className="mt-3 border-l-2 border-accent bg-paper-2 px-3 py-2 font-mono text-[0.74rem] leading-relaxed" data-testid="demo-math">
                 {step.math.join("\n")}
               </pre>
             )}
@@ -185,8 +185,8 @@ function DemoInner() {
           {report ? (
             <div className="border-t border-rule pt-3" data-testid="demo-grade" data-score={report.score}>
               <div className="flex items-baseline gap-3">
-                <span className={`font-pixel text-4xl font-bold ${report.passed ? "text-ok" : "text-bad"}`}>{report.score}</span>
-                <span className={`font-mono text-[0.7rem] tracking-[0.12em] uppercase ${report.passed ? "text-ok" : "text-bad"}`}>
+                <span className={`font-display text-4xl font-bold ${report.passed ? "text-ok" : "text-bad"}`}>{report.score}</span>
+                <span className={`font-mono text-[0.7rem] ${report.passed ? "text-ok" : "text-bad"}`}>
                   {report.passed ? "Passed · no violations" : `Failed · ${report.violations.length} violation${report.violations.length === 1 ? "" : "s"}`}
                 </span>
               </div>
@@ -224,10 +224,10 @@ function FindingLine({ f }: { f: Finding }) {
 function ScenarioCard() {
   return (
     <div className="absolute inset-0 flex overflow-y-auto p-4">
-      <div className="m-auto w-full max-w-md border border-ink bg-paper p-4">
-        <div className="flex items-center gap-2 text-blue">
+      <div className="m-auto w-full max-w-md border border-line bg-paper p-4">
+        <div className="flex items-center gap-2 text-accent">
           <NodeIcon kind="client" className="h-4 w-4" />
-          <span className="label text-blue">Scenario · {S.title}</span>
+          <span className="label text-accent">Scenario · {S.title}</span>
         </div>
         <p className="prose-serif mt-2 text-[0.95rem] leading-snug text-ink-2">{S.summary}</p>
         <dl className="mt-3 grid grid-cols-1 gap-px border border-rule bg-rule font-mono text-[0.7rem] sm:grid-cols-2">

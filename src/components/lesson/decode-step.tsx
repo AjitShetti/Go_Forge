@@ -22,7 +22,7 @@ export function DecodeStep({ bundle, state, dispatch }: StepProps) {
         >
           <summary className="panel-head cursor-pointer">
             <span className="label">Python / JavaScript contrast</span>
-            <span className="label text-blue">expand</span>
+            <span className="label text-accent">expand</span>
           </summary>
           <div className="p-5">
             <Markdown source={contrast} />

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { utcStamp } from "@/lib/format";
 import Link from "next/link";
-import { Caption, Page, PixelHeading } from "@/components/ui";
+import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { designAccess, listDesigns } from "@/lib/canvas/designs.server";
 import { DeleteDesignButton } from "./delete-button";
 
@@ -24,11 +24,11 @@ export default async function CanvasPage() {
     <Page>
       <div className="flex flex-wrap items-center justify-between gap-4 pt-10">
         <Caption>System design canvas</Caption>
-        <Link href="/scenarios" className="label text-blue hover:underline">
+        <Link href="/scenarios" className="label text-accent hover:underline">
           Scenarios + grading →
         </Link>
       </div>
-      <PixelHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Canvas</PixelHeading>
+      <DisplayHeading className="mt-6 text-[clamp(2rem,6vw,4rem)]">Canvas</DisplayHeading>
       <p className="prose-serif mt-6 max-w-2xl text-ink-2">
         Lay out components, wire them with the kind of connection they really use, and set the numbers that matter: replicas, per-replica QPS, latency, storage, consistency. Every save is a new version you can diff against the
         last.
@@ -42,14 +42,14 @@ export default async function CanvasPage() {
 
       {access.kind === "not-configured" && (
         <div className="panel mt-8 max-w-2xl p-5" data-testid="designs-gate" data-kind="not-configured">
-          <p className="font-mono text-[0.75rem] tracking-[0.14em] text-bad uppercase">DB not connected</p>
+          <p className="font-mono text-[0.75rem] text-bad">DB not connected</p>
           <p className="prose-serif mt-2 text-ink-2">Supabase isn&apos;t configured, so designs can&apos;t be saved. The canvas still works; use Export JSON to keep a copy.</p>
         </div>
       )}
       {access.kind === "signed-out" && (
         <div className="panel mt-8 max-w-2xl p-5" data-testid="designs-gate" data-kind="signed-out">
           <p className="prose-serif text-ink-2">
-            <Link href="/login" className="text-blue underline underline-offset-2">
+            <Link href="/login" className="text-accent underline underline-offset-2">
               Sign in
             </Link>{" "}
             to save designs and keep their version history. Signed out, a new design works but is not saved; Export JSON keeps a copy.
@@ -58,7 +58,7 @@ export default async function CanvasPage() {
       )}
       {loadError && (
         <div className="panel mt-8 max-w-2xl p-5" data-testid="designs-gate" data-kind="error">
-          <p className="font-mono text-[0.75rem] tracking-[0.14em] text-bad uppercase">Could not load your designs</p>
+          <p className="font-mono text-[0.75rem] text-bad">Could not load your designs</p>
           <p className="mt-2 font-mono text-sm text-ink-2">{loadError}</p>
         </div>
       )}
@@ -77,7 +77,7 @@ export default async function CanvasPage() {
             <ul className="divide-y divide-rule">
               {designs.map((d) => (
                 <li key={d.designKey} data-testid={`design-${d.designKey}`} className="flex flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
-                  <Link href={`/canvas/${d.designKey}`} className="min-w-0 flex-1 basis-56 truncate font-mono text-[0.92rem] text-blue underline-offset-2 hover:underline">
+                  <Link href={`/canvas/${d.designKey}`} className="min-w-0 flex-1 basis-56 truncate font-mono text-[0.92rem] text-accent underline-offset-2 hover:underline">
                     {d.name}
                   </Link>
                   <span className="font-mono text-[0.74rem] text-ink-2">

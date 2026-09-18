@@ -22,7 +22,7 @@ export default async function DesignPage({ params, searchParams }: { params: Pro
           <p className="prose-serif text-ink-2">
             Saved designs belong to an account.{" "}
             {access.kind === "signed-out" ? (
-              <Link href="/login" className="text-blue underline underline-offset-2">
+              <Link href="/login" className="text-accent underline underline-offset-2">
                 Sign in
               </Link>
             ) : (
@@ -43,7 +43,7 @@ export default async function DesignPage({ params, searchParams }: { params: Pro
       <Page>
         <Caption className="pt-10">Design</Caption>
         <div className="panel mt-8 max-w-2xl p-5" data-testid="design-invalid">
-          <p className="font-mono text-[0.75rem] tracking-[0.14em] text-bad uppercase">This version can&apos;t be opened</p>
+          <p className="font-mono text-[0.75rem] text-bad">This version can&apos;t be opened</p>
           <p className="prose-serif mt-2 text-ink-2">The stored graph doesn&apos;t match the design format, so it isn&apos;t drawn half-broken. Problems:</p>
           <ul className="mt-2 list-disc pl-5 font-mono text-[0.76rem] text-bad">
             {loaded.errors.slice(0, 10).map((m) => (
@@ -60,7 +60,7 @@ export default async function DesignPage({ params, searchParams }: { params: Pro
   return (
     <main className="mx-auto w-full max-w-[1500px] px-4 pb-24 sm:px-8">
       <div className="flex flex-wrap items-center gap-4 pt-6 pb-4">
-        <Link href="/canvas" className="label hover:text-blue">
+        <Link href="/canvas" className="label hover:text-accent">
           ← Designs
         </Link>
         <Caption>

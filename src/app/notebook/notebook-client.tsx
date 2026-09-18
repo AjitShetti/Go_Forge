@@ -68,7 +68,7 @@ export function DeleteEntryButton({ id }: { id: string }) {
         type="button"
         data-testid="delete-entry"
         disabled={busy}
-        className="border border-bad px-2 py-0.5 font-mono text-[0.7rem] tracking-[0.12em] text-bad uppercase hover:bg-paper-2 disabled:opacity-40"
+        className="border border-bad px-2 py-0.5 font-mono text-[0.7rem] text-bad hover:bg-paper-2 disabled:opacity-40"
         onClick={async () => {
           if (!window.confirm("Delete this entry? This can't be undone.")) return;
           setBusy(true);

@@ -8,12 +8,17 @@ const LINKS = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-rule bg-paper/95" data-testid="site-footer">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-4 py-6 sm:px-8">
-        <p className="prose-serif text-[0.98rem] text-ink-2">Found something wrong, or want to add a lesson? The whole project is open on GitHub.</p>
+    <footer className="border-t border-rule" data-testid="site-footer">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-8 md:grid-cols-[1fr_auto] md:items-end">
+        <div>
+          <p className="font-display text-[1.6rem] font-extrabold tracking-[-0.01em]">
+            <span className="text-accent">Go</span>Forge
+          </p>
+          <p className="mt-2 max-w-md text-[0.92rem] text-ink-3">Found something wrong, or want to add a lesson? The whole project is open on GitHub.</p>
+        </div>
         <nav aria-label="Project" className="flex flex-wrap items-center gap-x-6 gap-y-2">
           {LINKS.map((l) => (
-            <a key={l.label} href={l.href} target="_blank" rel="noreferrer" data-testid={l.testId} className="font-mono text-[0.76rem] tracking-[0.12em] uppercase hover:text-blue">
+            <a key={l.label} href={l.href} target="_blank" rel="noreferrer" data-testid={l.testId} className="text-[0.88rem] font-medium text-ink-2 transition-colors hover:text-accent">
               {l.label} ↗
             </a>
           ))}

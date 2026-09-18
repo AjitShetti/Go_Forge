@@ -413,7 +413,7 @@ function EditorInner({ mode, design, versions: initialVersions, startScenario = 
           <div
             ref={wrapper}
             data-testid="canvas"
-            className="gf-canvas relative h-[62vh] min-h-[420px] border border-ink bg-paper lg:h-[72vh]"
+            className="gf-canvas relative h-[62vh] min-h-[420px] border border-line bg-paper lg:h-[72vh]"
             onDragOver={(e) => {
               if (e.dataTransfer.types.includes(DRAG_MIME)) {
                 e.preventDefault();
@@ -434,7 +434,7 @@ function EditorInner({ mode, design, versions: initialVersions, startScenario = 
               // Without it React Flow silently drops every edge (it finds no target handle).
               connectionMode={ConnectionMode.Loose}
               isValidConnection={(c) => c.source !== c.target}
-              connectionLineStyle={{ stroke: "#3d4df0", strokeWidth: 1.5, strokeDasharray: "4 3" }}
+              connectionLineStyle={{ stroke: "#00add8", strokeWidth: 1.5, strokeDasharray: "4 3" }}
               deleteKeyCode={["Backspace", "Delete"]}
               snapToGrid
               snapGrid={[10, 10]}
@@ -443,7 +443,7 @@ function EditorInner({ mode, design, versions: initialVersions, startScenario = 
               minZoom={0.2}
               maxZoom={2}
             >
-              <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#cfccc2" />
+              <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#2e302a" />
               <Controls showInteractive={false} position="bottom-left" />
             </ReactFlow>
             {nodes.length === 0 && (
@@ -452,7 +452,7 @@ function EditorInner({ mode, design, versions: initialVersions, startScenario = 
               </div>
             )}
             {notice && (
-              <p data-testid="canvas-notice" role="status" className="absolute top-3 left-1/2 z-10 -translate-x-1/2 border border-ink bg-paper px-3 py-1 font-mono text-[0.74rem]">
+              <p data-testid="canvas-notice" role="status" className="absolute top-3 left-1/2 z-10 -translate-x-1/2 border border-line bg-paper px-3 py-1 font-mono text-[0.74rem]">
                 {notice}
               </p>
             )}
@@ -493,19 +493,19 @@ function EditorInner({ mode, design, versions: initialVersions, startScenario = 
             />
           ) : selNodes.length + selEdges.length > 1 ? (
             <div data-testid="multi-inspector">
-              <p className="label text-blue">{selNodes.length + selEdges.length} selected</p>
+              <p className="label text-accent">{selNodes.length + selEdges.length} selected</p>
               <button type="button" className="btn mt-4 w-full border-bad py-1.5 text-[0.78rem] text-bad" onClick={() => void flow.deleteElements({ nodes: selNodes.map((n) => ({ id: n.id })), edges: selEdges.map((e) => ({ id: e.id })) })}>
                 Delete selection
               </button>
             </div>
           ) : (
             <div data-testid="design-inspector">
-              <p className="label text-blue">New connections</p>
+              <p className="label text-accent">New connections</p>
               <p className="mt-1 font-serif text-[0.95rem] text-ink-2 italic">Kind used when you drag a connection. Change any existing one by selecting it.</p>
-              <div className="mt-2 grid gap-px border border-ink bg-rule" role="radiogroup" aria-label="Kind for new connections">
+              <div className="mt-2 grid gap-px border border-line bg-rule" role="radiogroup" aria-label="Kind for new connections">
                 {EDGE_KINDS.map((k) => (
-                  <label key={k} className={`flex cursor-pointer items-center gap-2 px-2 py-1.5 font-mono text-[0.74rem] ${k === connectKind ? "bg-blue-soft" : "bg-paper hover:bg-paper-2"}`}>
-                    <input type="radio" name="connect-kind" data-testid={`connect-kind-${k}`} checked={k === connectKind} onChange={() => setConnectKind(k)} className="accent-blue" />
+                  <label key={k} className={`flex cursor-pointer items-center gap-2 px-2 py-1.5 font-mono text-[0.74rem] ${k === connectKind ? "bg-accent-soft" : "bg-paper hover:bg-paper-2"}`}>
+                    <input type="radio" name="connect-kind" data-testid={`connect-kind-${k}`} checked={k === connectKind} onChange={() => setConnectKind(k)} className="accent-accent" />
                     <EdgeSample kind={k} />
                     {EDGE_SPECS[k].title}
                   </label>
@@ -535,7 +535,7 @@ function EditorInner({ mode, design, versions: initialVersions, startScenario = 
 }
 
 function StatusChip({ status, version }: { status: Status; version: number | null }) {
-  const base = "border px-2 py-1 font-mono text-[0.7rem] tracking-[0.12em] uppercase";
+  const base = "border px-2 py-1 font-mono text-[0.7rem]";
   const map: Record<Status["kind"], [string, string]> = {
     "not-saved": ["Not saved", "border-bad text-bad"],
     new: ["Never saved", "border-warn text-warn"],
@@ -563,7 +563,7 @@ function HistoryPanel({ designKey, versions, current, dirty }: { designKey: stri
       <ol className="max-h-64 divide-y divide-rule overflow-y-auto">
         {versions.map((v) => (
           <li key={v.version} data-testid={`version-${v.version}`} className="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2 font-mono text-[0.76rem]">
-            <span className="w-10 text-blue">v{v.version}</span>
+            <span className="w-10 text-accent">v{v.version}</span>
             <span className="min-w-0 flex-1 truncate">{v.name}</span>
             <time className="text-ink-3" dateTime={v.createdAt}>
               {utcStamp(v.createdAt)}
@@ -571,12 +571,12 @@ function HistoryPanel({ designKey, versions, current, dirty }: { designKey: stri
             {v.version === current ? (
               <span className="text-ok">on canvas</span>
             ) : (
-              <a className="text-blue underline underline-offset-2" href={`/canvas/${designKey}?v=${v.version}`}>
+              <a className="text-accent underline underline-offset-2" href={`/canvas/${designKey}?v=${v.version}`}>
                 open
               </a>
             )}
             {v.version !== latest && (
-              <a className="text-blue underline underline-offset-2" data-testid={`diff-${v.version}`} href={`/canvas/${designKey}/diff?from=${v.version}&to=${latest}`}>
+              <a className="text-accent underline underline-offset-2" data-testid={`diff-${v.version}`} href={`/canvas/${designKey}/diff?from=${v.version}&to=${latest}`}>
                 diff → v{latest}
               </a>
             )}

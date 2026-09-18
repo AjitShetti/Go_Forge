@@ -34,9 +34,9 @@ export function RebuildStep({ bundle, state, dispatch, engineReady }: StepProps 
   return (
     <StepSection id="rebuild" n={4} title="Rebuild" done={!active}>
       {bundle.lesson.sections.Rebuild && <Markdown source={bundle.lesson.sections.Rebuild} />}
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border border-blue bg-blue-soft/40 px-4 py-3">
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border border-accent bg-accent-soft/40 px-4 py-3">
         <p className="font-mono text-sm">
-          <span className="label mr-2 text-blue">Goal</span>
+          <span className="label mr-2 text-accent">Goal</span>
           {fm.rebuild.goal}
         </p>
         <span data-testid="goal-status" data-met={state.rebuildGoalMet} className={`label ${state.rebuildGoalMet ? "text-ok" : "text-ink-3"}`}>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Caption, Page, PixelHeading } from "@/components/ui";
+import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { pickCard } from "@/lib/review/cards";
 import { answeredCards } from "@/lib/review/history.server";
 import { loadLearner, relativeDays } from "../learner";
@@ -26,12 +26,12 @@ export default async function ConceptReviewPage({ params }: { params: Promise<Pa
   return (
     <Page>
       <Caption className="pt-10">
-        <Link href="/review" className="hover:text-blue">
+        <Link href="/review" className="hover:text-accent">
           Review
         </Link>{" "}
         · {info.moduleCode} · {info.slug}
       </Caption>
-      <PixelHeading className="mt-6 text-[clamp(1.8rem,5vw,3.4rem)]">{info.title}</PixelHeading>
+      <DisplayHeading className="mt-6 text-[clamp(1.8rem,5vw,3.4rem)]">{info.title}</DisplayHeading>
 
       {view.kind !== "ok" ? (
         <LearnerGate view={view} what="review" />
@@ -49,7 +49,7 @@ export default async function ConceptReviewPage({ params }: { params: Promise<Pa
                 </span>
               </div>
               {state.status !== "mastered" && state.status !== "new" && (
-                <p className="label mt-3 normal-case tracking-[0.06em]" data-testid="mastery-missing">
+                <p className="label mt-3 normal-case" data-testid="mastery-missing">
                   To master this concept: {!state.rule.laterFirstTryCorrect && "get a new question on it right on the first try"}
                   {!state.rule.laterFirstTryCorrect && !state.rule.challengePassedWithoutSolution && ", and "}
                   {!state.rule.challengePassedWithoutSolution && "pass a challenge that uses it without revealing the solution"}

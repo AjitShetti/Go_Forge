@@ -58,10 +58,10 @@ export function DiffView({ from, to, fromVersion, toVersion }: { from: DesignGra
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
       <EdgeMarkers />
-      <div data-testid="diff-canvas" className="h-[62vh] min-h-[420px] border border-ink bg-paper lg:h-[72vh]">
+      <div data-testid="diff-canvas" className="h-[62vh] min-h-[420px] border border-line bg-paper lg:h-[72vh]">
         <ReactFlowProvider>
           <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} edgeTypes={edgeTypes} connectionMode={ConnectionMode.Loose} nodesDraggable={false} nodesConnectable={false} elementsSelectable={false} fitView fitViewOptions={{ padding: 0.2, maxZoom: 1.2 }} minZoom={0.2}>
-            <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#cfccc2" />
+            <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#2e302a" />
             <Controls showInteractive={false} position="bottom-left" />
           </ReactFlow>
         </ReactFlowProvider>

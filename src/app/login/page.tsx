@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Caption, NotImplemented, Page, PixelHeading } from "@/components/ui";
+import { Caption, NotImplemented, Page, DisplayHeading } from "@/components/ui";
 import { redirect } from "next/navigation";
 import { getSupabaseConfig } from "@/lib/supabase/config";
 import { getCurrentUser } from "@/lib/supabase/server";
@@ -15,7 +15,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   return (
     <Page className="max-w-xl">
       <Caption className="pt-10">Sign in · email magic link</Caption>
-      <PixelHeading className="mt-6 text-5xl">Sign in</PixelHeading>
+      <DisplayHeading className="mt-6 text-5xl">Sign in</DisplayHeading>
       {error && (
         <p data-testid="auth-error" className="mt-6 border border-bad px-3 py-2 font-mono text-sm text-bad">
           Sign-in failed: {error}

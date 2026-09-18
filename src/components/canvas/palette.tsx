@@ -27,9 +27,9 @@ export function Palette({ onAdd, disabled }: { onAdd: (kind: NodeKind) => void; 
                 e.dataTransfer.effectAllowed = "copy";
               }}
               onClick={() => onAdd(kind)}
-              className="flex w-full cursor-grab items-center gap-2 px-3 py-2 text-left font-mono text-[0.74rem] hover:bg-blue-soft active:cursor-grabbing disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex w-full cursor-grab items-center gap-2 px-3 py-2 text-left font-mono text-[0.74rem] hover:bg-accent-soft active:cursor-grabbing disabled:cursor-not-allowed disabled:opacity-40"
             >
-              <span className="text-blue">
+              <span className="text-accent">
                 <NodeIcon kind={kind} className="h-4 w-4" />
               </span>
               <span className="truncate">{NODE_SPECS[kind].title}</span>

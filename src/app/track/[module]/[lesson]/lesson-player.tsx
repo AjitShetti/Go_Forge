@@ -10,7 +10,7 @@ import { RebuildStep } from "@/components/lesson/rebuild-step";
 import { SaveBadge, Stepper } from "@/components/lesson/chrome";
 import { StretchStep } from "@/components/lesson/stretch-step";
 import type { Dispatch } from "@/components/lesson/types";
-import { Caption, PixelHeading } from "@/components/ui";
+import { Caption, DisplayHeading } from "@/components/ui";
 import type { LessonBundle } from "@/lib/content/load";
 import { LOCAL_ONLY, localOnlyFeatures } from "@/lib/engine/features";
 import { getExecutor } from "@/lib/engine/wasm-executor";
@@ -117,7 +117,7 @@ export function LessonPlayer({
     <main className="mx-auto w-full max-w-5xl px-4 pb-32 sm:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3 pt-10">
         <Caption>
-          <Link href="/track" className="hover:text-blue">
+          <Link href="/track" className="hover:text-accent">
             Track
           </Link>{" "}
           · {moduleCode} {moduleTitle} · Lesson {String(lessonNumber).padStart(2, "0")}
@@ -128,14 +128,14 @@ export function LessonPlayer({
             target="_blank"
             rel="noreferrer"
             data-testid="report-lesson"
-            className="font-mono text-[0.7rem] text-ink-3 underline underline-offset-2 hover:text-blue"
+            className="font-mono text-[0.7rem] text-ink-3 underline underline-offset-2 hover:text-accent"
           >
             Report a problem with this lesson ↗
           </a>
           <SaveBadge status={saveStatus} />
         </div>
       </div>
-      <PixelHeading className="mt-6 text-[clamp(2rem,5.5vw,3.6rem)]">{fm.title}</PixelHeading>
+      <DisplayHeading className="mt-6 text-[clamp(2rem,5.5vw,3.6rem)]">{fm.title}</DisplayHeading>
       <div className="mt-4 flex flex-wrap gap-2">
         {fm.concepts.map((c) => (
           <span key={c} className="border border-rule px-1.5 py-0.5 font-mono text-[0.7rem] text-ink-2">
@@ -190,7 +190,7 @@ function LocalOnlyBanner({ requires }: { requires: string[] }) {
   if (missing.length === 0) return null;
   return (
     <div data-testid="local-banner" data-features={missing.join(",")} className="mt-6 border border-warn bg-paper px-4 py-3">
-      <p className="font-mono text-[0.72rem] tracking-[0.14em] text-warn uppercase">Parts of this lesson run on your machine</p>
+      <p className="font-mono text-[0.72rem] text-warn">Parts of this lesson run on your machine</p>
       <ul className="prose-serif mt-2 grid gap-1 text-[1rem] text-ink-2">
         {missing.map((f) => {
           const info = LOCAL_ONLY[f];

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Caption, Page, PixelHeading } from "@/components/ui";
+import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { scenarioBySlug } from "@/lib/grader/scenarios";
 import type { RuleId } from "@/lib/grader/types";
 
@@ -38,12 +38,12 @@ export default async function ScenarioPage({ params }: { params: Promise<{ slug:
   return (
     <Page>
       <div className="flex flex-wrap items-center gap-4 pt-10">
-        <Link href="/scenarios" className="label hover:text-blue">
+        <Link href="/scenarios" className="label hover:text-accent">
           ← Scenarios
         </Link>
         <Caption>Design scenario</Caption>
       </div>
-      <PixelHeading className="mt-6 text-[clamp(1.8rem,5vw,3.4rem)]">{s.title}</PixelHeading>
+      <DisplayHeading className="mt-6 text-[clamp(1.8rem,5vw,3.4rem)]">{s.title}</DisplayHeading>
       <p className="prose-serif mt-6 max-w-3xl text-ink-2" data-testid="scenario-summary">
         {s.summary}
       </p>
@@ -93,7 +93,7 @@ export default async function ScenarioPage({ params }: { params: Promise<{ slug:
               <ul className="mt-1 grid gap-0.5 pl-5 font-mono text-[0.72rem] text-ink-2">
                 {c.rules.map((r) => (
                   <li key={r}>
-                    <span className="text-blue">{r}</span> · {RULE_TEXT[r]}
+                    <span className="text-accent">{r}</span> · {RULE_TEXT[r]}
                   </li>
                 ))}
               </ul>

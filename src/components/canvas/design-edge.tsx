@@ -59,8 +59,8 @@ function DesignEdgeView({ id, source, target, data, selected }: EdgeProps<Design
   const mx = (p1.x + p2.x) / 2;
   const my = (p1.y + p2.y) / 2;
 
-  const diffColor = data?.diff === "added" ? "#177a3b" : data?.diff === "removed" ? "#b42318" : data?.diff === "changed" ? "#9a6700" : null;
-  const color = selected ? "#3d4df0" : look.color;
+  const diffColor = data?.diff === "added" ? "#5fcb8a" : data?.diff === "removed" ? "#ff6a55" : data?.diff === "changed" ? "#e6b450" : null;
+  const color = selected ? "#4fcbeb" : look.color;
   const marker = `url(#gf-arrow-${kind}${selected ? "-sel" : ""})`;
 
   return (
@@ -73,13 +73,13 @@ function DesignEdgeView({ id, source, target, data, selected }: EdgeProps<Design
         interactionWidth={18}
         style={{ stroke: color, strokeWidth: look.width + (selected ? 0.8 : 0), strokeDasharray: data?.diff === "removed" ? "3 4" : look.dash }}
       />
-      {look.rail && <path d={path} fill="none" stroke="#f7f6f0" strokeWidth={1.8} pointerEvents="none" />}
+      {look.rail && <path d={path} fill="none" stroke="#121310" strokeWidth={1.8} pointerEvents="none" />}
       <EdgeLabelRenderer>
         <div
           data-testid={`edge-${id}`}
           data-kind={kind}
           data-diff={data?.diff ?? ""}
-          className="nodrag nopan pointer-events-none absolute border bg-paper px-1 font-mono text-[0.58rem] leading-[1.35] tracking-[0.1em] uppercase"
+          className="nodrag nopan pointer-events-none absolute border bg-paper px-1 font-mono text-[0.58rem] leading-[1.35]"
           style={{ transform: `translate(-50%, -50%) translate(${mx}px, ${my}px)`, borderColor: diffColor ?? color, color: diffColor ?? color }}
         >
           {EDGE_SPECS[kind].short}
@@ -101,7 +101,7 @@ export function EdgeMarkers() {
         {EDGE_KINDS.flatMap((k) =>
           [false, true].map((sel) => {
             const look = EDGE_LOOK[k];
-            const c = sel ? "#3d4df0" : look.color;
+            const c = sel ? "#4fcbeb" : look.color;
             return (
               <marker key={`${k}${sel}`} id={`gf-arrow-${k}${sel ? "-sel" : ""}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
                 {look.arrow === "closed" ? <path d="M0,0 L10,5 L0,10 z" fill={c} /> : <path d="M1,1 L9,5 L1,9" fill="none" stroke={c} strokeWidth={1.6} />}
@@ -121,7 +121,7 @@ export function EdgeSample({ kind, width = 44 }: { kind: (typeof EDGE_KINDS)[num
   return (
     <svg width={width} height={14} aria-hidden className="shrink-0">
       <path d={d} stroke={look.color} strokeWidth={look.width} strokeDasharray={look.dash} fill="none" markerEnd={`url(#gf-arrow-${kind})`} />
-      {look.rail && <path d={d} stroke="#f7f6f0" strokeWidth={1.8} fill="none" />}
+      {look.rail && <path d={d} stroke="#121310" strokeWidth={1.8} fill="none" />}
     </svg>
   );
 }

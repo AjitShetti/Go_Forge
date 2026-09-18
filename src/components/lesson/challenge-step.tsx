@@ -63,7 +63,7 @@ export function ChallengeStep({ bundle, state, dispatch, engineReady }: StepProp
       {last && <TestResults exec={last.exec} report={last.report} />}
 
       {state.passed && (
-        <p className="mt-5 border border-ok px-4 py-3 font-mono text-sm tracking-[0.1em] text-ok uppercase" data-testid="challenge-passed">
+        <p className="mt-5 border border-ok px-4 py-3 font-mono text-sm text-ok" data-testid="challenge-passed">
           All tests pass.
         </p>
       )}
@@ -125,7 +125,7 @@ export function ChallengeStep({ bundle, state, dispatch, engineReady }: StepProp
             Show reference solution
           </button>
         )}
-        {state.gaveUp && <span className="border border-warn px-2 py-1 font-mono text-[0.7rem] tracking-[0.14em] text-warn uppercase">Marked for review</span>}
+        {state.gaveUp && <span className="border border-warn px-2 py-1 font-mono text-[0.7rem] text-warn">Marked for review</span>}
       </div>
 
       {v.showSolution && (
