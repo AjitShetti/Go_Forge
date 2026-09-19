@@ -80,7 +80,7 @@ export function LoginForm({ providers = [] }: { providers?: OAuthProvider[] }) {
     return (
       <div className="mt-8 grid gap-4">
         <p data-testid="magic-link-sent" className="prose-serif">
-          We sent a sign-in email to <strong>{email}</strong>. Open the link in it, or type the code from the email here.
+          We sent a sign-in email to <strong>{email}</strong>. Open the link in it on this device. If the email shows a code, you can type it here instead.
         </p>
         <form onSubmit={verifyCode} className="grid gap-4">
           <label className="grid gap-2">
