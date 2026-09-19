@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Caption, NotImplemented, Page, DisplayHeading } from "@/components/ui";
 import { redirect } from "next/navigation";
 import { getSupabaseConfig } from "@/lib/supabase/config";
+import { getEnabledOAuthProviders } from "@/lib/supabase/providers";
 import { getCurrentUser } from "@/lib/supabase/server";
 import { LoginForm } from "./login-form";
 
@@ -12,9 +13,10 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   const configured = getSupabaseConfig() !== null;
   // Already signed in: there is nothing to do here.
   if (configured && (await getCurrentUser())) redirect("/track");
+  const providers = configured ? await getEnabledOAuthProviders() : [];
   return (
     <Page className="max-w-xl">
-      <Caption className="pt-10">Sign in · email magic link</Caption>
+      <Caption className="pt-10">Sign in · no password needed</Caption>
       <DisplayHeading className="mt-6 text-5xl">Sign in</DisplayHeading>
       {error && (
         <p data-testid="auth-error" className="mt-6 border border-bad px-3 py-2 font-mono text-sm text-bad">
@@ -22,7 +24,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         </p>
       )}
       {configured ? (
-        <LoginForm />
+        <LoginForm providers={providers} />
       ) : (
         <div className="mt-8 grid gap-4">
           <NotImplemented what="Supabase not configured" />

@@ -116,13 +116,28 @@ test("sign in: the magic-link form confirms, and bad callbacks land back on /log
   await page.goto("/");
   await page.getByRole("link", { name: "Sign in" }).click();
   await page.getByLabel("Email").fill("learner@example.com");
-  await page.getByRole("button", { name: "Email me a magic link" }).click();
+  await page.getByRole("button", { name: "Email me a sign-in link" }).click();
   await expect(page.getByTestId("magic-link-sent")).toContainText("learner@example.com");
   expect(requested).toBe("learner@example.com");
+
+  // The emailed code works in any browser; a wrong one shows a readable error, not Supabase's.
+  let verified: { email?: string; token?: string; type?: string } = {};
+  await page.route("**/auth/v1/verify**", async (route) => {
+    verified = JSON.parse(route.request().postData() ?? "{}");
+    await route.fulfill({ status: 403, contentType: "application/json", body: JSON.stringify({ code: 403, error_code: "otp_expired", msg: "Token has expired or is invalid" }) });
+  });
+  await page.getByLabel("Code from the email").fill("123456");
+  await page.getByRole("button", { name: "Sign in with code" }).click();
+  await expect(page.getByTestId("login-error")).toContainText("expired or was already used");
+  expect(verified).toMatchObject({ email: "learner@example.com", token: "123456", type: "email" });
 
   await page.goto("/auth/callback?token_hash=bogus&type=magiclink");
   await expect(page).toHaveURL(/\/login\?error=/);
   await expect(page.getByTestId("auth-error")).toBeVisible();
+
+  // A link opened in another browser (e.g. an email app's built-in one) explains itself.
+  await page.goto("/auth/callback?code=not-from-this-browser");
+  await expect(page.getByTestId("auth-error")).toContainText("different browser");
 });
 
 test("phone width: no page scrolls sideways", async ({ page }) => {

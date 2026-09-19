@@ -23,10 +23,15 @@ To stay free: don't enable compute add-ons, branching, PITR or custom domains. F
 
 ## Auth
 
-- Magic link via Supabase's built-in mailer.
-- On the free tier it only delivers to members of the organization's team, a few emails per hour. That's fine for a single user signing in with their own address.
-- Callback: `/auth/callback`. It handles both `?code=` (PKCE) and `?token_hash=&type=`.
-- In the dashboard, check that Authentication → URL Configuration has Site URL `http://localhost:3000` and an allowed redirect `http://localhost:3000/auth/callback`. Add the Vercel URL at P8.
+Sign-in is passwordless: an email with a link **and** a one-time code, plus GitHub when it's switched on.
+
+- **Links use `token_hash`, not PKCE.** A PKCE `?code=` link only works in the browser that asked for it. On phones, email apps open links in their own browser, so those links failed with "PKCE code verifier not found". The email templates send `/auth/callback?token_hash=…&type=email` instead, which works anywhere. The callback still accepts `?code=` for GitHub sign-in.
+- **The code** (`{{ .Token }}`) can be typed on the sign-in page. It covers opening the email on a different device.
+- **Email volume.** Supabase's built-in mailer allows **2 emails per hour for the whole project**. That isn't enough for a public site, so Auth uses custom SMTP (free: Gmail with an app password, about 500 a day, or Brevo, 300 a day).
+- **GitHub sign-in** needs no email at all. The button appears on `/login` only once the provider is enabled (the page reads `/auth/v1/settings`). GitHub OAuth app callback URL: `https://qevyjanefkagxnxxbvns.supabase.co/auth/v1/callback`.
+- Errors shown to people go through `src/lib/auth/auth-errors.ts`, never Supabase's raw text.
+
+All of this is applied by `scripts/configure-auth.mjs` (Site URL, redirect allow-list, templates, and SMTP / GitHub when their env vars are set). It needs a personal access token and dry-runs unless given `--apply`.
 
 ## Automated-test user
 

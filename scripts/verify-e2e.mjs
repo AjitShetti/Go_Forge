@@ -97,17 +97,17 @@ try {
   check("no script ran from the error parameter", (await page.evaluate(() => window.__xss)) === undefined);
 
   await page.locator('input[type="email"]').fill("not-an-email");
-  await page.getByRole("button", { name: "Email me a magic link" }).click();
+  await page.getByRole("button", { name: "Email me a sign-in link" }).click();
   check("invalid email is blocked by the form, nothing is sent", (await page.getByTestId("magic-link-sent").count()) === 0 && (await page.locator("input:invalid").count()) === 1);
 
   // Supabase unreachable: the form must report it, not hang on "Sending…". No email is sent.
   expectErrors = true;
   await page.route("**/auth/v1/otp**", (r) => r.abort("internetdisconnected"));
   await page.locator('input[type="email"]').fill("nobody@goforge.test");
-  await page.getByRole("button", { name: "Email me a magic link" }).click();
+  await page.getByRole("button", { name: "Email me a sign-in link" }).click();
   await page.getByTestId("login-error").waitFor({ timeout: 15000 }).catch(() => {});
   check("login form reports an unreachable auth service", (await page.getByTestId("login-error").count()) === 1, await page.locator("form").innerText());
-  check("login button is usable again after the failure", await page.getByRole("button", { name: "Email me a magic link" }).isEnabled());
+  check("login button is usable again after the failure", await page.getByRole("button", { name: "Email me a sign-in link" }).isEnabled());
   await page.unroute("**/auth/v1/otp**");
   expectErrors = false;
 

@@ -77,7 +77,7 @@ if (only.includes("p1")) {
 
   await page.goto(BASE + "/login");
   if (configured) {
-    check("login shows the magic-link form", await page.getByRole("button", { name: "Email me a magic link" }).isVisible());
+    check("login shows the magic-link form", await page.getByRole("button", { name: "Email me a sign-in link" }).isVisible());
     const cb = await fetch(BASE + "/auth/callback?code=not-a-real-code", { redirect: "manual" });
     check("auth callback with a bogus code redirects to /login with an error", cb.status === 307 && (cb.headers.get("location") ?? "").includes("/login?error="), `status=${cb.status} location=${cb.headers.get("location")}`);
   } else {
