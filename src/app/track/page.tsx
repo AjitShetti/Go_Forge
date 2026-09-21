@@ -4,12 +4,55 @@ import { Caption, NotImplemented, Page, DisplayHeading } from "@/components/ui";
 import { isLessonAuthored } from "@/lib/content/authored";
 import { track } from "@/lib/content/track";
 import { LOCAL_ONLY, localOnlyFeatures } from "@/lib/engine/features";
+import { abs, breadcrumbs, jsonLdScript, ORGANIZATION, SITE_NAME } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Track" };
+const lessonCount = track.modules.reduce((n, m) => n + m.lessons.length, 0);
+const TRACK_DESCRIPTION = `A ${track.modules.length}-module Go course in ${lessonCount} lessons: goroutines and channels, slices and maps, pointers, interfaces, errors, and the memory model. Each lesson runs real Go in your browser — no install.`;
+
+export const metadata: Metadata = {
+  title: "Track — the full Go course",
+  description: TRACK_DESCRIPTION,
+  alternates: { canonical: "/track" },
+  openGraph: { type: "website", url: "/track", title: `Track — the full Go course · ${SITE_NAME}`, description: TRACK_DESCRIPTION, siteName: SITE_NAME },
+};
 
 export default function TrackPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Course",
+        "@id": abs("/track#course"),
+        url: abs("/track"),
+        name: track.title,
+        description: TRACK_DESCRIPTION,
+        inLanguage: "en",
+        isAccessibleForFree: true,
+        teaches: [...new Set(track.modules.flatMap((m) => m.lessons.flatMap((l) => l.concepts)))],
+        about: { "@type": "Thing", name: "Go (programming language)" },
+        provider: ORGANIZATION,
+        hasCourseInstance: {
+          "@type": "CourseInstance",
+          courseMode: "online",
+          courseWorkload: `PT${lessonCount}H`,
+        },
+        syllabusSections: track.modules.map((m, i) => ({
+          "@type": "Syllabus",
+          name: m.title,
+          position: i + 1,
+          description: m.lessons.map((l) => l.title).join("; "),
+        })),
+      },
+      breadcrumbs([
+        { name: SITE_NAME, path: "/" },
+        { name: "Track", path: "/track" },
+      ]),
+    ],
+  };
+
   return (
     <Page>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(jsonLd)} />
       <Caption className="pt-14">Track · every module in order</Caption>
       <DisplayHeading className="mt-6 text-[clamp(2.4rem,6.5vw,4.8rem)]">{track.title}</DisplayHeading>
 
@@ -27,7 +70,11 @@ export default function TrackPage() {
                 return (
                   <li key={l.slug} className="flex flex-wrap items-center justify-between gap-3 px-1 py-3.5">
                     {authored ? (
-                      <Link href={`/track/${m.slug}/${l.slug}`} className="text-[1.08rem] font-medium transition-colors hover:text-accent">
+                      // Not prefetched: this page lists every lesson, and prefetching
+                      // the ones scrolled past was two thirds of its requests for a
+                      // reader who opens one. The lesson routes are prerendered, so
+                      // the navigation is quick without it.
+                      <Link href={`/track/${m.slug}/${l.slug}`} prefetch={false} className="text-[1.08rem] font-medium transition-colors hover:text-accent">
                         {l.title}
                       </Link>
                     ) : (

@@ -24,6 +24,12 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Skip static assets and the engine binaries.
-  matcher: ["/((?!_next/static|_next/image|engine/|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|wasm|pack|js|json)$).*)"],
+  // Only the routes that read the session on the server. The lessons, the track,
+  // the scenarios and the home page are prerendered and read no cookies, so running
+  // this on them bought nothing and cost a Supabase round trip per request — and a
+  // response carrying Set-Cookie is one the CDN will not cache.
+  //
+  // Sessions stay fresh on the public pages regardless: the browser client refreshes
+  // its own token and writes the cookies these routes then read.
+  matcher: ["/dashboard/:path*", "/notebook/:path*", "/review/:path*", "/canvas/:path*", "/login", "/auth/:path*"],
 };

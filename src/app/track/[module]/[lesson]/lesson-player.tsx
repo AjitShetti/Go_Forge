@@ -15,11 +15,12 @@ import type { LessonBundle } from "@/lib/content/load";
 import { LOCAL_ONLY, localOnlyFeatures } from "@/lib/engine/features";
 import { getExecutor } from "@/lib/engine/wasm-executor";
 import { initialState, replay, transition, view, type LessonEvent, type LessonState } from "@/lib/lesson/machine";
+import { resolvePersistence, type PersistenceContext } from "@/lib/lesson/persistence";
 import { NullRecorder, SupabaseRecorder, type LessonRecorder, type SaveStatus } from "@/lib/lesson/recorder";
 import { issueUrl } from "@/lib/site";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
 
-export type PersistenceContext = { kind: "off"; reason: string } | { kind: "on"; userId: string; lessonId: string; trapConceptId: string | null };
+export type { PersistenceContext };
 
 declare global {
   interface Window {
@@ -32,18 +33,35 @@ export function LessonPlayer({
   moduleCode,
   moduleTitle,
   lessonNumber,
-  persistence,
+  contentRef,
   next,
 }: {
   bundle: LessonBundle;
   moduleCode: string;
   moduleTitle: string;
   lessonNumber: number;
-  persistence: PersistenceContext;
+  contentRef: string;
   next: { href: string; title: string } | null;
 }) {
   const fm = bundle.lesson.frontmatter;
-  const recorder: LessonRecorder = useMemo(() => {
+
+  // Resolved here rather than passed down from the server, so the route stays
+  // prerenderable. Null means "still asking" — the recorder, and with it the saved
+  // progress, waits for the answer.
+  const [persistence, setPersistence] = useState<PersistenceContext | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    resolvePersistence(contentRef, fm.trap.concept).then(
+      (p) => !cancelled && setPersistence(p),
+      (e: Error) => !cancelled && setPersistence({ kind: "off", reason: e.message }),
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [contentRef, fm.trap.concept]);
+
+  const recorder: LessonRecorder | null = useMemo(() => {
+    if (!persistence) return null;
     const supabase = getSupabaseBrowser();
     if (persistence.kind === "on" && supabase) return new SupabaseRecorder(supabase, persistence.userId, persistence.lessonId, persistence.trapConceptId);
     return new NullRecorder(persistence.kind === "off" ? persistence.reason : "Supabase client unavailable");
@@ -60,6 +78,9 @@ export function LessonPlayer({
 
   const dispatch: Dispatch = useCallback(
     (event, extras) => {
+      // No steps are rendered until the recorder exists, so this is unreachable
+      // from the UI; it keeps an event from being dropped silently if that changes.
+      if (!recorder) return false;
       const from = stateRef.current;
       const result = transition(from, event);
       if (!result.ok) {
@@ -77,6 +98,7 @@ export function LessonPlayer({
   );
 
   useEffect(() => {
+    if (!recorder) return;
     recorder.onStatus(setSaveStatus);
     let cancelled = false;
     recorder.load().then(
@@ -100,6 +122,15 @@ export function LessonPlayer({
         if (!cancelled) setLoadError(e.message);
       },
     );
+    return () => {
+      cancelled = true;
+    };
+  }, [recorder]);
+
+  // Its own effect, and not the one above: the toolchain is tens of megabytes, so
+  // it starts downloading straight away rather than waiting on the session lookup.
+  useEffect(() => {
+    let cancelled = false;
     getExecutor()
       .ready()
       .then(
@@ -109,7 +140,7 @@ export function LessonPlayer({
     return () => {
       cancelled = true;
     };
-  }, [recorder]);
+  }, []);
 
   const v = view(state);
 
@@ -164,18 +195,23 @@ export function LessonPlayer({
         </p>
       )}
 
-      {!loaded ? (
-        <p className="mt-10 font-mono text-sm text-ink-3">{loadError ? "" : "Loading your progress…"}</p>
-      ) : (
-        <div className="mt-10 grid gap-14">
-          <ProvokeStep bundle={bundle} state={state} dispatch={dispatch} engineReady={engineReady} />
-          {v.showDecode && <DecodeStep bundle={bundle} state={state} dispatch={dispatch} />}
-          {(state.step === "rebuild" || stepAfter(state, "rebuild")) && <RebuildStep bundle={bundle} state={state} dispatch={dispatch} engineReady={engineReady} />}
-          {(state.step === "challenge" || stepAfter(state, "challenge")) && <ChallengeStep bundle={bundle} state={state} dispatch={dispatch} engineReady={engineReady} />}
-          {(state.step === "stretch" || state.step === "complete") && <StretchStep bundle={bundle} state={state} dispatch={dispatch} />}
-          {state.step === "complete" && <CompleteStep state={state} persistent={recorder.persistent} next={next} />}
-        </div>
-      )}
+      {/* Reserving a viewport of height keeps the footer below the fold while saved
+          progress loads, so swapping the placeholder for the steps shifts nothing
+          the reader can see (this swap was the whole of the page's 0.07 CLS). */}
+      <div className="mt-10 min-h-screen">
+        {!loaded ? (
+          <p className="font-mono text-sm text-ink-3">{loadError ? "" : "Loading your progress…"}</p>
+        ) : (
+          <div className="grid gap-14">
+            <ProvokeStep bundle={bundle} state={state} dispatch={dispatch} engineReady={engineReady} />
+            {v.showDecode && <DecodeStep bundle={bundle} state={state} dispatch={dispatch} />}
+            {(state.step === "rebuild" || stepAfter(state, "rebuild")) && <RebuildStep bundle={bundle} state={state} dispatch={dispatch} engineReady={engineReady} />}
+            {(state.step === "challenge" || stepAfter(state, "challenge")) && <ChallengeStep bundle={bundle} state={state} dispatch={dispatch} engineReady={engineReady} />}
+            {(state.step === "stretch" || state.step === "complete") && <StretchStep bundle={bundle} state={state} dispatch={dispatch} />}
+            {state.step === "complete" && <CompleteStep state={state} persistent={recorder?.persistent ?? false} next={next} />}
+          </div>
+        )}
+      </div>
     </main>
   );
 }

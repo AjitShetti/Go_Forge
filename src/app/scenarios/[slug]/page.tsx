@@ -2,10 +2,27 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Caption, Page, DisplayHeading } from "@/components/ui";
-import { scenarioBySlug } from "@/lib/grader/scenarios";
+import { scenarioBySlug, SCENARIOS } from "@/lib/grader/scenarios";
 import type { RuleId } from "@/lib/grader/types";
+import { abs, breadcrumbs, jsonLdScript, SITE_NAME, summarize } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Scenario" };
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const s = scenarioBySlug((await params).slug);
+  if (!s) return { title: "Scenario" };
+  const description = summarize(s.summary, 158);
+  const path = `/scenarios/${s.slug}`;
+  return {
+    title: s.title,
+    description,
+    alternates: { canonical: path },
+    openGraph: { type: "article", url: path, title: `${s.title} · ${SITE_NAME}`, description, siteName: SITE_NAME },
+  };
+}
+
+/** Prerenders every scenario page: the set is a constant in the grader. */
+export function generateStaticParams() {
+  return SCENARIOS.map((s) => ({ slug: s.slug }));
+}
 
 const RULE_TEXT: Record<RuleId, string> = {
   "has-entry": "There is a Client with at least one request connection.",
@@ -35,8 +52,31 @@ const RULE_TEXT: Record<RuleId, string> = {
 export default async function ScenarioPage({ params }: { params: Promise<{ slug: string }> }) {
   const s = scenarioBySlug((await params).slug);
   if (!s) notFound();
+  const path = `/scenarios/${s.slug}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LearningResource",
+        "@id": abs(path),
+        url: abs(path),
+        name: s.title,
+        description: s.summary,
+        learningResourceType: "System design exercise",
+        teaches: ["system design", "scalability", "distributed systems"],
+        inLanguage: "en",
+        isAccessibleForFree: true,
+      },
+      breadcrumbs([
+        { name: SITE_NAME, path: "/" },
+        { name: "Scenarios", path: "/scenarios" },
+        { name: s.title, path },
+      ]),
+    ],
+  };
   return (
     <Page>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(jsonLd)} />
       <div className="flex flex-wrap items-center gap-4 pt-10">
         <Link href="/scenarios" className="label hover:text-accent">
           ← Scenarios

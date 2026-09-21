@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
 import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { LOCAL_ONLY } from "@/lib/engine/features";
+import { SITE_NAME } from "@/lib/seo";
 import { EngineLab } from "./engine-lab";
 
-export const metadata: Metadata = { title: "Engine" };
+const DESCRIPTION =
+  "Run Go in your browser with no install and no server: the real gc toolchain — cmd/compile and cmd/link — built to WebAssembly and running in a worker in your tab. Includes where it differs from go run on your machine.";
+
+export const metadata: Metadata = {
+  title: "Run Go in your browser — the gc toolchain in WebAssembly",
+  description: DESCRIPTION,
+  alternates: { canonical: "/engine" },
+  openGraph: { type: "website", url: "/engine", title: `Run Go in your browser · ${SITE_NAME}`, description: DESCRIPTION, siteName: SITE_NAME },
+};
 
 export default function EnginePage() {
   return (

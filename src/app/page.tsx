@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CanvasDemo } from "@/components/home/canvas-demo";
 import { Caption, Page, DisplayHeading, Plate } from "@/components/ui";
 import { track } from "@/lib/content/track";
+import { abs, jsonLdScript, ORGANIZATION, SITE_NAME } from "@/lib/seo";
 
 const lessonCount = track.modules.reduce((n, m) => n + m.lessons.length, 0);
 
@@ -33,9 +34,37 @@ const PLACES: { n: string; title: string; href: string; link: string; text: stri
   { n: "04", title: "Design", href: "/scenarios", link: "Scenarios", text: "Pick a system to build, sketch it on the canvas, and grade it against the scenario's load and constraints." },
 ];
 
+const HOME_JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    ORGANIZATION,
+    {
+      "@type": "WebSite",
+      "@id": abs("/#website"),
+      url: abs("/"),
+      name: SITE_NAME,
+      description: "Learn Go from first principles by predicting, failing, and decoding, with real Go compiled in your browser.",
+      inLanguage: "en",
+      publisher: { "@id": abs("/#organization") },
+    },
+    {
+      "@type": "Course",
+      "@id": abs("/track#course"),
+      url: abs("/track"),
+      name: track.title,
+      description: `A ${track.modules.length}-module Go course in ${lessonCount} lessons, for developers who already write Python or JavaScript.`,
+      provider: { "@id": abs("/#organization") },
+      isAccessibleForFree: true,
+      inLanguage: "en",
+      hasCourseInstance: { "@type": "CourseInstance", courseMode: "online", courseWorkload: `PT${lessonCount}H` },
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <Page>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(HOME_JSON_LD)} />
       {/* ------------------------------------------------------------ hero --- */}
       <section className="relative pt-14 sm:pt-20">
         {/* Four-column grid, drawn: the page is set on it. */}

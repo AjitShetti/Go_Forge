@@ -2,8 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { SCENARIOS } from "@/lib/grader/scenarios";
+import { SITE_NAME } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Scenarios" };
+const DESCRIPTION = `${SCENARIOS.length} system design exercises — ticketing flash sale, URL shortener, news feed fan-out, rate-limited API, file storage with a CDN, chat presence. Sketch the system, then have it graded against real load and constraints.`;
+
+export const metadata: Metadata = {
+  title: "System design scenarios",
+  description: DESCRIPTION,
+  alternates: { canonical: "/scenarios" },
+  openGraph: { type: "website", url: "/scenarios", title: `System design scenarios · ${SITE_NAME}`, description: DESCRIPTION, siteName: SITE_NAME },
+};
 
 export default function ScenariosPage() {
   return (

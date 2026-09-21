@@ -2,9 +2,12 @@
 
 import Editor, { loader, type OnMount } from "@monaco-editor/react";
 import { useEffect, useRef } from "react";
+import { MONACO_VERSION } from "@/lib/monaco";
 
-// Monaco is served from this origin (scripts/copy-monaco.mjs), not a CDN.
-loader.config({ paths: { vs: "/monaco/vs" } });
+// Monaco is served from this origin (scripts/copy-monaco.mjs), not a CDN. The
+// version sits in the path so those chunks can be cached immutably (next.config.ts);
+// the copy script writes to the same versioned directory.
+loader.config({ paths: { vs: `/monaco/${MONACO_VERSION}/vs` } });
 
 type MonacoEditor = Parameters<OnMount>[0];
 type Monaco = Parameters<OnMount>[1];
