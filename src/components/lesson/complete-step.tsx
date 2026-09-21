@@ -11,7 +11,7 @@ export function CompleteStep({ state, persistent, next }: { state: LessonState; 
     ["Decode time", `${Math.round(state.decodeMs / 1000)} s`],
     ["Rebuild", `${state.rebuildRuns} runs · goal ${state.rebuildGoalMet ? "met" : "not met"}`],
     ["Challenge", `${state.attempts} attempts · ${state.hintsRevealed} hints · ${state.gaveUp ? "gave up" : "passed"}`],
-    ["Stretch", state.stretchSubmitted ? "saved to notebook" : "skipped"],
+    ["Stretch", state.stretchSubmitted ? "answered" : "skipped"],
   ];
   return (
     <section data-testid="step-complete">

@@ -39,7 +39,7 @@ export class NullRecorder implements LessonRecorder {
 /**
  * Writes each accepted transition to lesson_events (the replayable log) and
  * lesson_progress, plus the domain tables for the events that produce them:
- * predictions, runs, challenge_attempts, notebook. Writes are serialized so
+ * predictions, runs, challenge_attempts. Writes are serialized so
  * the event log keeps its order.
  */
 export class SupabaseRecorder implements LessonRecorder {
@@ -129,9 +129,6 @@ export class SupabaseRecorder implements LessonRecorder {
           }),
           "challenge_attempts",
         );
-        break;
-      case "SUBMIT_STRETCH":
-        check(await db.from("notebook").insert({ ...base, kind: "stretch", body: event.body }), "notebook");
         break;
     }
   }

@@ -17,7 +17,7 @@ const LOOP: [string, string][] = [
   ["Decode", "Why it happened, with the Python and JavaScript contrast."],
   ["Rebuild", "Change the code until it meets a stated goal. Unlimited runs."],
   ["Challenge", "Write code that passes hidden tests. Two hints if you're stuck."],
-  ["Stretch", "An open question with no grade. Your answer goes to the Notebook."],
+  ["Stretch", "An open question with no grade. Your answer stays with the lesson."],
 ];
 
 const STATS: [string, string][] = [
@@ -29,9 +29,14 @@ const STATS: [string, string][] = [
 
 const PLACES: { n: string; title: string; href: string; link: string; text: string }[] = [
   { n: "01", title: "Learn", href: "/track", link: "Track", text: `${track.modules.length} modules in order. Each lesson runs the loop below, with real Go compiled in your browser.` },
-  { n: "02", title: "Review", href: "/review", link: "Review", text: "Every prediction you get wrong comes back as a review card, then again on a spaced schedule until it sticks." },
-  { n: "03", title: "Progress", href: "/dashboard", link: "Progress", text: "Which lessons you've finished, which concepts you've mastered, and what's due for review." },
-  { n: "04", title: "Design", href: "/scenarios", link: "Scenarios", text: "Pick a system to build, sketch it on the canvas, and grade it against the scenario's load and constraints." },
+  {
+    n: "02",
+    title: "Review",
+    href: "/review",
+    link: "Review",
+    text: "Every prediction you get wrong comes back as a review card, then again on a spaced schedule until it sticks - next to what you've finished and what you've mastered.",
+  },
+  { n: "03", title: "Design", href: "/scenarios", link: "Scenarios", text: "Pick a system to build, sketch it on the canvas, and grade it against the scenario's load and constraints." },
 ];
 
 const HOME_JSON_LD = {
@@ -135,7 +140,7 @@ export default function Home() {
             </DisplayHeading>
           </div>
           <p className="max-w-xl text-[1.02rem] leading-relaxed text-ink-2">
-            Lessons, the canvas and the engine all work signed out. Sign in to keep your predictions, progress, designs and notes; Review and Progress need an account.
+            Lessons, the canvas and the engine all work signed out. Sign in to keep your predictions, progress and designs; Review needs an account.
           </p>
         </div>
 

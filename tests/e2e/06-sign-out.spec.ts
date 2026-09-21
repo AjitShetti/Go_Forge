@@ -12,8 +12,6 @@ test("signed in, /login redirects; sign out gates personal pages again", async (
   await expect(page.getByRole("link", { name: "Sign in" })).toBeVisible();
   await expect(page.getByTestId("user-email")).toHaveCount(0);
 
-  await page.goto("/notebook");
-  await expect(page.getByTestId("notebook-gate")).toHaveAttribute("data-kind", "signed-out");
   await page.goto("/review");
   await expect(page.getByTestId("learner-gate")).toHaveAttribute("data-kind", "signed-out");
   await page.goto("/track/m6-errors/defer-timing");

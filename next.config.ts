@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // Progress used to be its own page; it is now the lower half of /review,
+      // so anything bookmarked or linked to /dashboard lands where it moved to.
+      { source: "/dashboard", destination: "/review", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

@@ -66,11 +66,10 @@ test("pages don't show repository file paths", async ({ page }) => {
 test("every main nav link opens its page", async ({ page, errors }) => {
   const nav = [
     ["Track", "/track"],
+    ["Reference", "/go"],
     ["Review", "/review"],
-    ["Progress", "/dashboard"],
     ["Canvas", "/canvas"],
     ["Scenarios", "/scenarios"],
-    ["Notebook", "/notebook"],
     ["Engine", "/engine"],
   ] as const;
   await page.goto("/");
@@ -86,9 +85,7 @@ test("every main nav link opens its page", async ({ page, errors }) => {
 test("pages that need an account say so instead of breaking", async ({ page }) => {
   for (const [path, gate] of [
     ["/review", "learner-gate"],
-    ["/dashboard", "learner-gate"],
     ["/canvas", "designs-gate"],
-    ["/notebook", "notebook-gate"],
   ]) {
     await page.goto(path);
     await expect(page.getByTestId(gate), path).toHaveAttribute("data-kind", "signed-out");
@@ -142,7 +139,7 @@ test("sign in: the magic-link form confirms, and bad callbacks land back on /log
 
 test("phone width: no page scrolls sideways", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const path of ["/", "/track", "/track/m5-interfaces/nil-interface", "/scenarios", "/scenarios/chat-presence", "/canvas/new", "/engine", "/login", "/notebook", "/nope"]) {
+  for (const path of ["/", "/track", "/track/m5-interfaces/nil-interface", "/scenarios", "/scenarios/chat-presence", "/canvas/new", "/engine", "/login", "/review", "/nope"]) {
     await page.goto(path);
     await expectNoHorizontalScroll(page);
   }

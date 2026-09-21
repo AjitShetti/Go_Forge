@@ -2,8 +2,8 @@ import { content, expect, lessonState, requireCleanConcept, setEditor, test } fr
 
 // A signed-in learner works through one whole lesson the way a person would:
 // predicts wrong, reads the decode, rebuilds, fails the challenge, passes it,
-// writes a stretch answer, then finds the mistake in review, the lesson on the
-// progress page and the stretch answer in the notebook.
+// writes a stretch answer, then finds the mistake, the lesson's completed status
+// and the stretch answer where they now live: the merged review page and the lesson.
 //
 // Lesson: M6 defer-timing (concept defer-evaluation). No other suite touches it.
 
@@ -12,7 +12,7 @@ const read = (...p: string[]) => content(...DIR, ...p);
 const trap = (JSON.parse(read("lesson.md").split("---")[1]) as { trap: { choices: string[]; answer: number } }).trap;
 const STRETCH = "defer f(x) copies x into the deferred call record right away.\nA closure keeps a reference instead.";
 
-test("a whole lesson, then review, progress and notebook agree", async ({ page, errors, learner }) => {
+test("a whole lesson, then the review page and the lesson agree", async ({ page, errors, learner }) => {
   test.slow();
   await requireCleanConcept(learner.db, "defer-evaluation");
 
@@ -68,9 +68,11 @@ test("a whole lesson, then review, progress and notebook agree", async ({ page, 
   await expect(page.getByTestId("next-lesson")).toHaveAttribute("href", "/track/m6-errors/panic-recover");
   await expect(page.getByTestId("save-status")).toHaveAttribute("data-kind", "saved");
 
-  // A reload resumes at the end instead of starting over.
+  // A reload resumes at the end instead of starting over, and the stretch answer
+  // is shown back in the lesson - it is not filed away on another page any more.
   await page.reload();
   await expect(page.getByTestId("completion")).toBeVisible({ timeout: 60_000 });
+  await expect(page.getByTestId("stretch-answer")).toHaveText(STRETCH);
 
   // ----------------------------------------------------------------- review
   await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Review", exact: true }).click();
@@ -84,15 +86,14 @@ test("a whole lesson, then review, progress and notebook agree", async ({ page, 
   await page.getByTestId("submit-answer").click();
   await expect(page.getByTestId("review-result")).toContainText(/go printed/i);
 
-  // --------------------------------------------------------------- progress
-  await page.goto("/dashboard");
+  // ------------------------------------------- progress, on that same page now
+  await page.goto("/review");
+  await expect(page.getByTestId("progress-facts")).toBeVisible();
   await expect(page.getByTestId("lesson-defer-timing")).toHaveAttribute("data-status", "completed");
 
-  // --------------------------------------------------------------- notebook
-  await page.goto("/notebook?kind=stretch");
-  const entry = page.getByTestId("notebook-entry").filter({ hasText: "M6 · defer evaluates arguments now" });
-  await expect(entry).toHaveCount(1);
-  await expect(entry.getByTestId("entry-body")).toHaveText(STRETCH);
+  // /dashboard was the progress page; it now redirects to where it moved to.
+  await page.goto("/dashboard");
+  await expect(page).toHaveURL(/\/review$/);
 
   expect(errors).toEqual([]);
 });

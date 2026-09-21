@@ -31,5 +31,5 @@ export const config = {
   //
   // Sessions stay fresh on the public pages regardless: the browser client refreshes
   // its own token and writes the cookies these routes then read.
-  matcher: ["/dashboard/:path*", "/notebook/:path*", "/review/:path*", "/canvas/:path*", "/login", "/auth/:path*"],
+  matcher: ["/review/:path*", "/canvas/:path*", "/login", "/auth/:path*"],
 };

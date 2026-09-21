@@ -31,6 +31,8 @@ export type LessonState = {
   gaveUp: boolean;
   solutionRevealed: boolean;
   stretchSubmitted: boolean;
+  /** The answer itself, so a lesson reopened later can show it back. */
+  stretchBody: string | null;
 };
 
 export type LessonEvent =
@@ -66,6 +68,7 @@ export const initialState: LessonState = {
   gaveUp: false,
   solutionRevealed: false,
   stretchSubmitted: false,
+  stretchBody: null,
 };
 
 export type Transition = { ok: true; state: LessonState } | { ok: false; state: LessonState; reason: string };
@@ -149,7 +152,7 @@ export function transition(s: LessonState, e: LessonEvent): Transition {
     case "SUBMIT_STRETCH":
       if (s.step !== "stretch") return reject(s, "not in stretch");
       if (e.body.trim() === "") return reject(s, "stretch answer is empty");
-      return accept({ ...s, stretchSubmitted: true, step: "complete" });
+      return accept({ ...s, stretchSubmitted: true, stretchBody: e.body, step: "complete" });
 
     case "SKIP_STRETCH":
       if (s.step !== "stretch") return reject(s, "not in stretch");
