@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/site-footer";
@@ -34,6 +34,13 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
   },
   twitter: { card: "summary_large_image", title: "Go Forge — learn Go from first principles", description: DESCRIPTION },
+};
+
+/** Tints the browser's own chrome with the page's ground colour, so the frame around
+ *  the site is the same near-black the site is drawn on. */
+export const viewport: Viewport = {
+  themeColor: "#0c0d0a",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
