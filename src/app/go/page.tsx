@@ -6,10 +6,10 @@ import { track } from "@/lib/content/track";
 import { abs, breadcrumbs, jsonLdScript, SITE_NAME } from "@/lib/seo";
 
 const DESCRIPTION =
-  "Go explained one concept at a time: slices and their headers, strings as bytes and runes, pointers, escape analysis, interfaces, goroutines, channels and the memory model — each with programs run by real Go.";
+  "Go explained one concept at a time: slices and their headers, strings as bytes and runes, pointers, escape analysis, interfaces, goroutines, channels and the memory model - each with programs run by real Go.";
 
 export const metadata: Metadata = {
-  title: "Go reference — one concept at a time",
+  title: "Go reference - one concept at a time",
   description: DESCRIPTION,
   alternates: { canonical: "/go" },
   openGraph: { type: "website", url: "/go", title: `Go reference · ${SITE_NAME}`, description: DESCRIPTION, siteName: SITE_NAME },
@@ -61,7 +61,7 @@ export default function GoReferenceIndex() {
       </DisplayHeading>
 
       <p className="prose-serif mt-8 max-w-2xl text-[1.05rem] text-ink-2">
-        The explanation behind every lesson, readable on its own. Each page ends with the lesson that makes you predict it first — which is where it actually sticks.
+        The explanation behind every lesson, readable on its own. Each page ends with the lesson that makes you predict it first - which is where it actually sticks.
       </p>
 
       <div className="mt-14 border-t border-line">

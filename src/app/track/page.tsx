@@ -7,13 +7,13 @@ import { LOCAL_ONLY, localOnlyFeatures } from "@/lib/engine/features";
 import { abs, breadcrumbs, jsonLdScript, ORGANIZATION, SITE_NAME } from "@/lib/seo";
 
 const lessonCount = track.modules.reduce((n, m) => n + m.lessons.length, 0);
-const TRACK_DESCRIPTION = `A ${track.modules.length}-module Go course in ${lessonCount} lessons: goroutines and channels, slices and maps, pointers, interfaces, errors, and the memory model. Each lesson runs real Go in your browser — no install.`;
+const TRACK_DESCRIPTION = `A ${track.modules.length}-module Go course in ${lessonCount} lessons: goroutines and channels, slices and maps, pointers, interfaces, errors, and the memory model. Each lesson runs real Go in your browser - no install.`;
 
 export const metadata: Metadata = {
-  title: "Track — the full Go course",
+  title: "Track - the full Go course",
   description: TRACK_DESCRIPTION,
   alternates: { canonical: "/track" },
-  openGraph: { type: "website", url: "/track", title: `Track — the full Go course · ${SITE_NAME}`, description: TRACK_DESCRIPTION, siteName: SITE_NAME },
+  openGraph: { type: "website", url: "/track", title: `Track - the full Go course · ${SITE_NAME}`, description: TRACK_DESCRIPTION, siteName: SITE_NAME },
 };
 
 export default function TrackPage() {

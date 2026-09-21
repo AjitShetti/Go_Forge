@@ -9,7 +9,7 @@ export type PersistenceContext = { kind: "off"; reason: string } | { kind: "on";
  * Whether this lesson can record events, and the ids it records against.
  *
  * This is resolved in the browser rather than on the server so the lesson route has
- * no cookie read in it and can be prerendered — the lesson pages are the site's
+ * no cookie read in it and can be prerendered - the lesson pages are the site's
  * search-facing content, and a dynamic route is neither cached nor cheap to crawl.
  * `lessons` and `concepts` are readable by `anon` (migration 20260915000000_init.sql),
  * so the two lookups work signed in or out.

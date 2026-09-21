@@ -20,7 +20,7 @@ export type ExecResult = {
 export type RunOptions = {
   /** Wall-clock limit for the run phase (compile has its own cap). */
   timeoutMs: number;
-  /** Language version, e.g. "go1.21" — what a go.mod `go` directive would say. */
+  /** Language version, e.g. "go1.21" - what a go.mod `go` directive would say. */
   lang?: string;
   gcflags?: string[];
   onStdout?: (chunk: string) => void;

@@ -6,7 +6,7 @@
 // hints, the solution and advancing are all derived from state. The UI only
 // dispatches events and renders `view(state)`. Every accepted event is also a
 // persisted record (lesson_events), and replaying the stored events through
-// `reduce` rebuilds the exact state — so resuming a lesson is a fold.
+// `reduce` rebuilds the exact state - so resuming a lesson is a fold.
 
 export const STEPS = ["provoke", "collide", "decode", "rebuild", "challenge", "stretch", "complete"] as const;
 export type Step = (typeof STEPS)[number];

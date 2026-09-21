@@ -4,8 +4,8 @@ import { NavLinks } from "@/components/nav-links";
 
 /**
  * Static chrome. Nothing here reads cookies: the signed-in state lives in AuthNav
- * and resolves in the browser, which is what keeps this layout — and therefore every
- * route under it — prerenderable.
+ * and resolves in the browser, which is what keeps this layout - and therefore every
+ * route under it - prerenderable.
  */
 export function SiteHeader() {
   return (

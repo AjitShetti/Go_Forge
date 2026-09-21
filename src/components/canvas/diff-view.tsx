@@ -12,7 +12,7 @@ import type { DesignFlowEdge, DesignFlowNode } from "./flow";
 const nodeTypes: NodeTypes = { design: DesignNode };
 const edgeTypes: EdgeTypes = { design: DesignEdge };
 
-const show = (v: unknown) => (v === undefined ? "—" : typeof v === "number" ? v.toLocaleString("en-US") : String(v));
+const show = (v: unknown) => (v === undefined ? "-" : typeof v === "number" ? v.toLocaleString("en-US") : String(v));
 const fieldName = (c: FieldChange) => (c.field === "label" ? "name" : c.field === "kind" ? "kind" : FIELDS[c.field].label);
 
 /**

@@ -1,8 +1,8 @@
 // Server-only (reads the filesystem).
 //
 // The reference side of the site. A lesson deliberately withholds its explanation
-// until the learner has committed to a prediction, which means that prose — the best
-// writing here — is not on the page for a reader arriving from a search. These pages
+// until the learner has committed to a prediction, which means that prose - the best
+// writing here - is not on the page for a reader arriving from a search. These pages
 // give each concept a home of its own: the same explanation, gathered from every
 // lesson that teaches it, readable immediately and linked to the lesson that drills it.
 import { loadLessonBundle } from "@/lib/content/load";
@@ -48,7 +48,7 @@ export function loadConcepts(): Concept[] {
   for (const m of track.modules) {
     for (const l of m.lessons) {
       const bundle = loadLessonBundle(m.slug, l.slug);
-      if (!bundle) continue; // not authored yet — nothing to explain
+      if (!bundle) continue; // not authored yet - nothing to explain
       const entry: ConceptLesson = {
         moduleSlug: m.slug,
         lessonSlug: l.slug,

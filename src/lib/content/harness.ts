@@ -47,7 +47,7 @@ export type TestReport = {
   /** Leaf results only: a parent test with subtests is represented by its subtests. */
   cases: CaseResult[];
   failedCases: string[];
-  /** The run did not finish normally (panic, timeout, compile error) — cases may be incomplete. */
+  /** The run did not finish normally (panic, timeout, compile error) - cases may be incomplete. */
   incomplete: boolean;
 };
 

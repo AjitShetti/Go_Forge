@@ -26,7 +26,7 @@ export async function proxy(request: NextRequest) {
 export const config = {
   // Only the routes that read the session on the server. The lessons, the track,
   // the scenarios and the home page are prerendered and read no cookies, so running
-  // this on them bought nothing and cost a Supabase round trip per request — and a
+  // this on them bought nothing and cost a Supabase round trip per request - and a
   // response carrying Set-Cookie is one the CDN will not cache.
   //
   // Sessions stay fresh on the public pages regardless: the browser client refreshes

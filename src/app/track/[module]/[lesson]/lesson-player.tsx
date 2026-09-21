@@ -46,7 +46,7 @@ export function LessonPlayer({
   const fm = bundle.lesson.frontmatter;
 
   // Resolved here rather than passed down from the server, so the route stays
-  // prerenderable. Null means "still asking" — the recorder, and with it the saved
+  // prerenderable. Null means "still asking" - the recorder, and with it the saved
   // progress, waits for the answer.
   const [persistence, setPersistence] = useState<PersistenceContext | null>(null);
   useEffect(() => {

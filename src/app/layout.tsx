@@ -11,12 +11,12 @@ const archivo = Archivo({ subsets: ["latin"], style: ["normal", "italic"], axes:
 const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-plex-mono" });
 
 const DESCRIPTION =
-  "Learn Go from first principles. Every lesson starts with a Go program you will predict wrong — then you run it, see what really happened, and decode why, with real Go compiled in your browser. Written for Python and JavaScript developers.";
+  "Learn Go from first principles. Every lesson starts with a Go program you will predict wrong - then you run it, see what really happened, and decode why, with real Go compiled in your browser. Written for Python and JavaScript developers.";
 
 export const metadata: Metadata = {
   // Lets every route below give `alternates.canonical` and OG urls as a path.
   metadataBase: new URL(SITE_URL),
-  title: { default: "Go Forge — learn Go from first principles", template: "%s · Go Forge" },
+  title: { default: "Go Forge - learn Go from first principles", template: "%s · Go Forge" },
   description: DESCRIPTION,
   applicationName: SITE_NAME,
   alternates: { canonical: "/" },
@@ -30,10 +30,10 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     locale: "en_US",
     url: "/",
-    title: "Go Forge — learn Go from first principles",
+    title: "Go Forge - learn Go from first principles",
     description: DESCRIPTION,
   },
-  twitter: { card: "summary_large_image", title: "Go Forge — learn Go from first principles", description: DESCRIPTION },
+  twitter: { card: "summary_large_image", title: "Go Forge - learn Go from first principles", description: DESCRIPTION },
 };
 
 /** Tints the browser's own chrome with the page's ground colour, so the frame around

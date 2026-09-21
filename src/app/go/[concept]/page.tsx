@@ -82,7 +82,7 @@ export default async function ConceptPage({ params }: { params: Promise<Params> 
 
       <p className="prose-serif mt-6 max-w-2xl text-ink-2">
         Explained below, then drilled in {concept.lessons.length} {concept.lessons.length === 1 ? "lesson" : "lessons"} where you predict the output before you run it. Every program on this page was
-        compiled and run by real Go ({concept.lessons[0]?.goVersion}) — the outputs are recorded, not written by hand.
+        compiled and run by real Go ({concept.lessons[0]?.goVersion}) - the outputs are recorded, not written by hand.
       </p>
 
       {concept.lessons.map((l) => (

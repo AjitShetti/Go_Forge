@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
  * Default ("auto") prefetching, which is not the same thing for every route here:
  * the prerendered ones (Track, Reference, Scenarios, Engine) are fetched whole,
  * while Review, Progress, Canvas and Notebook are fetched only as far as their
- * loading.tsx. That boundary is what makes the default affordable — without one,
+ * loading.tsx. That boundary is what makes the default affordable - without one,
  * prefetching a dynamic route pulls a full server render of a page most readers
  * never open, which is why these four were briefly set to `false`. They should not
  * be: in the App Router `false` also turns off prefetching on hover, so every visit

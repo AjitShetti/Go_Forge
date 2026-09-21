@@ -6,7 +6,7 @@ import { Caption, DisplayHeading, Page } from "@/components/ui";
  * These four routes read the session and query Supabase, so they cannot be
  * prerendered and take ~400ms to answer. A `loading.tsx` built on this puts the
  * heading on screen on the click instead of at the end of that wait, and it gives
- * the router a boundary to prefetch down to — so `prefetch="auto"` on the nav costs
+ * the router a boundary to prefetch down to - so `prefetch="auto"` on the nav costs
  * a shell rather than a full render of a page most readers never open.
  *
  * The caption and title match the real page's exactly, so nothing moves when the

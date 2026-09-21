@@ -45,7 +45,7 @@ export function loadLessonBundle(moduleSlug: string, lessonSlug: string): Lesson
   if (!existsSync(join(dir, "lesson.md"))) return null;
   const read = (...p: string[]) => readFileSync(join(dir, ...p), "utf8");
   if (!existsSync(join(dir, "expected.json"))) {
-    throw new Error(`lesson ${moduleSlug}/${lessonSlug} has no expected.json — run the content verifier`);
+    throw new Error(`lesson ${moduleSlug}/${lessonSlug} has no expected.json - run the content verifier`);
   }
   const lesson = parseLessonMd(read("lesson.md"));
   return {

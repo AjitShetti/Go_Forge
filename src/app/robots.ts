@@ -3,7 +3,7 @@ import { SITE_URL } from "@/lib/site";
 
 /**
  * Crawlers get the teaching material and nothing else. The disallowed routes are
- * per-learner views (progress, notes, review queue, saved designs) — a crawler
+ * per-learner views (progress, notes, review queue, saved designs) - a crawler
  * signed out sees an empty shell of each, and a pile of near-identical empty pages
  * is a thin-content signal working against the pages that do matter.
  *

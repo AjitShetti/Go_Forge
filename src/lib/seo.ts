@@ -62,7 +62,7 @@ export function jsonLdScript(data: unknown): { __html: string } {
 
 /**
  * BreadcrumbList; Google renders these as the path shown under a result title.
- * No `@context` of its own — every caller nests this inside a graph that has one.
+ * No `@context` of its own - every caller nests this inside a graph that has one.
  */
 export function breadcrumbs(trail: { name: string; path: string }[]) {
   return {

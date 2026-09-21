@@ -13,8 +13,8 @@ type Params = { module: string; lesson: string };
 const loadOnce = cache(loadLessonBundle);
 
 /**
- * Prerenders every authored lesson. Nothing in this route reads cookies any more —
- * the player resolves the session in the browser — so these 43 pages are static:
+ * Prerenders every authored lesson. Nothing in this route reads cookies any more -
+ * the player resolves the session in the browser - so these 43 pages are static:
  * served from the edge, cheap to crawl, and free for the router to prefetch.
  */
 export function generateStaticParams() {
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const bundle = isLessonAuthored(module, lesson) ? loadOnce(module, lesson) : null;
   const fm = bundle?.lesson.frontmatter;
   const title = fm?.title ?? ref.lesson.title;
-  const description = bundle ? lessonDescription(bundle.lesson.sections.Decode, fm!.trap.question, title) : `${title} — a Go lesson you predict before you run.`;
+  const description = bundle ? lessonDescription(bundle.lesson.sections.Decode, fm!.trap.question, title) : `${title} - a Go lesson you predict before you run.`;
   const path = `/track/${module}/${lesson}`;
 
   return {

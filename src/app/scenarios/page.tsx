@@ -4,7 +4,7 @@ import { Caption, Page, DisplayHeading } from "@/components/ui";
 import { SCENARIOS } from "@/lib/grader/scenarios";
 import { SITE_NAME } from "@/lib/seo";
 
-const DESCRIPTION = `${SCENARIOS.length} system design exercises — ticketing flash sale, URL shortener, news feed fan-out, rate-limited API, file storage with a CDN, chat presence. Sketch the system, then have it graded against real load and constraints.`;
+const DESCRIPTION = `${SCENARIOS.length} system design exercises - ticketing flash sale, URL shortener, news feed fan-out, rate-limited API, file storage with a CDN, chat presence. Sketch the system, then have it graded against real load and constraints.`;
 
 export const metadata: Metadata = {
   title: "System design scenarios",
